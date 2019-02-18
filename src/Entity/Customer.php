@@ -1,12 +1,13 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: josip
+ * Customer: josip
  * Date: 18.02.19.
- * Time: 09:25
+ * Time: 09:26
  */
 
 namespace App\Entity;
+
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,11 +15,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Employee
+ * Class Customer
  * @package App\Entity
  * @ORM\Entity()
  */
-class Employee
+class Customer
 {
     /**
      * @ORM\Id()
@@ -27,12 +28,12 @@ class Employee
      */
     private $id;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
     private $firstName;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
     private $lastName;
@@ -42,15 +43,11 @@ class Employee
      * @Assert\Email()
      */
     private $email;
+
     /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\OneToMany(targetEntity="App\Entity\Borrowed", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
      */
-    private $password;
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
+    private $borrowed;
 
     /**
      * @return mixed
@@ -117,35 +114,19 @@ class Employee
     }
 
     /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
-
-    /**
      * @return mixed
      */
-    public function getRoles()
+    public function getBorrowed()
     {
-        return $this->roles;
+        return $this->borrowed;
     }
 
     /**
-     * @param mixed $roles
+     * @param mixed $borrowed
      */
-    public function setRoles($roles): void
+    public function setBorrowed($borrowed): void
     {
-        $this->roles = $roles;
+        $this->borrowed = $borrowed;
     }
 
 

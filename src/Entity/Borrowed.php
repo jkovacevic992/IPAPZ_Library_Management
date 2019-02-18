@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: josip
+ * Customer: josip
  * Date: 18.02.19.
  * Time: 09:26
  */
@@ -40,9 +40,9 @@ class Borrowed
      */
     private $book;
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
      */
-    private $user;
+    private $customer;
 
     /**
      * @return mixed
@@ -111,17 +111,17 @@ class Borrowed
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getCustomer()
     {
-        return $this->user;
+        return $this->customer;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $customer
      */
-    public function setUser($user): void
+    public function setCustomer($customer): void
     {
-        $this->user = $user;
+        $this->customer = $customer;
     }
 
 

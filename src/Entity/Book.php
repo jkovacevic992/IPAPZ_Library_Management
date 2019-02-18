@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: josip
+ * Customer: josip
  * Date: 18.02.19.
  * Time: 09:26
  */
@@ -37,9 +37,9 @@ class Book
      */
     private $author;
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Employee")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      */
-    private $employee;
+    private $user;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Genre")
      */
@@ -100,17 +100,17 @@ class Book
     /**
      * @return mixed
      */
-    public function getEmployee()
+    public function getUser()
     {
-        return $this->employee;
+        return $this->user;
     }
 
     /**
      * @param mixed $employee
      */
-    public function setEmployee($employee): void
+    public function setUser($user): void
     {
-        $this->employee = $employee;
+        $this->user = $user;
     }
 
     /**

@@ -1,25 +1,25 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: josip
+ * Customer: josip
  * Date: 18.02.19.
- * Time: 09:26
+ * Time: 09:25
  */
 
 namespace App\Entity;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class User
- * @package App\Entity
  * @ORM\Entity()
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -28,12 +28,12 @@ class User
      */
     private $id;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
     private $firstName;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
     private $lastName;
@@ -43,26 +43,19 @@ class User
      * @Assert\Email()
      */
     private $email;
-
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Borrowed", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
-    private $borrowed;
-
+    private $password;
     /**
-     * @return mixed
+     * @ORM\Column(type="json")
      */
-    public function getId()
+    private $roles = [];
+
+    public function getFullName()
     {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
 
     /**
@@ -76,7 +69,7 @@ class User
     /**
      * @param mixed $firstName
      */
-    public function setFirstName($firstName): void
+    public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
     }
@@ -92,41 +85,87 @@ class User
     /**
      * @param mixed $lastName
      */
-    public function setLastName($lastName): void
+    public function setLastName($lastName)
     {
         $this->lastName = $lastName;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEmail()
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param mixed $email
-     */
-    public function setEmail($email): void
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
      */
-    public function getBorrowed()
+    public function getUsername(): string
     {
-        return $this->borrowed;
+        return (string) $this->email;
     }
 
     /**
-     * @param mixed $borrowed
+     * @see UserInterface
      */
-    public function setBorrowed($borrowed): void
+    public function getRoles(): array
     {
-        $this->borrowed = $borrowed;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
 
