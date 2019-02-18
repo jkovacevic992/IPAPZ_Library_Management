@@ -28,12 +28,12 @@ class User implements UserInterface
      */
     private $id;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
     private $firstName;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
     private $lastName;

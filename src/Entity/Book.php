@@ -41,7 +41,7 @@ class Book
      */
     private $user;
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Genre")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Genre", inversedBy="book")
      */
     private $genre;
     /**
