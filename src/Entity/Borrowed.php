@@ -43,4 +43,86 @@ class Borrowed
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      */
     private $user;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBorrowDate()
+    {
+        return $this->borrowDate;
+    }
+
+    /**
+     * @param mixed $borrowDate
+     */
+    public function setBorrowDate($borrowDate): void
+    {
+        $this->borrowDate = $borrowDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReturnDate()
+    {
+        return $this->returnDate;
+    }
+
+    /**
+     * @param mixed $returnDate
+     */
+    public function setReturnDate($returnDate): void
+    {
+        $this->returnDate = $returnDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBook()
+    {
+        return $this->book;
+    }
+
+    /**
+     * @param mixed $book
+     */
+    public function setBook($book): void
+    {
+        $this->book = $book;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
+
 }
