@@ -12,12 +12,15 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Customer
  * @package App\Entity
  * @ORM\Entity()
+ * @UniqueEntity(fields={"email"}, message="This account is already taken")
+
  */
 class Customer
 {
@@ -38,16 +41,15 @@ class Customer
      */
     private $lastName;
     /**
+     *
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
+     *
+     *
      */
     private $email;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Borrowed", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    private $borrowed;
 
     /**
      * @return mixed
