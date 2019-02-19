@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New book{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.author) }}
+    <button class="btn" formnovalidate>Submit</button>
+    {{ form_end(form) }}
+{% endblock %}

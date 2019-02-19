@@ -27,12 +27,12 @@ class Book
      */
     private $id;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
     private $name;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
     private $author;

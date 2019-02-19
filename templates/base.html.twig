@@ -24,6 +24,11 @@
     <div class="navbar-collapse">
         <ul class="navbar-nav ml-auto">
             {% if is_granted('ROLE_USER') %}
+                <a class="nav-link" href="{{ path('new_book') }}">New book</a>
+                <a class="nav-link" href="{{ path('app_logout') }}">New genre</a>
+                <a class="nav-link" href="{{ path('app_logout') }}">New customer</a>
+
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
