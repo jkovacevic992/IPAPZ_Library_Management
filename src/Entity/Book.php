@@ -42,12 +42,16 @@ class Book
     private $user;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Genre", inversedBy="book")
+     *
      */
     private $genre;
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Borrowed", mappedBy="book")
      */
     private $borrowed;
+
+
+
 
     /**
      * @return mixed

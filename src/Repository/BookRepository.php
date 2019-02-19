@@ -19,4 +19,12 @@ class BookRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Book::class);
     }
+
+    public function getAllBooks()
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('App\Entity\Genre','g','WITH','g.id = b.genre')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -14,6 +14,7 @@ use App\Entity\Genre;
 use App\Form\BookFormType;
 use App\Form\GenreFormType;
 use App\Repository\BookRepository;
+use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,15 +26,21 @@ class BookController extends AbstractController
     /**
      * @Route("/", name="book_index")
      * @param BookRepository $bookRepository
+     * @param CustomerRepository $customerRepository
      * @return Response
      */
-    public function index(BookRepository $bookRepository)
+    public function index(BookRepository $bookRepository, CustomerRepository $customerRepository)
     {
 
         $books = $bookRepository->findAll();
+        $customers = $customerRepository->findCustomers()[0][1];
+        foreach($books as $book){
+            $book->setGenre($book->getGenre()->getName());
+    }
         return $this->render('book/index.html.twig', [
 
-            'books' => $books
+            'books' => $books,
+            'customers' => $customers
         ]);
     }
 
@@ -52,6 +59,7 @@ class BookController extends AbstractController
             /** @var Book $book */
             $book = $form->getData();
             $book->setUser($this->getUser());
+
             $entityManager->persist($book);
 
             $entityManager->flush();
