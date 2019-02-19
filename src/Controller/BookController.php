@@ -10,7 +10,9 @@ namespace App\Controller;
 
 
 use App\Entity\Book;
+use App\Entity\Genre;
 use App\Form\BookFormType;
+use App\Form\GenreFormType;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -60,6 +62,32 @@ class BookController extends AbstractController
 
         return $this->render('book/new_book.html.twig',[
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/new_genre", name="new_genre")
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function newGenre(Request $request, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(GenreFormType::class);
+        $form->handleRequest($request);
+        if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
+            /** @var Genre $genre */
+            $genre = $form->getData();
+            $entityManager->persist($genre);
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'New genre submitted!');
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render('genre/new_genre.html.twig',[
+            'genreForm' => $form->createView()
         ]);
     }
 }

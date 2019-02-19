@@ -10,7 +10,10 @@ namespace App\Form;
 
 
 use App\Entity\Book;
+use App\Entity\Genre;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +28,14 @@ class BookFormType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('author');
+            ->add('author')
+            ->add('genre', EntityType::class,[
+                'class' => Genre::class,
+                'choice_label' => 'name'
+            ])
+
+
+        ;
 
     }
 

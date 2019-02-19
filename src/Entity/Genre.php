@@ -27,7 +27,7 @@ class Genre
      */
     private $id;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
     private $name;
