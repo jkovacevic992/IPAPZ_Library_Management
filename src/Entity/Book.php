@@ -47,10 +47,14 @@ class Book
     private $genre;
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Borrowed", mappedBy="book")
+     * @var Collection
      */
     private $borrowed;
 
-
+    public function __construct()
+    {
+        $this->borrowed = new ArrayCollection();
+    }
 
 
     /**

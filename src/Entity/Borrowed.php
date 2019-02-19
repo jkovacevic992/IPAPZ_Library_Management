@@ -37,12 +37,18 @@ class Borrowed
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Book", inversedBy="borrowed")
      * @ORM\JoinTable(name="books_borrowed")
+     * @var Collection
      */
     private $book;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
      */
     private $customer;
+
+    public function __construct()
+    {
+        $this->book = new ArrayCollection();
+    }
 
     /**
      * @return mixed

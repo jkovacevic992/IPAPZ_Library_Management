@@ -113,8 +113,8 @@ class BookController extends AbstractController
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
             /** @var Genre $genre */
-            $genre = $form->getData();
-            $entityManager->persist($genre);
+            $borrowed = $form->getData();
+            $entityManager->persist($borrowed);
 
             $entityManager->flush();
 
