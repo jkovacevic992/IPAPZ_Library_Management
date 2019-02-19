@@ -20,10 +20,10 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
-    public function getAllBooks()
+    public function findBooks()
     {
         return $this->createQueryBuilder('b')
-            ->innerJoin('App\Entity\Genre','g','WITH','g.id = b.genre')
+            ->select('count(b.id)')
             ->getQuery()
             ->getResult();
     }
