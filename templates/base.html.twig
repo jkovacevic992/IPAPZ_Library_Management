@@ -27,7 +27,8 @@
                 <a class="nav-link" href="{{ path('new_book') }}">New book</a>
                 <a class="nav-link" href="{{ path('new_genre') }}">New genre</a>
                 <a class="nav-link" href="{{ path('new_customer') }}">New customer</a>
-                <a class="nav-link" href="{{ path('app_register') }}">New user</a>
+                <a class="nav-link" href="{{ path('app_register') }}">New employee</a>
+                <a class="nav-link" href="{{ path('lend_book') }}">Lend a book</a>
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
@@ -36,6 +37,7 @@
                 <a class="nav-link" href="{{ path('new_book') }}">New book</a>
                 <a class="nav-link" href="{{ path('new_genre') }}">New genre</a>
                 <a class="nav-link" href="{{ path('new_customer') }}">New customer</a>
+                <a class="nav-link" href="{{ path('lend_book') }}">Lend a book</a>
 
 
                 <li class="nav-item">
@@ -45,9 +47,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_login') }}">Login</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_register') }}">Registration</a>
-                    </li>
+
             {% endif %}
         </ul>
 

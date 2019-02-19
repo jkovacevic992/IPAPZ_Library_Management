@@ -12,10 +12,12 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Entity\Genre;
 use App\Form\BookFormType;
+use App\Form\BorrowedFormType;
 use App\Form\GenreFormType;
 use App\Repository\BookRepository;
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -96,6 +98,32 @@ class BookController extends AbstractController
 
         return $this->render('genre/new_genre.html.twig',[
             'genreForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/lend_book", name="lend_book")
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function lendBook(Request $request, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(BorrowedFormType::class);
+        $form->handleRequest($request);
+        if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
+            /** @var Genre $genre */
+            $genre = $form->getData();
+            $entityManager->persist($genre);
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Nice!');
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render('book/lend_book.html.twig',[
+            'bookForm' => $form->createView()
         ]);
     }
 }

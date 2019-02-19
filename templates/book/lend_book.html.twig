@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lend a book{% endblock %}
+
+{% block body %}
+    {{ form_start(bookForm) }}
+    {{ form_row(bookForm.book) }}
+    {{ form_row(bookForm.customer) }}
+
+    <button class="btn" formnovalidate>Submit</button>
+    {{ form_end(bookForm) }}
+{% endblock %}
