@@ -35,9 +35,7 @@ class BookController extends AbstractController
         $books = $bookRepository->findAll();
         $customers = $customerRepository->findCustomers()[0][1];
         $bookNumber = $bookRepository->findBooks()[0][1];
-        foreach($books as $book){
-            $book->setGenre($book->getGenre()->getName());
-    }
+
         return $this->render('book/index.html.twig', [
 
             'books' => $books,
