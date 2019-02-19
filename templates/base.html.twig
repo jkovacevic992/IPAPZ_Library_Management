@@ -23,7 +23,16 @@
     </div>
     <div class="navbar-collapse">
         <ul class="navbar-nav ml-auto">
-            {% if is_granted('ROLE_USER') %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="nav-link" href="{{ path('new_book') }}">New book</a>
+                <a class="nav-link" href="{{ path('new_genre') }}">New genre</a>
+                <a class="nav-link" href="{{ path('new_customer') }}">New customer</a>
+                <a class="nav-link" href="{{ path('app_register') }}">New user</a>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                </li>
+            {% elseif is_granted('ROLE_USER') %}
                 <a class="nav-link" href="{{ path('new_book') }}">New book</a>
                 <a class="nav-link" href="{{ path('new_genre') }}">New genre</a>
                 <a class="nav-link" href="{{ path('new_customer') }}">New customer</a>
@@ -32,13 +41,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_login') }}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_register') }}">Registration</a>
-                </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_register') }}">Registration</a>
+                    </li>
             {% endif %}
         </ul>
 
