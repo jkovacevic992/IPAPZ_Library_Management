@@ -35,11 +35,10 @@ class Borrowed
     private $returnDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Book", inversedBy="borrowed")
-     * @ORM\JoinTable(name="books_borrowed")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Book", inversedBy="borrowed",cascade={"persist"})
      * @var Collection
      */
-    private $book;
+    private $books;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
      */
@@ -47,9 +46,42 @@ class Borrowed
 
     public function __construct()
     {
-        $this->book = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
+    /**
+     * @return Collection
+     */
+    public function getBooks(): Collection
+    {
+        return $this->books;
+    }
+
+    /**
+     * @param Collection $books
+     */
+    public function setBooks(Collection $books): void
+    {
+        $this->books = $books;
+    }
+
+
+    public function addBook(Book $book): self
+    {
+        if (!$this->books->contains($book)) {
+            $this->books[] = $book;
+            $book->addBorrowed($this);
+        }
+        return $this;
+    }
+    public function removeBook(Book $book): self
+    {
+        if ($this->books->contains($book)) {
+            $this->books->removeElement($book);
+            $book->removeBorrowed($this);
+        }
+        return $this;
+    }
     /**
      * @return mixed
      */
@@ -98,21 +130,7 @@ class Borrowed
         $this->returnDate = $returnDate;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBook()
-    {
-        return $this->book;
-    }
 
-    /**
-     * @param mixed $book
-     */
-    public function setBook($book): void
-    {
-        $this->book = $book;
-    }
 
     /**
      * @return mixed

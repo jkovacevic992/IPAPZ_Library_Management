@@ -123,7 +123,7 @@ class BookController extends AbstractController
         }
 
         return $this->render('book/lend_book.html.twig',[
-            'bookForm' => $form->createView()
+            'form' => $form->createView()
         ]);
     }
 }

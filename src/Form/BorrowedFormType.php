@@ -14,6 +14,7 @@ use App\Entity\Borrowed;
 use App\Entity\Customer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,17 +25,18 @@ class BorrowedFormType extends AbstractType
         $builder
             ->add('borrowDate')
             ->add('returnDate')
-            ->add('book', EntityType::class,[
-                'class' => Book::class,
-                'choice_label' => 'name'
-            ])
             ->add('customer', EntityType::class,[
                 'class' => Customer::class,
                 'choice_label' => 'firstName'
-            ])
+            ]);
+        $builder->add('books', CollectionType::class, [
+            'entry_type' => BookBorrowedFormType::class,
+            'entry_options' => ['label' => false],
+            'allow_add' => true,
+            'by_reference' => false,
+            'label' => false,
 
-
-        ;
+        ]);
 
     }
 

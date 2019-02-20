@@ -3,10 +3,24 @@
 {% block title %}Lend a book{% endblock %}
 
 {% block body %}
-    {{ form_start(bookForm) }}
-    {{ form_row(bookForm.book) }}
-    {{ form_row(bookForm.customer) }}
+    {{ form_start(form) }}
+    {{ form_row(form.customer) }}
+    {{ form_row(form.borrowDate) }}
+    {{ form_row(form.returnDate) }}
+    <ul class="books" data-prototype="{{ form_widget(form.books.vars.prototype)|e('html_attr') }}">
 
+        {% for book in form.books %}
+            <li>{{ form_row(book.name) }}</li>
+        {% endfor %}
+    </ul>
     <button class="btn" formnovalidate>Submit</button>
-    {{ form_end(bookForm) }}
+    {{ form_end(form) }}
+
+
+
 {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('js/books.js') }}"></script>
+    {% endblock %}
