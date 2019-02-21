@@ -7,10 +7,10 @@
     {{ form_row(form.customer) }}
     {{ form_row(form.borrowDate) }}
     {{ form_row(form.returnDate) }}
-    <ul class="books" data-prototype="{{ form_widget(form.books.vars.prototype)|e('html_attr') }}">
+    <ul class="books" data-prototype="{{ form_widget(form.borrowedBooks.vars.prototype)|e('html_attr') }}">
 
-        {% for book in form.books %}
-            <li>{{ form_row(book.name) }}</li>
+        {% for borrowedBook in form.borrowedBooks %}
+            <li>{{ form_row(borrowedBook.book) }}</li>
         {% endfor %}
     </ul>
     <button class="btn" formnovalidate>Submit</button>

@@ -35,10 +35,10 @@ class Borrowed
     private $returnDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Book", inversedBy="borrowed",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\BorrowedBooks", mappedBy="borrowed", cascade={"persist", "remove"})
      * @var Collection
      */
-    private $books;
+    private $borrowedBooks;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
      */
@@ -46,39 +46,33 @@ class Borrowed
 
     public function __construct()
     {
-        $this->books = new ArrayCollection();
+        $this->borrowedBooks = new ArrayCollection();
     }
 
     /**
      * @return Collection
      */
-    public function getBooks(): Collection
+    public function getBorrowedBooks(): Collection
     {
-        return $this->books;
-    }
-
-    /**
-     * @param Collection $books
-     */
-    public function setBooks(Collection $books): void
-    {
-        $this->books = $books;
+        return $this->borrowedBooks;
     }
 
 
-    public function addBook(Book $book): self
+    public function addBorrowedBook(BorrowedBooks $borrowedBooks): self
     {
-        if (!$this->books->contains($book)) {
-            $this->books[] = $book;
-            $book->addBorrowed($this);
+        if (!$this->borrowedBooks->contains($borrowedBooks)) {
+            $borrowedBooks->setBorrowed($this);
+            $this->borrowedBooks[] = $borrowedBooks;
         }
         return $this;
     }
-    public function removeBook(Book $book): self
+    public function removeBorrowedBook(BorrowedBooks $borrowedBooks): self
     {
-        if ($this->books->contains($book)) {
-            $this->books->removeElement($book);
-            $book->removeBorrowed($this);
+        if ($this->borrowedBooks->contains($borrowedBooks)) {
+            $this->borrowedBooks->removeElement($borrowedBooks);
+            if ($borrowedBooks->getBorrowed() === $this) {
+                $borrowedBooks->setBorrowed(null);
+            }
         }
         return $this;
     }

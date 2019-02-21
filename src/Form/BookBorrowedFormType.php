@@ -10,6 +10,7 @@ namespace App\Form;
 
 
 use App\Entity\Book;
+use App\Entity\BorrowedBooks;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,7 +31,7 @@ class BookBorrowedFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Book::class,
+            'data_class' => BorrowedBooks::class,
         ]);
     }
 }

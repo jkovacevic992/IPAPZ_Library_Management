@@ -28,11 +28,12 @@ class BorrowedFormType extends AbstractType
             ->add('customer', EntityType::class,[
                 'class' => Customer::class,
                 'choice_label' => 'firstName'
-            ]);
-        $builder->add('books', CollectionType::class, [
+            ])
+            ->add('borrowedBooks', CollectionType::class, [
             'entry_type' => BookBorrowedFormType::class,
             'entry_options' => ['label' => false],
             'allow_add' => true,
+            'allow_delete' => true,
             'by_reference' => false,
             'label' => false,
 
