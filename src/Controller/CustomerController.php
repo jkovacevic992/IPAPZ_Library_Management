@@ -70,4 +70,48 @@ class CustomerController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/view/{id}", name="customer_view")
+     * @param Customer $customer
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * * @return Response
+     */
+    public function show(Customer $customer)
+    {
+
+
+        return $this->render('customer/view.html.twig',[
+            'customer' => $customer
+        ]);
+    }
+
+    /**
+     * @Route("/customer_change/{id}", name="customer_change")
+     * @param Customer $customer
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * * @return Response
+     */
+    public function changeInfo(Customer $customerId, Request $request, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(CustomerFormType::class);
+        $form->handleRequest($request);
+        if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
+            /** @var Customer $customer */
+            $customer = $form->getData();
+            $customer->setId($customerId->getId());
+            $entityManager->merge($customer);
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Customer edited!');
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render('customer/customer_change.html.twig',[
+            'form' => $form->createView()
+        ]);
+    }
 }
