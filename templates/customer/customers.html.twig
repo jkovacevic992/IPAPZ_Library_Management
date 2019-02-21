@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+      <h3>Customers</h3>
+    {% for customer in customers %}
+        <div class="row mt-3">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mt-2 text-muted">{{ customer.firstName }} {{ customer.lastName }}</h6>
+                        <p class="card-text">{{ customer.email }}</p>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

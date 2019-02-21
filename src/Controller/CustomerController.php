@@ -13,6 +13,7 @@ namespace App\Controller;
 
 use App\Entity\Customer;
 use App\Form\CustomerFormType;
+use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,27 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CustomerController extends AbstractController
 {
+
+
+
+
+    /**
+     * @Route("/customers", name="customers")
+
+     * @param CustomerRepository $customerRepository
+     * @return Response
+     */
+    public function customers(CustomerRepository $customerRepository)
+    {
+
+        $customers = $customerRepository->findAll();
+
+        return $this->render('customer/customers.html.twig', [
+
+            'customers' => $customers
+
+        ]);
+    }
     /**
      * @Route("/new_customer", name="new_customer")
      * @param Request $request
