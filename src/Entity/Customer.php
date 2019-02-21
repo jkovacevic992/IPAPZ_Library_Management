@@ -115,21 +115,9 @@ class Customer
         $this->email = $email;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBorrowed()
+    public function getFullName()
     {
-        return $this->borrowed;
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
-
-    /**
-     * @param mixed $borrowed
-     */
-    public function setBorrowed($borrowed): void
-    {
-        $this->borrowed = $borrowed;
-    }
-
 
 }

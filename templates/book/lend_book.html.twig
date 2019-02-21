@@ -23,4 +23,12 @@
     {% block javascripts %}
         {{ parent() }}
         <script src="{{ asset('js/books.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+                $('.js-datepicker').datepicker({
+                    orientation: 'bottom',
+                    format: 'dd.mm.yyyy.'
+                });
+            });
+        </script>
     {% endblock %}

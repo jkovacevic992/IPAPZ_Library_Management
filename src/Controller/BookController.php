@@ -10,6 +10,8 @@ namespace App\Controller;
 
 
 use App\Entity\Book;
+use App\Entity\Borrowed;
+use App\Entity\BorrowedBooks;
 use App\Entity\Genre;
 use App\Form\BookFormType;
 use App\Form\BorrowedFormType;
@@ -109,7 +111,9 @@ class BookController extends AbstractController
      */
     public function lendBook(Request $request, EntityManagerInterface $entityManager)
     {
-        $form = $this->createForm(BorrowedFormType::class);
+        $borrowed = new Borrowed();
+        $borrowed->setBorrowDate(new \DateTime());
+        $form = $this->createForm(BorrowedFormType::class, $borrowed);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
             /** @var Genre $genre */

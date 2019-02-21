@@ -45,36 +45,6 @@ class Book
      *
      */
     private $genre;
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Borrowed", mappedBy="books",cascade={"persist"})
-     * @var Collection
-     */
-    private $borrowed;
-
-
-
-    public function __construct()
-    {
-        $this->borrowed = new ArrayCollection();
-    }
-
-    public function addBorrowed(Borrowed $borrowed): self
-    {
-        if (!$this->borrowed->contains($borrowed)) {
-            $this->borrowed[] = $borrowed;
-            $borrowed->addBook($this);
-        }
-        return $this;
-    }
-    public function removeBorrowed(Borrowed $borrowed): self
-    {
-        if ($this->borrowed->contains($borrowed)) {
-            $this->borrowed->removeElement($borrowed);
-            $borrowed->removeBorrowed($this);
-        }
-        return $this;
-    }
-
 
     /**
      * @return mixed
@@ -154,22 +124,6 @@ class Book
     public function setGenre($genre): void
     {
         $this->genre = $genre;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBorrowed()
-    {
-        return $this->borrowed;
-    }
-
-    /**
-     * @param mixed $borrowed
-     */
-    public function setBorrowed($borrowed): void
-    {
-        $this->borrowed = $borrowed;
     }
 
 

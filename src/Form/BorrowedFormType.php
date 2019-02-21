@@ -15,6 +15,7 @@ use App\Entity\Customer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,11 +24,27 @@ class BorrowedFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('borrowDate')
-            ->add('returnDate')
+            ->add('borrowDate', DateType::class, [
+                'widget' => 'single_text',
+                'attr' => ['class' => 'js-datepicker'],
+                'html5' => false,
+                'format' => 'm.d.Y.'
+            ])
+            ->add('returnDate', DateType::class, [
+                'widget' => 'single_text',
+                'attr' => ['class' => 'js-datepicker'],
+                'html5' => false,
+                'format' => 'm.d.Y.'
+            ])
             ->add('customer', EntityType::class,[
                 'class' => Customer::class,
-                'choice_label' => 'firstName'
+                'choice_label' => function($customer) {
+                    /** @var Customer $customer */
+                    return $customer->getFirstName() . ' ' . $customer->getLastName();
+                },
+
+
+
             ])
             ->add('borrowedBooks', CollectionType::class, [
             'entry_type' => BookBorrowedFormType::class,
