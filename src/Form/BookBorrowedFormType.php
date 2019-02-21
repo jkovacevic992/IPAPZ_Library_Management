@@ -11,6 +11,7 @@ namespace App\Form;
 
 use App\Entity\Book;
 use App\Entity\BorrowedBooks;
+use App\Repository\BookRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,6 +25,9 @@ class BookBorrowedFormType extends AbstractType
         $builder->add('book', EntityType::class,[
             'class' => Book::class,
             'choice_label' => 'name',
+            'query_builder' => function (BookRepository $bookRepository) {
+                return $bookRepository->getAvailableBooks();
+            }
 
         ]);
     }

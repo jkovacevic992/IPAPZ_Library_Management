@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Class Borrowed
@@ -27,10 +28,13 @@ class Borrowed
     private $id;
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
+     *
      */
     private $borrowDate;
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
      */
     private $returnDate;
 
@@ -75,6 +79,30 @@ class Borrowed
             }
         }
         return $this;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        $available = true;
+        if($this->borrowedBooks->count()===0){
+            $available=false;
+        }
+
+        /** @var BorrowedBooks $borrowedBook */
+        foreach($this->borrowedBooks as $borrowedBook){
+            if($borrowedBook->getBook()===null){
+               $available=false;
+            }
+        }
+        if(!$available){
+            $context->buildViolation('No available books.')
+                ->addViolation();
+        }
+
+
     }
     /**
      * @return mixed

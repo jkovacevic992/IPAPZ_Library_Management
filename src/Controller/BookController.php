@@ -116,8 +116,12 @@ class BookController extends AbstractController
         $form = $this->createForm(BorrowedFormType::class, $borrowed);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
-            /** @var Genre $genre */
+            /** @var Borrowed $borrowed */
             $borrowed = $form->getData();
+            /** @var BorrowedBooks $borrowedBook */
+            foreach($borrowed->getBorrowedBooks() as $borrowedBook){
+                $borrowedBook->getBook()->setAvailable(false);
+            }
             $entityManager->persist($borrowed);
 
             $entityManager->flush();

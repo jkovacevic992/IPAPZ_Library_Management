@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Book
  * @package App\Entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
  */
 class Book
 {
@@ -45,6 +45,27 @@ class Book
      *
      */
     private $genre;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $available = true;
+
+    /**
+     * @return mixed
+     */
+    public function getAvailable()
+    {
+        return $this->available;
+    }
+
+    /**
+     * @param mixed $available
+     */
+    public function setAvailable($available): void
+    {
+        $this->available = $available;
+    }
 
     /**
      * @return mixed

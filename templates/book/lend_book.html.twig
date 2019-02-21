@@ -4,6 +4,7 @@
 
 {% block body %}
     {{ form_start(form) }}
+    {{ form_errors(form) }}
     {{ form_row(form.customer) }}
     {{ form_row(form.borrowDate) }}
     {{ form_row(form.returnDate) }}
@@ -14,6 +15,8 @@
         {% endfor %}
     </ul>
     <button class="btn" formnovalidate>Submit</button>
+
+    {{ form_widget(form.borrowedBooks) }}
     {{ form_end(form) }}
 
 

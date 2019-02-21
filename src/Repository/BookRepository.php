@@ -27,4 +27,10 @@ class BookRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getAvailableBooks()
+    {
+        return $this->createQueryBuilder('b')
+            ->where('b.available=true');
+    }
 }
