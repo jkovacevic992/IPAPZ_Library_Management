@@ -52,11 +52,6 @@ class Borrowed
      */
     private $active = true;
 
-    public function __construct()
-    {
-        $this->borrowedBooks = new ArrayCollection();
-    }
-
     /**
      * @return mixed
      */
@@ -71,6 +66,10 @@ class Borrowed
     public function setActive($active): void
     {
         $this->active = $active;
+    }
+    public function __construct()
+    {
+        $this->borrowedBooks = new ArrayCollection();
     }
 
 

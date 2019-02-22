@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class BookController extends AbstractController
 {
     /**
@@ -108,14 +109,14 @@ class BookController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @throws \Exception
+
      */
 
 
     public function lendBook(Request $request, EntityManagerInterface $entityManager)
     {
         $borrowed = new Borrowed();
-        $borrowed->setBorrowDate(new \DateTime());
+        $borrowed->setBorrowDate(new \DateTime('now'));
         $form = $this->createForm(BorrowedFormType::class, $borrowed);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
