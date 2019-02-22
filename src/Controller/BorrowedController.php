@@ -9,9 +9,11 @@
 namespace App\Controller;
 
 
+use App\Entity\Book;
 use App\Entity\Borrowed;
 use App\Repository\BorrowedRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,7 +46,7 @@ class BorrowedController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function changeInfo(Borrowed $borrowedId, EntityManagerInterface $entityManager)
+    public function returnBooks(Borrowed $borrowedId, EntityManagerInterface $entityManager)
     {
         /** Borrowed $borrowedId */
 
@@ -59,6 +61,34 @@ class BorrowedController extends AbstractController
         return $this->redirectToRoute('book_index');
     }
 
+    /**
+     * @Route("/return_single_book/{id}", name= "return_single_book")
+     * @param Book $book
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    public function returnSingleBook(Book $book,  EntityManagerInterface $entityManager)
+    {
+        $book->setAvailable(true);
+
+        $entityManager->merge($book);
+        $entityManager->flush();
+        $this->addFlash('success', 'Successfully returned one book!');
+        return $this->redirectToRoute('book_index');
+
+
+    }
+    /**
+     * @Route("/books_details/{id}", name="books_details")
+     * @param Borrowed $borrowed
+     * @return Response
+     */
+    public function booksDetails(Borrowed $borrowed)
+    {
+        return $this->render('book/books_details.html.twig',[
+            'borrowed' => $borrowed
+        ]);
+    }
 
 
 }
