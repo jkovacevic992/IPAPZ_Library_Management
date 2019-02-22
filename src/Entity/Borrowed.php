@@ -47,11 +47,33 @@ class Borrowed
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
      */
     private $customer;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active = true;
 
     public function __construct()
     {
         $this->borrowedBooks = new ArrayCollection();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active): void
+    {
+        $this->active = $active;
+    }
+
+
 
     /**
      * @return Collection

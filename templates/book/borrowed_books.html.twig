@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>Borrowed books</h3>
+    {% for borrowedBook in borrowed %}
+        <div class="row mt-3">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-subtitle mt-2 text-muted">Customer: {{ borrowedBook.customer.firstName }} {{ borrowedBook.customer.lastName }} </h5>
+                        {% for book in borrowedBook.borrowedBooks %}
+
+                            <h6 class="card-subtitle mt-2 text-muted">{{ book.book.name }}  </h6>
+
+                        {% endfor %}
+                        <a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all books</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

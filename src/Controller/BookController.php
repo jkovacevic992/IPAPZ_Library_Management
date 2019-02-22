@@ -108,7 +108,10 @@ class BookController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      */
+
+
     public function lendBook(Request $request, EntityManagerInterface $entityManager)
     {
         $borrowed = new Borrowed();
@@ -133,5 +136,10 @@ class BookController extends AbstractController
         return $this->render('book/lend_book.html.twig',[
             'form' => $form->createView()
         ]);
+    }
+
+    public function returnBook(Request $request, EntityManagerInterface $entityManager)
+    {
+
     }
 }

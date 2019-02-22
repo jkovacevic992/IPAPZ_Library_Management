@@ -89,14 +89,17 @@ class CustomerController extends AbstractController
 
     /**
      * @Route("/customer_change/{id}", name="customer_change")
-     * @param Customer $customer
+     * @param Customer $customerId
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * * @return Response
      */
     public function changeInfo(Customer $customerId, Request $request, EntityManagerInterface $entityManager)
     {
-        $form = $this->createForm(CustomerFormType::class);
+        $customer = new Customer();
+        $customer->setFirstName($customerId->getFirstName());
+        $customer->setLastName($customerId->getLastName());
+        $form = $this->createForm(CustomerFormType::class, $customer);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
             /** @var Customer $customer */
