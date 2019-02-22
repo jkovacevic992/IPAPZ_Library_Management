@@ -11,7 +11,7 @@
                         {% for book in borrowed.borrowedBooks %}
                             {% if book.book.available == false %}
                             <h6 class="card-subtitle mt-2 text-muted">{{ book.book.name }}  </h6>
-                            <a href="{{ path('return_single_book', {id: book.book.id}) }}" class="btn btn-danger">Return this book</a>
+                            <a href="{{ path('return_single_book',{id: book.book.id, borrowedId: borrowed.id}) }}" class="btn btn-danger">Return this book</a>
                             {% endif %}
                         {% endfor %}
 

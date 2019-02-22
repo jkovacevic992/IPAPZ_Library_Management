@@ -62,15 +62,29 @@ class BorrowedController extends AbstractController
     }
 
     /**
-     * @Route("/return_single_book/{id}", name= "return_single_book")
+     * @Route("/return_single_book/{id}/{borrowedId}", name= "return_single_book")
      * @param Book $book
+     * @param Borrowed $borrowedId
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function returnSingleBook(Book $book,  EntityManagerInterface $entityManager)
+    public function returnSingleBook(Book $book, Borrowed $borrowedId,  EntityManagerInterface $entityManager)
     {
         $book->setAvailable(true);
 
+
+        $counter = 0;
+        foreach($borrowedId->getBorrowedBooks() as $singleBook){
+            if($singleBook->getBook()->getAvailable()===true){
+                $counter++;
+
+            }
+
+        }
+        if($counter === count($borrowedId->getBorrowedBooks())){
+            $borrowedId->setActive(false);
+        }
+        $entityManager->merge($borrowedId);
         $entityManager->merge($book);
         $entityManager->flush();
         $this->addFlash('success', 'Successfully returned one book!');
