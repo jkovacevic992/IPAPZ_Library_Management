@@ -127,21 +127,34 @@ class UserController extends AbstractController
      */
     public function changeUser(User $userId, Request $request, EntityManagerInterface $entityManager,  UserPasswordEncoderInterface $passwordEncoder)
     {
-        $user = new User();
-        $user->setFirstName($userId->getFirstName());
-        $user->setLastName($userId->getLastName());
-        $form = $this->createForm(RegistrationFormType::class, $user);
+
+        $form = $this->createForm(RegistrationFormType::class, $userId);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
-            /** @var User $user */
-            $user = $form->getData();
-            $user->setId($userId->getId());
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                ));
-            $entityManager->merge($user);
+            $user = $entityManager->find(User::class, $userId->getId() );
+            if($userId->getEmail() === $form['email']->getData()){
+                /** @var User $user */
+                $user->setFirstName($form['firstName']->getData());
+                $user->setLastName($form['lastName']->getData());
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    ));
+            }else{
+                $user= $form->getData();
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    ));
+                $entityManager->persist($user);
+
+            }
+
+
+
+
 
             $entityManager->flush();
 
