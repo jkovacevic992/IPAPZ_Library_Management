@@ -105,7 +105,7 @@ class Borrowed
     /**
      * @Assert\Callback
      */
-    public function validate(ExecutionContextInterface $context, $payload)
+    public function validate(ExecutionContextInterface $context)
     {
         $available = true;
         if($this->borrowedBooks->count()===0){

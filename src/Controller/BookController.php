@@ -40,12 +40,16 @@ class BookController extends AbstractController
         $books = $bookRepository->findAll();
         $customers = $customerRepository->findCustomers()[0][1];
         $bookNumber = $bookRepository->findBooks()[0][1];
+        $availableBooks = $bookRepository->count(['available'=> true]);
+        $borrowedBooks = $bookRepository->count(['available'=> false]);
 
         return $this->render('book/index.html.twig', [
 
             'books' => $books,
             'customers' => $customers,
-            'bookNumber' => $bookNumber
+            'bookNumber' => $bookNumber,
+            'availableBooks' => $availableBooks,
+            'borrowedBooks' => $borrowedBooks
         ]);
     }
 

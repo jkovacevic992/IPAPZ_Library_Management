@@ -25,10 +25,12 @@
     </div>
     <div class="navbar-collapse">
         <ul class="navbar-nav ml-auto">
+
             {% if is_granted('ROLE_ADMIN') %}
+
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Add New
+                        New
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ path('new_book') }}">Book</a>
