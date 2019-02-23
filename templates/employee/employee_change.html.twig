@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Change info{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.firstName) }}
+    {{ form_row(form.lastName) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.plainPassword.first) }}
+    {{ form_row(form.plainPassword.second) }}
+    <button class="btn" formnovalidate>Submit</button>
+    {{ form_end(form) }}
+{% endblock %}

@@ -176,6 +176,14 @@ class User implements UserInterface
     }
 
     /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @see UserInterface
      */
     public function getSalt()

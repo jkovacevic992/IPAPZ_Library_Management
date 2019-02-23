@@ -102,4 +102,55 @@ class UserController extends AbstractController
 
         ]);
     }
+
+    /**
+     * @Route("/profile/view_employee/{id}", name="employee_view")
+     * @param User $user
+     * @return Response
+     */
+    public function viewUser(User $user)
+    {
+
+
+        return $this->render('employee/employee_view.html.twig',[
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @Route("/profile/employee_change/{id}", name="employee_change")
+     * @param User $userId
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * * @return Response
+     */
+    public function changeUser(User $userId, Request $request, EntityManagerInterface $entityManager,  UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $user = new User();
+        $user->setFirstName($userId->getFirstName());
+        $user->setLastName($userId->getLastName());
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+        if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
+            $user = $form->getData();
+            $user->setId($userId->getId());
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                ));
+            $entityManager->merge($user);
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Employee edited!');
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render('employee/employee_change.html.twig',[
+            'form' => $form->createView()
+        ]);
+    }
 }

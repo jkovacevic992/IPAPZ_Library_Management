@@ -32,6 +32,7 @@ class BookFormType extends AbstractType
             ->add('genre', EntityType::class,[
                 'class' => Genre::class,
                 'choice_label' => 'name'
+
             ])
 
 

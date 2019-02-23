@@ -96,17 +96,20 @@ class CustomerController extends AbstractController
      */
     public function changeInfo(Customer $customerId, Request $request, EntityManagerInterface $entityManager)
     {
-        $customer = new Customer();
-        $customer->setFirstName($customerId->getFirstName());
-        $customer->setLastName($customerId->getLastName());
-        $form = $this->createForm(CustomerFormType::class, $customer);
+
+        $form = $this->createForm(CustomerFormType::class, $customerId);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
+            $customer = $entityManager->find(Customer::class, $customerId->getId() );
+            if($customerId->getEmail() === $form['email']->getData()){
             /** @var Customer $customer */
-            $customer = $form->getData();
-            $customer->setId($customerId->getId());
-            $entityManager->merge($customer);
+            $customer->setFirstName($form['firstName']->getData());
+            $customer->setLastName($form['lastName']->getData());
+            }else{
+                $customer= $form->getData();
+                $entityManager->persist($customer);
 
+            }
             $entityManager->flush();
 
             $this->addFlash('success', 'Customer edited!');
