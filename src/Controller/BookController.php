@@ -139,8 +139,35 @@ class BookController extends AbstractController
         ]);
     }
 
-    public function returnBook(Request $request, EntityManagerInterface $entityManager)
+    /**
+     * @Route("/profile/edit_book/{id}", name="edit_book")
+     * @param Book $bookId
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * * @return Response
+     */
+    public function editBook(Book $bookId, Request $request, EntityManagerInterface $entityManager)
     {
+        $book = new Book();
+        $book->setName($bookId->getName());
+        $book->setAuthor($bookId->getAuthor());
+        $book->setGenre($bookId->getGenre());
+        $form = $this->createForm(BookFormType::class, $book);
+        $form->handleRequest($request);
+        if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
+            /** @var Customer $customer */
+            $book = $form->getData();
+            $book->setId($bookId->getId());
+            $entityManager->merge($book);
 
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Book edited!');
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render('book/book_edit.html.twig',[
+            'form' => $form->createView()
+        ]);
     }
 }
