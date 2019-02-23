@@ -10,6 +10,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 
+use App\Repository\UserRepository;
 use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -81,5 +82,24 @@ class UserController extends AbstractController
      */
     public function logout()
     {
+    }
+
+
+    /**
+     * @Route("/admin/users", name="users")
+
+     * @param UserRepository $userRepository
+     * @return Response
+     */
+    public function users(UserRepository $userRepository)
+    {
+
+        $users = $userRepository->findBy(['admin'=> false]);
+
+        return $this->render('employee/employees.html.twig', [
+
+            'users' => $users
+
+        ]);
     }
 }

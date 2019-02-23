@@ -53,6 +53,29 @@ class User implements UserInterface
      */
     private $roles = [];
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $admin = 0;
+
+    /**
+     * @return int
+     */
+    public function getAdmin(): int
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @param int $admin
+     */
+    public function setAdmin(int $admin): void
+    {
+        $this->admin = $admin;
+    }
+
+
+
     public function getFullName()
     {
         return $this->getFirstName() . ' ' . $this->getLastName();

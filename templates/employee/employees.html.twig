@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>Employees</h3>
+    {% for user in users %}
+        <div class="row mt-3">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mt-2 text-muted">{{ user.firstName }} {{ user.lastName }}</h6>
+                        {#<a href="{{ path('customer_view', {'id': customer.id}) }}" class="card-link">Details</a>#}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
