@@ -27,7 +27,7 @@ class CustomerController extends AbstractController
 
 
     /**
-     * @Route("/customers", name="customers")
+     * @Route("/profile/customers", name="customers")
 
      * @param CustomerRepository $customerRepository
      * @return Response
@@ -44,7 +44,7 @@ class CustomerController extends AbstractController
         ]);
     }
     /**
-     * @Route("/new_customer", name="new_customer")
+     * @Route("/profile/new_customer", name="new_customer")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
@@ -72,7 +72,7 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/view/{id}", name="customer_view")
+     * @Route("/profile/view/{id}", name="customer_view")
      * @param Customer $customer
      * @param Request $request
      * @param EntityManagerInterface $entityManager
@@ -88,7 +88,7 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/customer_change/{id}", name="customer_change")
+     * @Route("/profile/customer_change/{id}", name="customer_change")
      * @param Customer $customerId
      * @param Request $request
      * @param EntityManagerInterface $entityManager

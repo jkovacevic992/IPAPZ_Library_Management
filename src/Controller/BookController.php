@@ -50,7 +50,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/new_book", name="new_book")
+     * @Route("/profile/new_book", name="new_book")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
@@ -79,7 +79,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/new_genre", name="new_genre")
+     * @Route("/profile/new_genre", name="new_genre")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -105,7 +105,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/lend_book", name="lend_book")
+     * @Route("/profile/lend_book", name="lend_book")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response

@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 class BorrowedController extends AbstractController
 {
     /**
-     * @Route("/borrowed_books", name="borrowed_books")
+     * @Route("/profile/borrowed_books", name="borrowed_books")
 
      * @param BorrowedRepository $borrowedRepository
      * @return Response
@@ -41,7 +41,7 @@ class BorrowedController extends AbstractController
 }
 
     /**
-     * @Route("/return_books/{id}", name="return_books")
+     * @Route("/profile/return_books/{id}", name="return_books")
      * @param Borrowed $borrowedId
      * @param EntityManagerInterface $entityManager
      * @return Response
@@ -62,7 +62,7 @@ class BorrowedController extends AbstractController
     }
 
     /**
-     * @Route("/return_single_book/{id}/{borrowedId}", name= "return_single_book")
+     * @Route("/profile/return_single_book/{id}/{borrowedId}", name= "return_single_book")
      * @param Book $book
      * @param Borrowed $borrowedId
      * @param EntityManagerInterface $entityManager
@@ -93,7 +93,7 @@ class BorrowedController extends AbstractController
 
     }
     /**
-     * @Route("/books_details/{id}", name="books_details")
+     * @Route("/profile/books_details/{id}", name="books_details")
      * @param Borrowed $borrowed
      * @return Response
      */
