@@ -28,13 +28,13 @@ class BorrowedFormType extends AbstractType
                 'widget' => 'single_text',
                 'attr' => ['class' => 'js-datepicker'],
                 'html5' => false,
-                'format' => 'd.MM.Y.'
+                'format' => 'dd.MM.yyyy.'
             ])
             ->add('returnDate', DateType::class, [
                 'widget' => 'single_text',
                 'attr' => ['class' => 'js-datepicker'],
                 'html5' => false,
-                'format' => 'd.MM.Y.'
+                'format' => 'dd.MM.yyyy.'
             ])
             ->add('customer', EntityType::class,[
                 'class' => Customer::class,

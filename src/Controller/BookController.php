@@ -20,6 +20,8 @@ use App\Repository\BookRepository;
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,6 +54,8 @@ class BookController extends AbstractController
             'borrowedBooks' => $borrowedBooks
         ]);
     }
+
+
 
     /**
      * @Route("/profile/new_book", name="new_book")
