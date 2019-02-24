@@ -58,7 +58,7 @@ class BorrowedController extends AbstractController
         $entityManager->merge($borrowedId);
         $entityManager->flush();
         $this->addFlash('success', 'Successfully returned all books!');
-        return $this->redirectToRoute('book_index');
+        return $this->redirectToRoute('borrowed_books');
     }
 
     /**
@@ -88,7 +88,7 @@ class BorrowedController extends AbstractController
         $entityManager->merge($book);
         $entityManager->flush();
         $this->addFlash('success', 'Successfully returned one book!');
-        return $this->redirectToRoute('book_index');
+        return $this->redirectToRoute('borrowed_books');
 
 
     }

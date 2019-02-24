@@ -11,7 +11,7 @@
                         <p class="card-text">Genre: {{ book.genre.name }}</p>
                         {% if book.images != null %}
                            {% for image in book.images %}
-                            <a href="{{ path('set_main_image', {'id': book.id,'imageName': image}) }} "> <img style="max-height: 50px" src="../../uploads/images/{{image}}"><a/>
+                            <a href="{{ path('set_main_image', {'id': book.id,'imageName': image}) }} "> <img style="max-height: 100px" src="../../uploads/images/{{image}}"><a/><br/>
                             {% endfor %}
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}

@@ -54,6 +54,7 @@ class Book
 
     /**
      * @ORM\Column(type="array", nullable=true)
+     *
      */
     private $images = [];
 
