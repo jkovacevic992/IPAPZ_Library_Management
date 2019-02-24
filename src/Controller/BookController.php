@@ -42,19 +42,18 @@ class BookController extends AbstractController
         $books = $bookRepository->findAll();
         $customers = $customerRepository->findCustomers()[0][1];
         $bookNumber = $bookRepository->findBooks()[0][1];
-        $availableBooks = $bookRepository->count(['available'=> true]);
-        $borrowedBooks = $bookRepository->count(['available'=> false]);
+        $availableBooks = $bookRepository->count(['available' => true]);
+        $borrowedBooks = $bookRepository->count(['available' => false]);
 
         return $this->render('book/index.html.twig', [
 
             'books' => $books,
-            'customers' => $customers,
-            'bookNumber' => $bookNumber,
+            'totalCustomers' => $customers,
+            'totalBooks' => $bookNumber,
             'availableBooks' => $availableBooks,
-            'borrowedBooks' => $borrowedBooks
+            'allBorrowedBooks' => $borrowedBooks
         ]);
     }
-
 
 
     /**
@@ -72,9 +71,9 @@ class BookController extends AbstractController
             /** @var Book $book */
             $book = $form->getData();
             $files = $request->files->get('book_form')['images'];
-            $uploads_directory= $this->getParameter('images_directory');
-
-            foreach($files as $file) {
+            $uploads_directory = $this->getParameter('images_directory');
+            $images = [];
+            foreach ($files as $file) {
                 $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
                 $file->move(
@@ -85,7 +84,9 @@ class BookController extends AbstractController
 
 
             }
-            $book->setImages($images);
+            if($images !== null){
+                $book->setImages($images);
+            }
 
 
 
@@ -98,7 +99,7 @@ class BookController extends AbstractController
             return $this->redirectToRoute('book_index');
         }
 
-        return $this->render('book/new_book.html.twig',[
+        return $this->render('book/new_book.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -125,7 +126,7 @@ class BookController extends AbstractController
             return $this->redirectToRoute('book_index');
         }
 
-        return $this->render('genre/new_genre.html.twig',[
+        return $this->render('genre/new_genre.html.twig', [
             'genreForm' => $form->createView()
         ]);
     }
@@ -135,7 +136,6 @@ class BookController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-
      */
 
 
@@ -149,7 +149,7 @@ class BookController extends AbstractController
             /** @var Borrowed $borrowed */
             $borrowed = $form->getData();
             /** @var BorrowedBooks $borrowedBook */
-            foreach($borrowed->getBorrowedBooks() as $borrowedBook){
+            foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
                 $borrowedBook->getBook()->setAvailable(false);
             }
             $entityManager->persist($borrowed);
@@ -160,7 +160,7 @@ class BookController extends AbstractController
             return $this->redirectToRoute('book_index');
         }
 
-        return $this->render('book/lend_book.html.twig',[
+        return $this->render('book/lend_book.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -178,14 +178,14 @@ class BookController extends AbstractController
         $form = $this->createForm(BookFormType::class, $bookId);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
-           // $book = $entityManager->find(Book::class, $bookId->getId() );
+            // $book = $entityManager->find(Book::class, $bookId->getId() );
             /** @var Book $book */
             $book = $form->getData();
             $images = [];
             $files = $request->files->get('book_form')['images'];
-            $uploads_directory= $this->getParameter('images_directory');
+            $uploads_directory = $this->getParameter('images_directory');
 
-            foreach($files as $file) {
+            foreach ($files as $file) {
                 $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
                 $file->move(
@@ -205,7 +205,7 @@ class BookController extends AbstractController
             return $this->redirectToRoute('book_index');
         }
 
-        return $this->render('book/book_edit.html.twig',[
+        return $this->render('book/book_edit.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -219,22 +219,23 @@ class BookController extends AbstractController
     {
 
 
-        return $this->render('book/view_book.html.twig',[
+        return $this->render('book/view_book.html.twig', [
             'book' => $book
         ]);
     }
+
     /**
      * @Route("/set_image/{id}/{imageName}", name="set_main_image")
      * @param Book $book
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function setMainImage(Book $book, String $imageName,EntityManagerInterface $entityManager)
+    public function setMainImage(Book $book, String $imageName, EntityManagerInterface $entityManager)
     {
 
 
         $images = $book->getImages();
-        $key = array_search ($imageName, $images);
+        $key = array_search($imageName, $images);
         unset($images[$key]);
         array_unshift($images, $imageName);
         $book->setImages($images);

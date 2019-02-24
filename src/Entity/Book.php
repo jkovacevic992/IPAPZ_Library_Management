@@ -27,6 +27,12 @@ class Book
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     */
+    private $summary;
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
@@ -72,6 +78,22 @@ class Book
     public function setImages($images): void
     {
         $this->images = $images;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * @param mixed $summary
+     */
+    public function setSummary($summary): void
+    {
+        $this->summary = $summary;
     }
 
     public function addImages($image): self

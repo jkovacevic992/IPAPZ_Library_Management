@@ -1,11 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h5>Library users: {{ customers }}</h5>
-    <h5>Books in the library: {{ bookNumber }}</h5>
-    <h5>Available books: {{ availableBooks }}</h5>
-    <h5>Borrowed books: {{ borrowedBooks }}</h5>
-    <h3>Books</h3>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <p class="nav-link" >Library users: {{ totalCustomers }}</p>
+            <p class="nav-link" >Books in the library: {{ totalBooks }}</p>
+            <p class="nav-link">Available books: {{ availableBooks }}</p>
+            <p class="nav-link">Borrowed books: {{ allBorrowedBooks }}</p>
+        </ul>
+    </div>
+    <div class="navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+
+
+
+        </ul>
+
+    </div>
+</nav>
+    <h3>Books in the Library</h3>
 
     {% for book in books %}
         <div class="row mt-3">

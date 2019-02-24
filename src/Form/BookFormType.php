@@ -35,6 +35,7 @@ class BookFormType extends AbstractType
                 'choice_label' => 'name'
 
             ])
+            ->add('summary')
             ->add('images', FileType::class,[
                 'required' => false,
                 'multiple' => true,

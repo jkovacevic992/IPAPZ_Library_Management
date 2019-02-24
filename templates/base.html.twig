@@ -46,6 +46,7 @@
                         <a class="dropdown-item"  href="{{ path('new_genre') }}">Genre</a>
                         <a class="dropdown-item" href="{{ path('new_customer') }}">Customer</a>
                         <a class="dropdown-item" href="{{ path('app_register') }}">Employee</a>
+
                     </div>
                 </div>
                 <div class="dropdown">
@@ -66,10 +67,28 @@
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
             {% elseif is_granted('ROLE_USER') %}
-                <a class="nav-link" href="{{ path('new_book') }}">New book</a>
-                <a class="nav-link" href="{{ path('new_genre') }}">New genre</a>
-                <a class="nav-link" href="{{ path('new_customer') }}">New customer</a>
-                <a class="nav-link" href="{{ path('lend_book') }}">Lend a book</a>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        New
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ path('new_book') }}">Book</a>
+                        <a class="dropdown-item"  href="{{ path('new_genre') }}">Genre</a>
+                        <a class="dropdown-item" href="{{ path('new_customer') }}">Customer</a>
+                        <a class="dropdown-item" href="{{ path('app_register') }}">Employee</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Books
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ path('lend_book') }}">Lend</a>
+                        <a class="dropdown-item"  href="{{ path('borrowed_books') }}">Return</a>
+
+                    </div>
+                </div>
+
                 <a class="nav-link" href="{{ path('customers') }}">Customers</a>
 
 
