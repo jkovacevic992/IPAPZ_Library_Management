@@ -11,6 +11,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use MongoDB\BSON\Serializable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -70,6 +71,14 @@ class Book
     public function setImages($images): void
     {
         $this->images = $images;
+    }
+
+    public function addImages($image): self
+    {
+        $this->images[] = $image;
+
+
+        return $this;
     }
 
     /**
@@ -167,6 +176,7 @@ class Book
     {
         $this->genre = $genre;
     }
+
 
 
 }

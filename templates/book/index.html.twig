@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
     <h5>Library users: {{ customers }}</h5>
     <h5>Books in the library: {{ bookNumber }}</h5>
     <h5>Available books: {{ availableBooks }}</h5>
     <h5>Borrowed books: {{ borrowedBooks }}</h5>
     <h3>Books</h3>
+
     {% for book in books %}
         <div class="row mt-3">
              <div class="col-lg-6">
@@ -15,11 +15,11 @@
                         <h6 class="card-subtitle mt-2 text-muted">{{ book.author }}</h6>
                         <p class="card-text">{{ book.name }}</p>
                         <p class="card-text">Genre: {{ book.genre.name }}</p>
-                        {% for image in book.images %}
-                        <img style="max-height: 50px" src="../../uploads/images/{{ image }}">
-                        {% endfor %}
+                        {% if book.images != null %}
+                        <img style="max-height: 50px" src="../../uploads/images/{{ book.images[0]}}">
+                        {% endif %}
                         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
-                            <a href="{{ path('edit_book', {'id': book.id}) }}" class="card-link">Change info</a>
+                            <br/><a href="{{ path('edit_book', {'id': book.id}) }}" class="card-link">Change info</a>
                         {% endif %}
 
                      </div>

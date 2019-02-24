@@ -174,17 +174,30 @@ class BookController extends AbstractController
      */
     public function editBook(Book $bookId, Request $request, EntityManagerInterface $entityManager)
     {
-        $book = new Book();
-        $book->setName($bookId->getName());
-        $book->setAuthor($bookId->getAuthor());
-        $book->setGenre($bookId->getGenre());
-        $form = $this->createForm(BookFormType::class, $book);
+
+        $form = $this->createForm(BookFormType::class, $bookId);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
-            /** @var Customer $customer */
+           // $book = $entityManager->find(Book::class, $bookId->getId() );
+            /** @var Book $book */
             $book = $form->getData();
-            $book->setId($bookId->getId());
-            $entityManager->merge($book);
+
+            $files = $request->files->get('book_form')['images'];
+            $uploads_directory= $this->getParameter('images_directory');
+
+            foreach($files as $file) {
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+                $file->move(
+                    $uploads_directory,
+                    $fileName
+                );
+                $images[] = $fileName;
+
+
+            }
+
+            $book->setImages($images);
 
             $entityManager->flush();
 
