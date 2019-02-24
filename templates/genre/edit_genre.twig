@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit genre{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+
+    <button class="btn" formnovalidate>Submit</button>
+    {{ form_end(form) }}
+{% endblock %}

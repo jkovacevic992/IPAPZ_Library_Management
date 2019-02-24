@@ -12,16 +12,13 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Entity\Borrowed;
 use App\Entity\BorrowedBooks;
-use App\Entity\Genre;
+
 use App\Form\BookFormType;
 use App\Form\BorrowedFormType;
-use App\Form\GenreFormType;
+
 use App\Repository\BookRepository;
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Tools\Pagination\Paginator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -105,31 +102,6 @@ class BookController extends AbstractController
     }
 
 
-    /**
-     * @Route("/profile/new_genre", name="new_genre")
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     */
-    public function newGenre(Request $request, EntityManagerInterface $entityManager)
-    {
-        $form = $this->createForm(GenreFormType::class);
-        $form->handleRequest($request);
-        if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
-            /** @var Genre $genre */
-            $genre = $form->getData();
-            $entityManager->persist($genre);
-
-            $entityManager->flush();
-
-            $this->addFlash('success', 'New genre submitted!');
-            return $this->redirectToRoute('book_index');
-        }
-
-        return $this->render('genre/new_genre.html.twig', [
-            'genreForm' => $form->createView()
-        ]);
-    }
 
     /**
      * @Route("/profile/lend_book", name="lend_book")
