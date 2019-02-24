@@ -52,6 +52,27 @@ class Book
     private $available = true;
 
     /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $images = [];
+
+    /**
+     * @return mixed
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * @param mixed $images
+     */
+    public function setImages($images): void
+    {
+        $this->images = $images;
+    }
+
+    /**
      * @return mixed
      */
     public function getAvailable()

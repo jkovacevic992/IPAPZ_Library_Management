@@ -71,8 +71,25 @@ class BookController extends AbstractController
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
             /** @var Book $book */
             $book = $form->getData();
-            $book->setUser($this->getUser());
+            $files = $request->files->get('book_form')['images'];
+            $uploads_directory= $this->getParameter('images_directory');
 
+            foreach($files as $file) {
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+                $file->move(
+                    $uploads_directory,
+                    $fileName
+                );
+                $images[] = $fileName;
+
+
+            }
+            $book->setImages($images);
+
+
+
+            $book->setUser($this->getUser());
             $entityManager->persist($book);
 
             $entityManager->flush();
@@ -85,6 +102,7 @@ class BookController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
 
     /**
      * @Route("/profile/new_genre", name="new_genre")
