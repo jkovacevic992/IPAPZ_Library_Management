@@ -18,9 +18,8 @@
                         {% if book.images != null %}
                         <img style="max-height: 50px" src="../../uploads/images/{{ book.images[0]}}">
                         {% endif %}
-                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
-                            <br/><a href="{{ path('edit_book', {'id': book.id}) }}" class="card-link">Change info</a>
-                        {% endif %}
+                        <br/>
+                        <a href="{{ path('book_view', {'id': book.id}) }}" class="card-link">Details</a>
 
                      </div>
                  </div>

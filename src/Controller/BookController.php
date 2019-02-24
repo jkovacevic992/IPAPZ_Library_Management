@@ -181,7 +181,7 @@ class BookController extends AbstractController
            // $book = $entityManager->find(Book::class, $bookId->getId() );
             /** @var Book $book */
             $book = $form->getData();
-
+            $images = [];
             $files = $request->files->get('book_form')['images'];
             $uploads_directory= $this->getParameter('images_directory');
 
@@ -208,5 +208,38 @@ class BookController extends AbstractController
         return $this->render('book/book_edit.html.twig',[
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/view_book/{id}", name="book_view")
+     * @param Book $book
+     * @return Response
+     */
+    public function showBook(Book $book)
+    {
+
+
+        return $this->render('book/view_book.html.twig',[
+            'book' => $book
+        ]);
+    }
+    /**
+     * @Route("/set_image/{id}/{imageName}", name="set_main_image")
+     * @param Book $book
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    public function setMainImage(Book $book, String $imageName,EntityManagerInterface $entityManager)
+    {
+
+
+        $images = $book->getImages();
+        $key = array_search ($imageName, $images);
+        unset($images[$key]);
+        array_unshift($images, $imageName);
+        $book->setImages($images);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('book_index');
     }
 }

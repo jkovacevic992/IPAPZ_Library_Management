@@ -74,9 +74,7 @@ class CustomerController extends AbstractController
     /**
      * @Route("/profile/view/{id}", name="customer_view")
      * @param Customer $customer
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
-     * * @return Response
+     * @return Response
      */
     public function show(Customer $customer)
     {

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h6 class="card-subtitle mt-2 text-muted">{{ book.author }}</h6>
+                        <p class="card-text">{{ book.name }}</p>
+                        <p class="card-text">Genre: {{ book.genre.name }}</p>
+                        {% if book.images != null %}
+                           {% for image in book.images %}
+                            <a href="{{ path('set_main_image', {'id': book.id,'imageName': image}) }} "> <img style="max-height: 50px" src="../../uploads/images/{{image}}"><a/>
+                            {% endfor %}
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+                            <br/><a href="{{ path('edit_book', {'id': book.id}) }}" class="card-link">Change info</a>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
