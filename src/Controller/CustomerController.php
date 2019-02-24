@@ -113,7 +113,9 @@ class CustomerController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Customer edited!');
-            return $this->redirectToRoute('book_index');
+            return $this->redirectToRoute('customer_view', [
+                'id' => $customerId->getId()
+            ]);
         }
 
         return $this->render('customer/customer_change.html.twig',[
