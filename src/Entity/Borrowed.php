@@ -44,7 +44,7 @@ class Borrowed
      */
     private $borrowedBooks;
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="borrowed")
      */
     private $customer;
     /**

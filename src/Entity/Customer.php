@@ -50,7 +50,34 @@ class Customer
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hasBooks = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Borrowed", mappedBy="customer", cascade={"remove"})
+     */
+    private $borrowed;
+
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getBorrowed()
+    {
+        return $this->borrowed;
+    }
+
+    /**
+     * @param mixed $borrowed
+     */
+    public function setBorrowed($borrowed): void
+    {
+        $this->borrowed = $borrowed;
+    }
     /**
      * @return mixed
      */
@@ -118,6 +145,22 @@ class Customer
     public function getFullName()
     {
         return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHasBooks(): bool
+    {
+        return $this->hasBooks;
+    }
+
+    /**
+     * @param bool $hasBooks
+     */
+    public function setHasBooks(bool $hasBooks): void
+    {
+        $this->hasBooks = $hasBooks;
     }
 
 }

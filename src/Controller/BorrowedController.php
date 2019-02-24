@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Entity\Borrowed;
+use App\Entity\Customer;
 use App\Repository\BorrowedRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
@@ -55,6 +56,8 @@ class BorrowedController extends AbstractController
 
         }
         $borrowedId->setActive(false);
+        $customer = $entityManager->find(Customer::class,$borrowedId->getCustomer());
+        $customer->setHasBooks(false);
         $entityManager->merge($borrowedId);
         $entityManager->flush();
         $this->addFlash('success', 'Successfully returned all books!');
@@ -83,6 +86,9 @@ class BorrowedController extends AbstractController
         }
         if($counter === count($borrowedId->getBorrowedBooks())){
             $borrowedId->setActive(false);
+            $customer = $entityManager->find(Customer::class,$borrowedId->getCustomer());
+            $customer->setHasBooks(false);
+
         }
         $entityManager->merge($borrowedId);
         $entityManager->merge($book);

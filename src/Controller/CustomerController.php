@@ -120,4 +120,25 @@ class CustomerController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/profile/customer_delete/{id}", name="customer_delete")
+     * @param Customer $customer
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteCustomer(Customer $customer, EntityManagerInterface $entityManager)
+    {
+
+        if($customer->isHasBooks()===true){
+            $this->addFlash('warning', 'Customer has not returned their books!');
+            return $this->redirectToRoute('book_index');
+        }else{
+            $entityManager->remove($customer);
+            $entityManager->flush();
+            $this->addFlash('success', 'Customer deleted!');
+            return $this->redirectToRoute('book_index');
+
+        }
+        }
 }

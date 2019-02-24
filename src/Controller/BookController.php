@@ -13,6 +13,7 @@ use App\Entity\Book;
 use App\Entity\Borrowed;
 use App\Entity\BorrowedBooks;
 
+use App\Entity\Customer;
 use App\Form\BookFormType;
 use App\Form\BorrowedFormType;
 
@@ -120,6 +121,9 @@ class BookController extends AbstractController
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
             /** @var Borrowed $borrowed */
             $borrowed = $form->getData();
+            $customerId= $borrowed->getCustomer();
+            $customer = $entityManager->find(Customer::class,$customerId);
+            $customer->setHasBooks(true);
             /** @var BorrowedBooks $borrowedBook */
             foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
                 $borrowedBook->getBook()->setAvailable(false);
@@ -213,6 +217,20 @@ class BookController extends AbstractController
         $book->setImages($images);
         $entityManager->flush();
 
+        return $this->redirectToRoute('book_index');
+    }
+
+    /**
+     * @Route("/profile/book_delete/{id}", name="book_delete")
+     * @param Book $book
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteBook(Book $book, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($book);
+        $entityManager->flush();
+        $this->addFlash('success', 'Book deleted!');
         return $this->redirectToRoute('book_index');
     }
 }
