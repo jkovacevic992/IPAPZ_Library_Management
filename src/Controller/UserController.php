@@ -166,4 +166,18 @@ class UserController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/profile/employee_delete/{id}", name="employee_delete")
+     * @param User $user
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteUser(User $user, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($user);
+        $entityManager->flush();
+        $this->addFlash('success', 'Employee deleted!');
+        return $this->redirectToRoute('book_index');
+    }
 }

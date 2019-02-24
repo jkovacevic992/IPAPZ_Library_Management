@@ -43,10 +43,7 @@ class Book
      * @Assert\NotBlank()
      */
     private $author;
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     */
-    private $user;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Genre", inversedBy="book")
      *
@@ -168,21 +165,6 @@ class Book
         $this->author = $author;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param mixed $employee
-     */
-    public function setUser($user): void
-    {
-        $this->user = $user;
-    }
 
     /**
      * @return mixed
