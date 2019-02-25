@@ -11,8 +11,11 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Entity\Borrowed;
+use App\Entity\BorrowedBooks;
 use App\Entity\Customer;
+use App\Form\BorrowedFormType;
 use App\Repository\BorrowedRepository;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\HttpFoundation\Request;
@@ -107,6 +110,58 @@ class BorrowedController extends AbstractController
     {
         return $this->render('book/books_details.html.twig',[
             'borrowed' => $borrowed
+        ]);
+    }
+    /**
+     * @Route("/profile/edit_borrowed/{id}", name="edit_borrowed")
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Borrowed $borrowedId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function editBorrowed(Borrowed $borrowedId, Request $request, EntityManagerInterface $entityManager)
+    {
+
+        $borrowed = new Borrowed();
+        $borrowed->setBorrowDate(new \DateTime('now'));
+        $borrowed->setReturnDate($borrowedId->getReturnDate());
+        $form = $this->createForm(BorrowedFormType::class, $borrowed);
+
+            $form->handleRequest($request);
+
+        if ($this->isGranted('ROLE_USER') && $form->isSubmitted() ) {
+            /** @var Borrowed $borrowed */
+            $borrowed = $form->getData();
+
+            if($borrowed->getCustomer() !== $borrowedId->getCustomer()){
+                $borrowedId->getCustomer()->setHasBooks(false);
+            }
+            $customerId= $borrowed->getCustomer();
+            $customer = $entityManager->find(Customer::class,$customerId);
+            $customer->setHasBooks(true);
+
+            /** @var BorrowedBooks $borrowedBook */
+            foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
+                $borrowedBook->getBook()->setAvailable(false);
+                $borrowedId->addBorrowedBook($borrowedBook);
+            }
+
+            $borrowed->setId($borrowedId->getId());
+           $entityManager->merge($borrowed);
+            try{
+                $entityManager->flush();
+            }catch(DBALException $exception){
+                $this->addFlash('warning', 'Date fields cannot be empty!');
+                return $this->redirectToRoute('book_index');
+            }
+
+
+            $this->addFlash('success', 'Nice!');
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render('book/lend_book.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 

@@ -20,7 +20,10 @@
 
     </div>
 </nav>
+
     <h3>Books in the Library</h3>
+
+
     <table class="table table-striped">
         <thead>
         <tr>
@@ -41,10 +44,16 @@
             </tr>
         {% endfor %}
         </tbody>
+
     </table>
 
-    <div class="navbar">
-        {{ knp_pagination_render(books) }}
+
+    <div class="navigation">
+        {{ knp_pagination_render(books, 'book/pagination.html.twig') }}
     </div>
 
+
 {% endblock %}
+
+
+
