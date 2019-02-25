@@ -93,4 +93,25 @@ class GenreController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/profile/genre_delete/{id}", name="genre_delete")
+     * @param Genre $genre
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteGenre(Genre $genre, EntityManagerInterface $entityManager)
+    {
+ 
+        if($genre->getBook()[0]!==null){
+            $this->addFlash('warning', 'Some books are using this genre and it cannot be deleted! Sorry!');
+            return $this->redirectToRoute('book_index');
+        }else{
+            $entityManager->remove($genre);
+            $entityManager->flush();
+            $this->addFlash('success', 'Genre deleted!');
+            return $this->redirectToRoute('book_index');
+
+        }
+    }
+
 }

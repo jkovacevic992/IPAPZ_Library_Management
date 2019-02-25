@@ -9,6 +9,7 @@
                     <div class="card-body">
                         <h6 class="card-subtitle mt-2 text-muted">{{ genre.name }}</h6>
                         <a href="{{ path('edit_genre', {'id': genre.id}) }}" class="btn btn-primary">Edit</a>
+                        <br/><a href="{{ path('genre_delete', {'id': genre.id}) }}" class="btn btn-danger">Delete Genre</a>
 
                     </div>
                 </div>
