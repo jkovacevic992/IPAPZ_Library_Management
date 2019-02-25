@@ -7,6 +7,7 @@
  */
 
 namespace App\Controller;
+
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 
@@ -20,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 class UserController extends AbstractController
 {
     /**
@@ -35,6 +37,7 @@ class UserController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
+
     /**
      * @Route("admin/register", name="app_register")
      * @param Request $request
@@ -50,7 +53,8 @@ class UserController extends AbstractController
         GuardAuthenticatorHandler $guardHandler,
         AppCustomAuthenticator $authenticator,
         EntityManagerInterface $entityManager
-    ) {
+    )
+    {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -77,6 +81,7 @@ class UserController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/logout", name="app_logout")
      */
@@ -87,14 +92,13 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/users", name="users")
-
      * @param UserRepository $userRepository
      * @return Response
      */
     public function users(UserRepository $userRepository)
     {
 
-        $users = $userRepository->findBy(['admin'=> false]);
+        $users = $userRepository->findBy(['admin' => false]);
 
         return $this->render('employee/employees.html.twig', [
 
@@ -112,7 +116,7 @@ class UserController extends AbstractController
     {
 
 
-        return $this->render('employee/employee_view.html.twig',[
+        return $this->render('employee/employee_view.html.twig', [
             'user' => $user
         ]);
     }
@@ -125,14 +129,14 @@ class UserController extends AbstractController
      * @param UserPasswordEncoderInterface $passwordEncoder
      * * @return Response
      */
-    public function changeUser(User $userId, Request $request, EntityManagerInterface $entityManager,  UserPasswordEncoderInterface $passwordEncoder)
+    public function editUser(User $userId, Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder)
     {
 
         $form = $this->createForm(RegistrationFormType::class, $userId);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
-            $user = $entityManager->find(User::class, $userId->getId() );
-            if($userId->getEmail() === $form['email']->getData()){
+            $user = $entityManager->find(User::class, $userId->getId());
+            if ($userId->getEmail() === $form['email']->getData()) {
                 /** @var User $user */
                 $user->setFirstName($form['firstName']->getData());
                 $user->setLastName($form['lastName']->getData());
@@ -141,8 +145,8 @@ class UserController extends AbstractController
                         $user,
                         $form->get('plainPassword')->getData()
                     ));
-            }else{
-                $user= $form->getData();
+            } else {
+                $user = $form->getData();
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
                         $user,
@@ -153,16 +157,13 @@ class UserController extends AbstractController
             }
 
 
-
-
-
             $entityManager->flush();
 
             $this->addFlash('success', 'Employee edited!');
             return $this->redirectToRoute('book_index');
         }
 
-        return $this->render('employee/employee_change.html.twig',[
+        return $this->render('employee/employee_change.html.twig', [
             'form' => $form->createView()
         ]);
     }

@@ -75,7 +75,6 @@ class User implements UserInterface
     }
 
 
-
     public function getFullName()
     {
         return $this->getFirstName() . ' ' . $this->getLastName();
@@ -118,6 +117,14 @@ class User implements UserInterface
         return $this->id;
     }
 
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -137,7 +144,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -165,7 +172,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -173,14 +180,6 @@ class User implements UserInterface
         $this->password = $password;
 
         return $this;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
     }
 
     /**

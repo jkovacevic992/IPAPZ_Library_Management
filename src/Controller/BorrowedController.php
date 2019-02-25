@@ -17,7 +17,7 @@ use App\Form\BorrowedFormType;
 use App\Repository\BorrowedRepository;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Entity;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,7 +27,6 @@ class BorrowedController extends AbstractController
 {
     /**
      * @Route("/profile/borrowed_books", name="borrowed_books")
-
      * @param BorrowedRepository $borrowedRepository
      * @return Response
      */
@@ -42,7 +41,7 @@ class BorrowedController extends AbstractController
             'borrowed' => $borrowedBooks
 
         ]);
-}
+    }
 
     /**
      * @Route("/profile/return_books/{id}", name="return_books")
@@ -59,7 +58,7 @@ class BorrowedController extends AbstractController
 
         }
         $borrowedId->setActive(false);
-        $customer = $entityManager->find(Customer::class,$borrowedId->getCustomer());
+        $customer = $entityManager->find(Customer::class, $borrowedId->getCustomer());
         $customer->setHasBooks(false);
         $entityManager->merge($borrowedId);
         $entityManager->flush();
@@ -74,22 +73,22 @@ class BorrowedController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function returnSingleBook(Book $book, Borrowed $borrowedId,  EntityManagerInterface $entityManager)
+    public function returnSingleBook(Book $book, Borrowed $borrowedId, EntityManagerInterface $entityManager)
     {
         $book->setAvailable(true);
 
 
         $counter = 0;
-        foreach($borrowedId->getBorrowedBooks() as $singleBook){
-            if($singleBook->getBook()->getAvailable()===true){
+        foreach ($borrowedId->getBorrowedBooks() as $singleBook) {
+            if ($singleBook->getBook()->getAvailable() === true) {
                 $counter++;
 
             }
 
         }
-        if($counter === count($borrowedId->getBorrowedBooks())){
+        if ($counter === count($borrowedId->getBorrowedBooks())) {
             $borrowedId->setActive(false);
-            $customer = $entityManager->find(Customer::class,$borrowedId->getCustomer());
+            $customer = $entityManager->find(Customer::class, $borrowedId->getCustomer());
             $customer->setHasBooks(false);
 
         }
@@ -101,6 +100,7 @@ class BorrowedController extends AbstractController
 
 
     }
+
     /**
      * @Route("/profile/books_details/{id}", name="books_details")
      * @param Borrowed $borrowed
@@ -108,10 +108,11 @@ class BorrowedController extends AbstractController
      */
     public function booksDetails(Borrowed $borrowed)
     {
-        return $this->render('book/books_details.html.twig',[
+        return $this->render('book/books_details.html.twig', [
             'borrowed' => $borrowed
         ]);
     }
+
     /**
      * @Route("/profile/edit_borrowed/{id}", name="edit_borrowed")
      * @param Request $request
@@ -127,17 +128,17 @@ class BorrowedController extends AbstractController
         $borrowed->setReturnDate($borrowedId->getReturnDate());
         $form = $this->createForm(BorrowedFormType::class, $borrowed);
 
-            $form->handleRequest($request);
+        $form->handleRequest($request);
 
-        if ($this->isGranted('ROLE_USER') && $form->isSubmitted() ) {
+        if ($this->isGranted('ROLE_USER') && $form->isSubmitted()) {
             /** @var Borrowed $borrowed */
             $borrowed = $form->getData();
 
-            if($borrowed->getCustomer() !== $borrowedId->getCustomer()){
+            if ($borrowed->getCustomer() !== $borrowedId->getCustomer()) {
                 $borrowedId->getCustomer()->setHasBooks(false);
             }
-            $customerId= $borrowed->getCustomer();
-            $customer = $entityManager->find(Customer::class,$customerId);
+            $customerId = $borrowed->getCustomer();
+            $customer = $entityManager->find(Customer::class, $customerId);
             $customer->setHasBooks(true);
 
             /** @var BorrowedBooks $borrowedBook */
@@ -147,10 +148,10 @@ class BorrowedController extends AbstractController
             }
 
             $borrowed->setId($borrowedId->getId());
-           $entityManager->merge($borrowed);
-            try{
+            $entityManager->merge($borrowed);
+            try {
                 $entityManager->flush();
-            }catch(DBALException $exception){
+            } catch (DBALException $exception) {
                 $this->addFlash('warning', 'Date fields cannot be empty!');
                 return $this->redirectToRoute('book_index');
             }

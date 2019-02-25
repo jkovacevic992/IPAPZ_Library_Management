@@ -7,19 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     {% block stylesheets %}
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+              integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+              integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+              crossorigin="anonymous">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
     {% endblock %}
 </head>
 <style type="text/css">
-    body { background: #F3F3F3 !important; }
-    .navbar{
+    body {
+        background: #F3F3F3 !important;
+    }
+
+    .navbar {
         background: #EEEEEE !important;
     }
-    .card-body{
-        background: #EEEEEE !important;
-    }
+
+
+
     /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
 </style>
 <body>
@@ -39,75 +47,99 @@
             {% if is_granted('ROLE_ADMIN') %}
 
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         New
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ path('new_book') }}">Book</a>
-                        <a class="dropdown-item"  href="{{ path('new_genre') }}">Genre</a>
+                        <a class="dropdown-item" href="{{ path('new_genre') }}">Genre</a>
                         <a class="dropdown-item" href="{{ path('new_customer') }}">Customer</a>
                         <a class="dropdown-item" href="{{ path('app_register') }}">Employee</a>
 
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Books
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ path('lend_book') }}">Lend</a>
-                    <a class="dropdown-item"  href="{{ path('borrowed_books') }}">Return</a>
+                        <a class="dropdown-item" href="{{ path('lend_book') }}">Lend</a>
+                        <a class="dropdown-item" href="{{ path('borrowed_books') }}">Return</a>
 
                     </div>
                 </div>
-                <a class="nav-link" href="{{ path('genres') }}">Genres</a>
-                <a class="nav-link" href="{{ path('customers') }}">Customers</a>
-                <a class="nav-link" href="{{ path('users') }}">Employees</a>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        View
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ path('genres') }}">Genres</a>
+                        <a class="dropdown-item" href="{{ path('customers') }}">Customers</a>
+                        <a class="dropdown-item" href="{{ path('users') }}">Employees</a>
+
+
+                    </div>
+                </div>
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
             {% elseif is_granted('ROLE_USER') %}
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         New
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ path('new_book') }}">Book</a>
-                        <a class="dropdown-item"  href="{{ path('new_genre') }}">Genre</a>
+                        <a class="dropdown-item" href="{{ path('new_genre') }}">Genre</a>
                         <a class="dropdown-item" href="{{ path('new_customer') }}">Customer</a>
                         <a class="dropdown-item" href="{{ path('app_register') }}">Employee</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Books
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ path('lend_book') }}">Lend</a>
-                        <a class="dropdown-item"  href="{{ path('borrowed_books') }}">Return</a>
+                        <a class="dropdown-item" href="{{ path('borrowed_books') }}">Return</a>
 
                     </div>
                 </div>
-                <a class="nav-link" href="{{ path('genres') }}">Genres</a>
-                <a class="nav-link" href="{{ path('customers') }}">Customers</a>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        View
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ path('genres') }}">Genres</a>
+                        <a class="dropdown-item" href="{{ path('customers') }}">Customers</a>
+
+
+                    </div>
+                </div>
+
 
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_login') }}">Login</a>
-                    </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                </li>
 
             {% endif %}
         </ul>
 
     </div>
 </nav>
-<div class="container" >
-
+<div class="container">
 
 
     {% for message in app.flashes('success') %}
@@ -122,13 +154,13 @@
     {% endfor %}
 
     {% for message in app.flashes('warning') %}
-    <div class="row mt-3">
-        <div class="col">
-            <div class="alert alert-warning">
-                {{ message }}
+        <div class="row mt-3">
+            <div class="col">
+                <div class="alert alert-warning">
+                    {{ message }}
+                </div>
             </div>
         </div>
-    </div>
     {% endfor %}
 
     {% block body %}{% endblock %}
@@ -136,8 +168,12 @@
 
 {% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
 
 {% endblock %}

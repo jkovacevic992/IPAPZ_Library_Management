@@ -48,10 +48,8 @@ class GenreController extends AbstractController
     }
 
 
-
     /**
      * @Route("/profile/genres", name="genres")
-
      * @param GenreRepository $genreRepository
      * @return Response
      */
@@ -88,7 +86,7 @@ class GenreController extends AbstractController
             return $this->redirectToRoute('genres');
         }
 
-        return $this->render('genre/edit_genre.twig',[
+        return $this->render('genre/edit_genre.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -101,11 +99,11 @@ class GenreController extends AbstractController
      */
     public function deleteGenre(Genre $genre, EntityManagerInterface $entityManager)
     {
- 
-        if($genre->getBook()[0]!==null){
+
+        if ($genre->getBook()[0] !== null) {
             $this->addFlash('warning', 'Some books are using this genre and it cannot be deleted! Sorry!');
             return $this->redirectToRoute('book_index');
-        }else{
+        } else {
             $entityManager->remove($genre);
             $entityManager->flush();
             $this->addFlash('success', 'Genre deleted!');

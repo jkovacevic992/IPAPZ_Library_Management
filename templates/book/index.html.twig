@@ -2,24 +2,23 @@
 
 {% block body %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-            <p class="nav-link" >Library users: {{ totalCustomers }}</p>
-            <p class="nav-link" >Books in the library: {{ totalBooks }}</p>
-            <p class="nav-link">Available books: {{ availableBooks }}</p>
-            <p class="nav-link">Borrowed books: {{ allBorrowedBooks }}</p>
-        </ul>
-    </div>
-    <div class="navbar-collapse">
-        <ul class="navbar-nav ml-auto">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <p class="nav-link">Library users: {{ totalCustomers }}</p>
+                <p class="nav-link">Books in the library: {{ totalBooks }}</p>
+                <p class="nav-link">Available books: {{ availableBooks }}</p>
+                <p class="nav-link">Borrowed books: {{ allBorrowedBooks }}</p>
+            </ul>
+        </div>
+        <div class="navbar-collapse">
+            <ul class="navbar-nav ml-auto">
 
 
+            </ul>
 
-        </ul>
-
-    </div>
-</nav>
+        </div>
+    </nav>
 
     <h3>Books in the Library</h3>
 
@@ -36,7 +35,9 @@
         <tbody>
         {% for book in books %}
             <tr>
-                <td>{% if book.images != null %}<img style="max-height: 50px" src="../../uploads/images/{{ book.images[0]}}">{% endif %} {{ book.name }}</td>
+                <td>{% if book.images != null %}<img style="max-height: 50px"
+                                                     src="../../uploads/images/{{ book.images[0] }}">{% endif %} {{ book.name }}
+                </td>
                 <td>{{ book.author }}</td>
                 <td>{{ book.genre.name }}</td>
                 <td><a href="{{ path('book_view', {'id': book.id}) }}" class="card-link">Details</a></td>

@@ -7,6 +7,7 @@
  */
 
 namespace App\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -52,6 +53,11 @@ class Borrowed
      */
     private $active = true;
 
+    public function __construct()
+    {
+        $this->borrowedBooks = new ArrayCollection();
+    }
+
     /**
      * @return mixed
      */
@@ -67,12 +73,6 @@ class Borrowed
     {
         $this->active = $active;
     }
-    public function __construct()
-    {
-        $this->borrowedBooks = new ArrayCollection();
-    }
-
-
 
     /**
      * @return Collection
@@ -91,6 +91,7 @@ class Borrowed
         }
         return $this;
     }
+
     public function removeBorrowedBook(BorrowedBooks $borrowedBooks): self
     {
         if ($this->borrowedBooks->contains($borrowedBooks)) {
@@ -108,23 +109,24 @@ class Borrowed
     public function validate(ExecutionContextInterface $context)
     {
         $available = true;
-        if($this->borrowedBooks->count()===0){
-            $available=false;
+        if ($this->borrowedBooks->count() === 0) {
+            $available = false;
         }
 
         /** @var BorrowedBooks $borrowedBook */
-        foreach($this->borrowedBooks as $borrowedBook){
-            if($borrowedBook->getBook()===null){
-               $available=false;
+        foreach ($this->borrowedBooks as $borrowedBook) {
+            if ($borrowedBook->getBook() === null) {
+                $available = false;
             }
         }
-        if(!$available){
+        if (!$available) {
             $context->buildViolation('No available books.')
                 ->addViolation();
         }
 
 
     }
+
     /**
      * @return mixed
      */
@@ -172,7 +174,6 @@ class Borrowed
     {
         $this->returnDate = $returnDate;
     }
-
 
 
     /**

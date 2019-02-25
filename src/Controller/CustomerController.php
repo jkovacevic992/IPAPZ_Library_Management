@@ -9,8 +9,6 @@
 namespace App\Controller;
 
 
-
-
 use App\Entity\Customer;
 use App\Form\CustomerFormType;
 use App\Repository\CustomerRepository;
@@ -24,11 +22,8 @@ class CustomerController extends AbstractController
 {
 
 
-
-
     /**
      * @Route("/profile/customers", name="customers")
-
      * @param CustomerRepository $customerRepository
      * @return Response
      */
@@ -43,13 +38,14 @@ class CustomerController extends AbstractController
 
         ]);
     }
+
     /**
      * @Route("/profile/new_customer", name="new_customer")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function newCustomer( Request $request, EntityManagerInterface $entityManager)
+    public function newCustomer(Request $request, EntityManagerInterface $entityManager)
     {
 
         $form = $this->createForm(CustomerFormType::class);
@@ -66,7 +62,7 @@ class CustomerController extends AbstractController
             return $this->redirectToRoute('book_index');
         }
 
-        return $this->render('customer/new_customer.html.twig',[
+        return $this->render('customer/new_customer.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -80,7 +76,7 @@ class CustomerController extends AbstractController
     {
 
 
-        return $this->render('customer/view.html.twig',[
+        return $this->render('customer/view.html.twig', [
             'customer' => $customer
         ]);
     }
@@ -92,19 +88,19 @@ class CustomerController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * * @return Response
      */
-    public function changeInfo(Customer $customerId, Request $request, EntityManagerInterface $entityManager)
+    public function editCustomer(Customer $customerId, Request $request, EntityManagerInterface $entityManager)
     {
 
         $form = $this->createForm(CustomerFormType::class, $customerId);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
-            $customer = $entityManager->find(Customer::class, $customerId->getId() );
-            if($customerId->getEmail() === $form['email']->getData()){
-            /** @var Customer $customer */
-            $customer->setFirstName($form['firstName']->getData());
-            $customer->setLastName($form['lastName']->getData());
-            }else{
-                $customer= $form->getData();
+            $customer = $entityManager->find(Customer::class, $customerId->getId());
+            if ($customerId->getEmail() === $form['email']->getData()) {
+                /** @var Customer $customer */
+                $customer->setFirstName($form['firstName']->getData());
+                $customer->setLastName($form['lastName']->getData());
+            } else {
+                $customer = $form->getData();
                 $entityManager->persist($customer);
 
             }
@@ -116,7 +112,7 @@ class CustomerController extends AbstractController
             ]);
         }
 
-        return $this->render('customer/customer_change.html.twig',[
+        return $this->render('customer/customer_change.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -130,15 +126,15 @@ class CustomerController extends AbstractController
     public function deleteCustomer(Customer $customer, EntityManagerInterface $entityManager)
     {
 
-        if($customer->isHasBooks()===true){
+        if ($customer->isHasBooks() === true) {
             $this->addFlash('warning', 'Customer has not returned their books!');
             return $this->redirectToRoute('book_index');
-        }else{
+        } else {
             $entityManager->remove($customer);
             $entityManager->flush();
             $this->addFlash('success', 'Customer deleted!');
             return $this->redirectToRoute('book_index');
 
         }
-        }
+    }
 }

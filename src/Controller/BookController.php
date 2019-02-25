@@ -31,7 +31,6 @@ class BookController extends AbstractController
 {
 
 
-
     /**
      * @Route("/profile/new_book", name="new_book")
      * @param Request $request
@@ -60,7 +59,7 @@ class BookController extends AbstractController
 
 
             }
-            if($images !== null){
+            if ($images !== null) {
                 $book->setImages($images);
             }
 
@@ -76,7 +75,6 @@ class BookController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
 
 
     /**
@@ -96,8 +94,8 @@ class BookController extends AbstractController
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
             /** @var Borrowed $borrowed */
             $borrowed = $form->getData();
-            $customerId= $borrowed->getCustomer();
-            $customer = $entityManager->find(Customer::class,$customerId);
+            $customerId = $borrowed->getCustomer();
+            $customer = $entityManager->find(Customer::class, $customerId);
             $customer->setHasBooks(true);
             /** @var BorrowedBooks $borrowedBook */
             foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
@@ -201,13 +199,13 @@ class BookController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-        public function deleteBook(Book $book, EntityManagerInterface $entityManager)
+    public function deleteBook(Book $book, EntityManagerInterface $entityManager)
     {
 
-        if($book->getAvailable()===false){
+        if ($book->getAvailable() === false) {
             $this->addFlash('warning', 'Book has to be returned first.');
             return $this->redirectToRoute('book_index');
-        }else{
+        } else {
             $entityManager->remove($book);
             $entityManager->flush();
             $this->addFlash('success', 'Book deleted!');
@@ -231,7 +229,7 @@ class BookController extends AbstractController
         $availableBooks = $bookRepository->count(['available' => true]);
         $borrowedBooks = $bookRepository->count(['available' => false]);
         $books = $query->returnBooks($request);
-        return $this->render('book/index.html.twig',[
+        return $this->render('book/index.html.twig', [
             'books' => $books,
             'totalCustomers' => $customers,
             'totalBooks' => $bookNumber,

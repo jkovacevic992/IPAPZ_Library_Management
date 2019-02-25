@@ -7,14 +7,17 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-subtitle mt-2 text-muted">Customer: {{ borrowedBook.customer.firstName }} {{ borrowedBook.customer.lastName }} </h5>
+                        <h5 class="card-subtitle mt-2 text-muted">
+                            Customer: {{ borrowedBook.customer.firstName }} {{ borrowedBook.customer.lastName }} </h5>
                         {% for book in borrowedBook.borrowedBooks %}
                             {% if book.book.available == false %}
-                            <h6 class="card-subtitle mt-2 text-muted">{{ book.book.name }}  </h6>
+                                <h6 class="card-subtitle mt-2 text-muted">{{ book.book.name }}  </h6>
                             {% endif %}
                         {% endfor %}
-                        <a href="{{ path('books_details', {'id': borrowedBook.id}) }}" class="btn btn-primary">Details</a>
-                        <a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all books</a>
+                        <a href="{{ path('books_details', {'id': borrowedBook.id}) }}"
+                           class="btn btn-primary">Details</a>
+                        <a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all
+                            books</a>
                     </div>
                 </div>
             </div>
