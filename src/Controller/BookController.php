@@ -64,9 +64,6 @@ class BookController extends AbstractController
                 $book->setImages($images);
             }
 
-
-
-            $book->setUser($this->getUser());
             $entityManager->persist($book);
 
             $entityManager->flush();
