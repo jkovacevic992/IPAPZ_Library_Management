@@ -19,6 +19,7 @@ use App\Form\BorrowedFormType;
 
 use App\Repository\BookRepository;
 use App\Repository\CustomerRepository;
+use App\Service\BookService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,30 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BookController extends AbstractController
 {
-    /**
-     * @Route("/", name="book_index")
-     * @param BookRepository $bookRepository
-     * @param CustomerRepository $customerRepository
-     * @return Response
-     */
-    public function index(BookRepository $bookRepository, CustomerRepository $customerRepository)
-    {
 
-        $books = $bookRepository->findAll();
-        $customers = $customerRepository->findCustomers()[0][1];
-        $bookNumber = $bookRepository->findBooks()[0][1];
-        $availableBooks = $bookRepository->count(['available' => true]);
-        $borrowedBooks = $bookRepository->count(['available' => false]);
-
-        return $this->render('book/index.html.twig', [
-
-            'books' => $books,
-            'totalCustomers' => $customers,
-            'totalBooks' => $bookNumber,
-            'availableBooks' => $availableBooks,
-            'allBorrowedBooks' => $borrowedBooks
-        ]);
-    }
 
 
     /**
@@ -220,17 +198,41 @@ class BookController extends AbstractController
         return $this->redirectToRoute('book_index');
     }
 
+//    /**
+//     * @Route("/profile/book_delete/{id}", name="book_delete")
+//     * @param Book $book
+//     * @param EntityManagerInterface $entityManager
+//     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+//     */
+//    public function deleteBook(Book $book, EntityManagerInterface $entityManager)
+//    {
+//        $entityManager->remove($book);
+//        $entityManager->flush();
+//        $this->addFlash('success', 'Book deleted!');
+//        return $this->redirectToRoute('book_index');
+//    }
+
     /**
-     * @Route("/profile/book_delete/{id}", name="book_delete")
-     * @param Book $book
-     * @param EntityManagerInterface $entityManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/", methods={"GET","POST"}, name="book_index")
+     * @param BookService $query
+     * @param BookRepository $bookRepository
+     * @param CustomerRepository $customerRepository
+     * @param Request $request
+     * @return Response
      */
-    public function deleteBook(Book $book, EntityManagerInterface $entityManager)
+    public function listBookAction(Request $request, BookService $query, BookRepository $bookRepository, CustomerRepository $customerRepository)
     {
-        $entityManager->remove($book);
-        $entityManager->flush();
-        $this->addFlash('success', 'Book deleted!');
-        return $this->redirectToRoute('book_index');
+        $customers = $customerRepository->findCustomers()[0][1];
+        $bookNumber = $bookRepository->findBooks()[0][1];
+        $availableBooks = $bookRepository->count(['available' => true]);
+        $borrowedBooks = $bookRepository->count(['available' => false]);
+        $books = $query->returnBooks($request);
+        return $this->render('book/index.html.twig',[
+            'books' => $books,
+            'totalCustomers' => $customers,
+            'totalBooks' => $bookNumber,
+            'availableBooks' => $availableBooks,
+            'allBorrowedBooks' => $borrowedBooks
+        ]);
     }
 }
