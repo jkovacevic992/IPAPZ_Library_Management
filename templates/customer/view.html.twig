@@ -11,8 +11,8 @@
 
                 </div>
                 <p>{{ customer.email }}</p>
-                <a href="{{ path('customer_change', {'id': customer.id}) }}" class="card-link">Change info</a>
-                <a href="{{ path('customer_delete', {'id': customer.id}) }}" class="card-link">Delete Customer</a>
+                <a href="{{ path('customer_change', {'id': customer.id}) }}" class="btn btn-primary">Edit</a>
+                <a href="{{ path('customer_delete', {'id': customer.id}) }}" class="btn btn-danger">Delete Customer</a>
 
 
 

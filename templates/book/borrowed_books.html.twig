@@ -13,7 +13,7 @@
                             <h6 class="card-subtitle mt-2 text-muted">{{ book.book.name }}  </h6>
                             {% endif %}
                         {% endfor %}
-                        <a href="{{ path('books_details', {'id': borrowedBook.id}) }}" class="card-link">Details</a>
+                        <a href="{{ path('books_details', {'id': borrowedBook.id}) }}" class="btn btn-primary">Details</a>
                         <a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all books</a>
                     </div>
                 </div>

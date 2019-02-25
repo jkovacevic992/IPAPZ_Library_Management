@@ -195,19 +195,26 @@ class BookController extends AbstractController
         return $this->redirectToRoute('book_index');
     }
 
-//    /**
-//     * @Route("/profile/book_delete/{id}", name="book_delete")
-//     * @param Book $book
-//     * @param EntityManagerInterface $entityManager
-//     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-//     */
-//    public function deleteBook(Book $book, EntityManagerInterface $entityManager)
-//    {
-//        $entityManager->remove($book);
-//        $entityManager->flush();
-//        $this->addFlash('success', 'Book deleted!');
-//        return $this->redirectToRoute('book_index');
-//    }
+    /**
+     * @Route("/profile/book_delete/{id}", name="book_delete")
+     * @param Book $book
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+        public function deleteBook(Book $book, EntityManagerInterface $entityManager)
+    {
+
+        if($book->getAvailable()===false){
+            $this->addFlash('warning', 'Book has to be returned first.');
+            return $this->redirectToRoute('book_index');
+        }else{
+            $entityManager->remove($book);
+            $entityManager->flush();
+            $this->addFlash('success', 'Book deleted!');
+            return $this->redirectToRoute('book_index');
+
+        }
+    }
 
     /**
      * @Route("/", methods={"GET","POST"}, name="book_index")

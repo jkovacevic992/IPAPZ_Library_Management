@@ -26,7 +26,7 @@ class BorrowedBooks
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Book")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Book", inversedBy="borrowedBooks")
      */
     private $book;
 

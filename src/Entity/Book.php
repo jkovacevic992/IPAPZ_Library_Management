@@ -62,6 +62,11 @@ class Book
     private $images = [];
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\BorrowedBooks", mappedBy="book", cascade={"remove"})
+     */
+    private $borrowedBooks;
+
+    /**
      * @return mixed
      */
     public function getImages()
