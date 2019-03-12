@@ -22,6 +22,8 @@ use App\Repository\CustomerRepository;
 use App\Service\BookService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -88,7 +90,11 @@ class BookController extends AbstractController
     public function lendBook(Request $request, EntityManagerInterface $entityManager)
     {
         $borrowed = new Borrowed();
-        $borrowed->setBorrowDate(new \DateTime('now'));
+        try {
+            $borrowed->setBorrowDate(new \DateTime('now'));
+        }catch (\Exception $e){
+            $e->getMessage();
+        }
         $form = $this->createForm(BorrowedFormType::class, $borrowed);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
@@ -228,13 +234,68 @@ class BookController extends AbstractController
         $bookNumber = $bookRepository->findBooks()[0][1];
         $availableBooks = $bookRepository->count(['available' => true]);
         $borrowedBooks = $bookRepository->count(['available' => false]);
-        $books = $query->returnBooks($request);
+
+
+        $formSearch = $this->createFormBuilder(null)
+            ->add('query', TextareaType::class)
+            ->add('search', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ]
+            ])
+            ->getForm();
+        $formSearch->handleRequest($request);
+        if($formSearch->isSubmitted() && $formSearch->isValid()) {
+            $booksFind = $formSearch->getData();
+            $books = $bookRepository->findBy(['name' => $booksFind]);
+
+            return $this->render('book/index.html.twig', [
+                'form' => $formSearch->createView(),
+                'books' => $books,
+                'formSearch' => $formSearch->createView(),
+                'totalCustomers' => $customers,
+                'totalBooks' => $bookNumber,
+                'availableBooks' => $availableBooks,
+                'allBorrowedBooks' => $borrowedBooks
+            ]);
+        }else{
+            $books = $query->returnBooks($request);
+            return $this->render('book/index.html.twig', [
+                'books' => $books,
+                'totalCustomers' => $customers,
+                'totalBooks' => $bookNumber,
+                'availableBooks' => $availableBooks,
+                'allBorrowedBooks' => $borrowedBooks,
+                'formSearch' => $formSearch->createView()
+
+            ]);
+        }
+
+
+
+
+    }
+
+    public function searchBarAction(Request $request, BookRepository $bookRepository)
+    {
+        $formSearch = $this->createFormBuilder(null)
+            ->add('query', TextareaType::class)
+            ->add('search', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ]
+            ])
+            ->getForm();
+        $formSearch->handleRequest($request);
+        if($formSearch->isSubmitted() && $formSearch->isValid()) {
+            $booksFind = $formSearch->getData();
+            $books = $bookRepository->findBy(['name' => $booksFind]);
+        }
+
         return $this->render('book/index.html.twig', [
+            'form' => $formSearch->createView(),
             'books' => $books,
-            'totalCustomers' => $customers,
-            'totalBooks' => $bookNumber,
-            'availableBooks' => $availableBooks,
-            'allBorrowedBooks' => $borrowedBooks
+            'formSearch' => $formSearch->createView()
         ]);
     }
 }
