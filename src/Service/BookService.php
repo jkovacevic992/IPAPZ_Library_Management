@@ -40,4 +40,21 @@ class BookService
         );
         return ($results);
     }
+
+    public function returnFoundBooks($request, $name)
+    {
+        $em = $this->em;
+        $container = $this->container;
+
+        $query = $em->createQuery('SELECT b from App\Entity\Book b where b.name like :name or b.author like :name'
+        )
+        ->setParameter('name', '%'.$name.'%');
+        $paginator = $container->get('knp_paginator');
+        $results = $paginator->paginate(
+            $query,
+            $request->query->getInt('page',1),
+            $request->query->getInt('limit',10)
+        );
+        return ($results);
+    }
 }

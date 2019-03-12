@@ -22,6 +22,7 @@ use App\Repository\CustomerRepository;
 use App\Service\BookService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
@@ -237,7 +238,7 @@ class BookController extends AbstractController
 
 
         $formSearch = $this->createFormBuilder(null)
-            ->add('query', TextareaType::class)
+            ->add('query', SearchType::class)
             ->add('search', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary'
@@ -246,8 +247,8 @@ class BookController extends AbstractController
             ->getForm();
         $formSearch->handleRequest($request);
         if($formSearch->isSubmitted() && $formSearch->isValid()) {
-            $booksFind = $formSearch->getData();
-            $books = $bookRepository->findBy(['name' => $booksFind]);
+
+            $books = $query->returnFoundBooks($request,$formSearch->getData()['query']);
 
             return $this->render('book/index.html.twig', [
                 'form' => $formSearch->createView(),
