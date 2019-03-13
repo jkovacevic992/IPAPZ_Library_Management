@@ -139,7 +139,14 @@ class BookController extends AbstractController
         $form = $this->createForm(BookFormType::class, $book);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
+            $bookId = $form->getData();
+            foreach($book->getBookGenre() as $genre){
 
+                if(in_array($genre->getGenre(),  $bookId->getBookGenre())){
+                    $this->addFlash('warning', 'Book already belongs to that genre.');
+                    return $this->redirectToRoute('book_index');
+                }
+            }
             /** @var Book $book */
             $book = $form->getData();
             $images = [];
@@ -159,6 +166,8 @@ class BookController extends AbstractController
             }
 
             $book->setImages($images);
+
+
 
             $entityManager->flush();
 
