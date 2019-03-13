@@ -12,6 +12,7 @@ namespace App\Form;
 
 use App\Entity\Borrowed;
 use App\Entity\Customer;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -36,11 +37,11 @@ class BorrowedFormType extends AbstractType
                 'html5' => false,
                 'format' => 'dd.MM.yyyy.'
             ])
-            ->add('customer', EntityType::class,[
-                'class' => Customer::class,
-                'choice_label' => function($customer) {
-                    /** @var Customer $customer */
-                    return $customer->getFirstName() . ' ' . $customer->getLastName();
+            ->add('user', EntityType::class,[
+                'class' => User::class,
+                'choice_label' => function($user) {
+                    /** @var User $user */
+                    return $user->getFirstName() . ' ' . $user->getLastName();
                 },
 
 

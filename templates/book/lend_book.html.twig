@@ -5,7 +5,7 @@
 {% block body %}
     {{ form_start(form) }}
     {{ form_errors(form) }}
-    {{ form_row(form.customer) }}
+    {{ form_row(form.user) }}
     {{ form_row(form.borrowDate) }}
     {{ form_row(form.returnDate) }}
     <ul class="books" data-prototype="{{ form_widget(form.borrowedBooks.vars.prototype)|e('html_attr') }}">

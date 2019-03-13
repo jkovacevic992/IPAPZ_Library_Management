@@ -14,11 +14,13 @@ use App\Entity\Borrowed;
 use App\Entity\BorrowedBooks;
 
 use App\Entity\Customer;
+use App\Entity\User;
 use App\Form\BookFormType;
 use App\Form\BorrowedFormType;
 
 use App\Repository\BookRepository;
 use App\Repository\CustomerRepository;
+use App\Repository\UserRepository;
 use App\Service\BookService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,7 +37,7 @@ class BookController extends AbstractController
 
 
     /**
-     * @Route("/profile/new_book", name="new_book")
+     * @Route("/employee/new_book", name="new_book")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
@@ -81,7 +83,7 @@ class BookController extends AbstractController
 
 
     /**
-     * @Route("/profile/lend_book", name="lend_book")
+     * @Route("/employee/lend_book", name="lend_book")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -101,9 +103,9 @@ class BookController extends AbstractController
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
             /** @var Borrowed $borrowed */
             $borrowed = $form->getData();
-            $customerId = $borrowed->getCustomer();
-            $customer = $entityManager->find(Customer::class, $customerId);
-            $customer->setHasBooks(true);
+            $userId = $borrowed->getUser();
+            $user = $entityManager->find(User::class, $userId);
+            $user->setHasBooks(true);
             /** @var BorrowedBooks $borrowedBook */
             foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
                 $borrowedBook->getBook()->setAvailable(false);
@@ -122,7 +124,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/profile/edit_book/{id}", name="edit_book")
+     * @Route("/employee/edit_book/{id}", name="edit_book")
      * @param Book $bookId
      * @param Request $request
      * @param EntityManagerInterface $entityManager
@@ -204,7 +206,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/profile/book_delete/{id}", name="book_delete")
+     * @Route("/employee/book_delete/{id}", name="book_delete")
      * @param Book $book
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -228,13 +230,13 @@ class BookController extends AbstractController
      * @Route("/", methods={"GET","POST"}, name="book_index")
      * @param BookService $query
      * @param BookRepository $bookRepository
-     * @param CustomerRepository $customerRepository
+     * @param UserRepository $cuserRepository
      * @param Request $request
      * @return Response
      */
-    public function listBookAction(Request $request, BookService $query, BookRepository $bookRepository, CustomerRepository $customerRepository)
+    public function listBookAction(Request $request, BookService $query, BookRepository $bookRepository, UserRepository $userRepository)
     {
-        $customers = $customerRepository->findCustomers()[0][1];
+        $users = $userRepository->findUsers()[0][1];
         $bookNumber = $bookRepository->findBooks()[0][1];
         $availableBooks = $bookRepository->count(['available' => true]);
         $borrowedBooks = $bookRepository->count(['available' => false]);
@@ -257,7 +259,7 @@ class BookController extends AbstractController
                 'form' => $formSearch->createView(),
                 'books' => $books,
                 'formSearch' => $formSearch->createView(),
-                'totalCustomers' => $customers,
+                'totalUsers' => $users,
                 'totalBooks' => $bookNumber,
                 'availableBooks' => $availableBooks,
                 'allBorrowedBooks' => $borrowedBooks
@@ -266,7 +268,7 @@ class BookController extends AbstractController
             $books = $query->returnBooks($request);
             return $this->render('book/index.html.twig', [
                 'books' => $books,
-                'totalCustomers' => $customers,
+                'totalUsers' => $users,
                 'totalBooks' => $bookNumber,
                 'availableBooks' => $availableBooks,
                 'allBorrowedBooks' => $borrowedBooks,
@@ -280,26 +282,5 @@ class BookController extends AbstractController
 
     }
 
-    public function searchBarAction(Request $request, BookRepository $bookRepository)
-    {
-        $formSearch = $this->createFormBuilder(null)
-            ->add('query', TextareaType::class)
-            ->add('search', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary'
-                ]
-            ])
-            ->getForm();
-        $formSearch->handleRequest($request);
-        if($formSearch->isSubmitted() && $formSearch->isValid()) {
-            $booksFind = $formSearch->getData();
-            $books = $bookRepository->findBy(['name' => $booksFind]);
-        }
 
-        return $this->render('book/index.html.twig', [
-            'form' => $formSearch->createView(),
-            'books' => $books,
-            'formSearch' => $formSearch->createView()
-        ]);
-    }
 }

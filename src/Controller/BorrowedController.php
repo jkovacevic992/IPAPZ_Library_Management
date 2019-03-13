@@ -13,6 +13,7 @@ use App\Entity\Book;
 use App\Entity\Borrowed;
 use App\Entity\BorrowedBooks;
 use App\Entity\Customer;
+use App\Entity\User;
 use App\Form\BorrowedFormType;
 use App\Repository\BorrowedRepository;
 use Doctrine\DBAL\DBALException;
@@ -26,7 +27,7 @@ use Symfony\Component\HttpFoundation\Response;
 class BorrowedController extends AbstractController
 {
     /**
-     * @Route("/profile/borrowed_books", name="borrowed_books")
+     * @Route("/employee/borrowed_books", name="borrowed_books")
      * @param BorrowedRepository $borrowedRepository
      * @return Response
      */
@@ -44,7 +45,7 @@ class BorrowedController extends AbstractController
     }
 
     /**
-     * @Route("/profile/return_books/{id}", name="return_books")
+     * @Route("/employee/return_books/{id}", name="return_books")
      * @param Borrowed $borrowedId
      * @param EntityManagerInterface $entityManager
      * @return Response
@@ -58,8 +59,8 @@ class BorrowedController extends AbstractController
 
         }
         $borrowedId->setActive(false);
-        $customer = $entityManager->find(Customer::class, $borrowedId->getCustomer());
-        $customer->setHasBooks(false);
+        $user = $entityManager->find(User::class, $borrowedId->getUser());
+        $user->setHasBooks(false);
         $entityManager->merge($borrowedId);
         $entityManager->flush();
         $this->addFlash('success', 'Successfully returned all books!');
@@ -67,7 +68,7 @@ class BorrowedController extends AbstractController
     }
 
     /**
-     * @Route("/profile/return_single_book/{id}/{borrowedId}", name= "return_single_book")
+     * @Route("/employee/return_single_book/{id}/{borrowedId}", name= "return_single_book")
      * @param Book $book
      * @param Borrowed $borrowedId
      * @param EntityManagerInterface $entityManager
@@ -88,8 +89,8 @@ class BorrowedController extends AbstractController
         }
         if ($counter === count($borrowedId->getBorrowedBooks())) {
             $borrowedId->setActive(false);
-            $customer = $entityManager->find(Customer::class, $borrowedId->getCustomer());
-            $customer->setHasBooks(false);
+            $user = $entityManager->find(User::class, $borrowedId->getUser());
+            $user->setHasBooks(false);
 
         }
         $entityManager->merge($borrowedId);
@@ -102,7 +103,7 @@ class BorrowedController extends AbstractController
     }
 
     /**
-     * @Route("/profile/books_details/{id}", name="books_details")
+     * @Route("/employee/books_details/{id}", name="books_details")
      * @param Borrowed $borrowed
      * @return Response
      */
@@ -114,7 +115,7 @@ class BorrowedController extends AbstractController
     }
 
     /**
-     * @Route("/profile/edit_borrowed/{id}", name="edit_borrowed")
+     * @Route("/employee/edit_borrowed/{id}", name="edit_borrowed")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @param Borrowed $borrowedId
@@ -134,12 +135,12 @@ class BorrowedController extends AbstractController
             /** @var Borrowed $borrowed */
             $borrowed = $form->getData();
 
-            if ($borrowed->getCustomer() !== $borrowedId->getCustomer()) {
-                $borrowedId->getCustomer()->setHasBooks(false);
+            if ($borrowed->getUser() !== $borrowedId->getUser()) {
+                $borrowedId->getUser()->setHasBooks(false);
             }
-            $customerId = $borrowed->getCustomer();
-            $customer = $entityManager->find(Customer::class, $customerId);
-            $customer->setHasBooks(true);
+            $userId = $borrowed->getUser();
+            $user = $entityManager->find(User::class, $userId);
+            $user->setHasBooks(true);
 
             /** @var BorrowedBooks $borrowedBook */
             foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {

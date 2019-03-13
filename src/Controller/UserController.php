@@ -108,7 +108,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profile/view_employee/{id}", name="employee_view")
+     * @Route("/admin/view_employee/{id}", name="employee_view")
      * @param User $user
      * @return Response
      */
@@ -122,7 +122,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profile/employee_change/{id}", name="employee_change")
+     * @Route("/admin/employee_change/{id}", name="employee_change")
      * @param User $userId
      * @param Request $request
      * @param EntityManagerInterface $entityManager
@@ -169,7 +169,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profile/employee_delete/{id}", name="employee_delete")
+     * @Route("/admin/employee_delete/{id}", name="employee_delete")
      * @param User $user
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse

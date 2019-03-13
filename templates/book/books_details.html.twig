@@ -7,7 +7,7 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-subtitle mt-2 text-muted">Customer: {{ borrowed.customer.firstName }} {{ borrowed.customer.lastName }} </h5>
+                        <h5 class="card-subtitle mt-2 text-muted">Customer: {{ borrowed.user.firstName }} {{ borrowed.user.lastName }} </h5>
                         {% for book in borrowed.borrowedBooks %}
                             {% if book.book.available == false %}
                             <h6 class="card-subtitle mt-2 text-muted">{{ book.book.name }}  </h6>
