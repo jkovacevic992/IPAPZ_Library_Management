@@ -132,6 +132,9 @@
                 </li>
             {% elseif is_granted('ROLE_USER') %}
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ path('my_borrowed_books',{'id': app.user.id}) }}">My Borrowed Books</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
 

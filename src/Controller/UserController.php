@@ -8,6 +8,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Borrowed;
+use App\Entity\BorrowedBooks;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 
@@ -216,6 +218,33 @@ class UserController extends AbstractController
             ->getQuery()
             ->getResult();
         return $this->redirectToRoute('book_index');
+
+    }
+    /**
+     * @Route("/profile/my_borrowed_books/{id}", name="my_borrowed_books")
+     * @param User $user
+     * @return Response
+     */
+    public function usersBorrowedBooks(User $user)
+    {
+        $tmp = [];
+        $borrowed = $user->getBorrowed();
+
+        foreach($borrowed as $borrowedBooks){
+
+            $temp = $borrowedBooks->getBorrowedBooks();
+            foreach($temp as $borrowedBook){
+                $tmp[]= $borrowedBook->getBook();
+            }
+        }
+
+
+
+        return $this->render('user/my_borrowed_books.html.twig', [
+
+            'books' => $tmp
+
+        ]);
 
     }
 
