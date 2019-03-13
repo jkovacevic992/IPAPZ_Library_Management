@@ -100,13 +100,14 @@ class GenreController extends AbstractController
     public function deleteGenre(Genre $genre, EntityManagerInterface $entityManager)
     {
 
-        if ($genre->getBook()[0] !== null) {
-            $this->addFlash('warning', 'Some books are using this genre and it cannot be deleted! Sorry!');
-            return $this->redirectToRoute('book_index');
-        } else {
+        if ($genre->getBookGenre()[0] === null) {
             $entityManager->remove($genre);
             $entityManager->flush();
             $this->addFlash('success', 'Genre deleted!');
+            return $this->redirectToRoute('book_index');
+        } else {
+
+            $this->addFlash('warning', 'Some books are using this genre and it cannot be deleted! Sorry!');
             return $this->redirectToRoute('book_index');
 
         }

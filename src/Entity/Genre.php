@@ -34,10 +34,7 @@ class Genre
      *
      */
     private $name;
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="genre")
-     */
-    private $book;
+
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\BookGenre", mappedBy="genre", cascade={"remove"})
@@ -79,17 +76,9 @@ class Genre
     /**
      * @return mixed
      */
-    public function getBook()
+    public function getBookGenre()
     {
-        return $this->book;
-    }
-
-    /**
-     * @param mixed $book
-     */
-    public function setBook($book): void
-    {
-        $this->book = $book;
+        return $this->bookGenre;
     }
 
 

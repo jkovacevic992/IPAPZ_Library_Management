@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use MongoDB\BSON\Serializable;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Class Book
@@ -44,11 +45,6 @@ class Book
      */
     private $author;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Genre", inversedBy="book")
-     *
-     */
-    private $genre;
 
     /**
      * @ORM\Column(type="boolean")
@@ -70,6 +66,8 @@ class Book
      * @ORM\OneToMany(targetEntity="App\Entity\BookGenre", mappedBy="book", cascade={"persist","remove"})
      */
     private $bookGenre;
+
+
 
 
     public function __construct()
@@ -211,21 +209,6 @@ class Book
     }
 
 
-    /**
-     * @return mixed
-     */
-    public function getGenre()
-    {
-        return $this->genre;
-    }
-
-    /**
-     * @param mixed $genre
-     */
-    public function setGenre($genre): void
-    {
-        $this->genre = $genre;
-    }
 
 
 }

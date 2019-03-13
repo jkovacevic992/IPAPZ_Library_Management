@@ -6,9 +6,22 @@
     {{ form_start(form) }}
     {{ form_row(form.name) }}
     {{ form_row(form.author) }}
-    {{ form_row(form.genre) }}
+
     {{ form_row(form.images) }}
+    <ul class="genres" data-prototype="{{ form_widget(form.bookGenre.vars.prototype)|e('html_attr') }}">
+
+    {% for book in form.bookGenre %}
+        <li>{{ form_row(book.genre) }}</li>
+    {% endfor %}
+    </ul>
 
     <button class="btn" formnovalidate>Submit</button>
     {{ form_end(form) }}
 {% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/genres.js') }}"></script>
+{% endblock %}
+

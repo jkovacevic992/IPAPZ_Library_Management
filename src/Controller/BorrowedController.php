@@ -151,7 +151,7 @@ class BorrowedController extends AbstractController
             $entityManager->merge($borrowed);
             try {
                 $entityManager->flush();
-            } catch (DBALException $exception) {
+            } catch (\Exception $exception) {
                 $this->addFlash('warning', 'Date fields cannot be empty!');
                 return $this->redirectToRoute('book_index');
             }

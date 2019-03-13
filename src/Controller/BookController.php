@@ -130,8 +130,11 @@ class BookController extends AbstractController
      */
     public function editBook(Book $bookId, Request $request, EntityManagerInterface $entityManager)
     {
-
-        $form = $this->createForm(BookFormType::class, $bookId);
+        $book = new Book();
+        $book->setAuthor($bookId->getAuthor());
+        $book->setName($bookId->getName());
+        $book->setSummary($bookId->getSummary());
+        $form = $this->createForm(BookFormType::class, $book);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
             // $book = $entityManager->find(Book::class, $bookId->getId() );
