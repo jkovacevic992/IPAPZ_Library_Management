@@ -40,7 +40,13 @@
                                                      src="../../uploads/images/{{ book.images[0] }}">{% endif %} {{ book.name }}
                 </td>
                 <td>{{ book.author }}</td>
-                <td>{{ book.genre.name }}</td>
+                <td>
+                    {% for genre in book.bookGenre %}
+
+                            <h6 class="card-subtitle mt-2 text-muted">{{ genre.genre.name }}  </h6>
+
+                    {% endfor %}
+                </td>
                 <td><a href="{{ path('book_view', {'id': book.id}) }}" class="card-link">Details</a></td>
 
             </tr>

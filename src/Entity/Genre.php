@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Genre
  * @package App\Entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\GenreRepository")
  * @UniqueEntity("name")
  */
 class Genre
@@ -38,6 +38,11 @@ class Genre
      * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="genre")
      */
     private $book;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\BookGenre", mappedBy="genre", cascade={"remove"})
+     */
+    private $bookGenre;
 
     /**
      * @return mixed

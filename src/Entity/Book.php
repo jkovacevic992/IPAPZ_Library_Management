@@ -67,6 +67,46 @@ class Book
     private $borrowedBooks;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\BookGenre", mappedBy="book", cascade={"persist","remove"})
+     */
+    private $bookGenre;
+
+
+    public function __construct()
+    {
+        $this->bookGenre = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getBookGenre(): Collection
+    {
+        return $this->bookGenre;
+    }
+
+
+    public function addBookGenre(BookGenre $bookGenre): self
+    {
+        if (!$this->bookGenre->contains($bookGenre)) {
+            $bookGenre->setBook($this);
+            $this->bookGenre[] = $bookGenre;
+        }
+        return $this;
+    }
+
+    public function removeBookGenre(BookGenre $bookGenre): self
+    {
+        if ($this->bookGenre->contains($bookGenre)) {
+            $this->bookGenre->removeElement($bookGenre);
+            if ($bookGenre->getBook() === $this) {
+                $bookGenre->setBook(null);
+            }
+        }
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getImages()

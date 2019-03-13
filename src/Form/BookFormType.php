@@ -14,6 +14,7 @@ use App\Entity\Genre;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,11 +31,13 @@ class BookFormType extends AbstractType
         $builder
             ->add('name')
             ->add('author')
-            ->add('genre', EntityType::class,[
-                'class' => Genre::class,
-                'choice_label' => 'name'
-
-            ])
+            ->add('bookGenre', CollectionType::class, [
+                'entry_type' => BookGenreFormType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => false])
             ->add('summary')
             ->add('images', FileType::class,[
                 'required' => false,
