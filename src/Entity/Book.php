@@ -67,6 +67,11 @@ class Book
      */
     private $bookGenre;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Wishlist", mappedBy="book", cascade={"persist","remove"})
+     */
+    private $wishlist;
+
 
 
 

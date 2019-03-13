@@ -73,6 +73,46 @@ class User implements UserInterface
     private $employee = 0;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Wishlist", mappedBy="user", cascade={"persist","remove"})
+     */
+    private $wishlist;
+
+
+    public function __construct()
+    {
+        $this->wishlist = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getWishlist(): Collection
+    {
+        return $this->wishlist;
+    }
+
+
+    public function addWishlist(Wishlist $wishlist): self
+    {
+        if (!$this->wishlist->contains($wishlist)) {
+            $wishlist->setUser($this);
+            $this->wishlist[] = $wishlist;
+        }
+        return $this;
+    }
+
+    public function removeWishlist(Wishlist $wishlist): self
+    {
+        if ($this->wishlist->contains($wishlist)) {
+            $this->wishlist->removeElement($wishlist);
+            if ($wishlist->getUser() === $this) {
+                $wishlist->setUser(null);
+            }
+        }
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getEmployee()

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wishlist{% endblock %}
+
+{% block body %}
+
+
+    <h3>My Wishlist</h3>
+    {% for book in books %}
+    <div class="row mt-3">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mt-2 text-muted">{{ book.book.author }}</h6>
+                    <h6 class="card-text">{{ book.book.name }}</h6>
+                    <h6 class="card-text">Genres:
+                        {% for genre in book.book.bookGenre %}
+
+                            <h6 class="card-text">{{ genre.genre.name }}  </h6>
+
+                        {% endfor %}
+                    </h6>
+                   <a href="{{ path('remove_from_wishlist', {'id': book.id}) }}" class="btn btn-primary">Remove</a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}

@@ -33,4 +33,9 @@ class BookRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->where('b.available=true');
     }
+
+    public function getBooks()
+    {
+        return $this->createQueryBuilder('b');
+    }
 }

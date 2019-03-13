@@ -8,19 +8,24 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
 use App\Entity\Borrowed;
 use App\Entity\BorrowedBooks;
 use App\Entity\User;
+use App\Entity\Wishlist;
 use App\Form\RegistrationFormType;
 
+use App\Form\UserWishlistFormType;
 use App\Repository\UserRepository;
 use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -220,24 +225,24 @@ class UserController extends AbstractController
         return $this->redirectToRoute('book_index');
 
     }
+
     /**
-     * @Route("/profile/my_borrowed_books/{id}", name="my_borrowed_books")
+     * @Route("/profile/my_borrowed_books", name="my_borrowed_books")
      * @param User $user
      * @return Response
      */
-    public function usersBorrowedBooks(User $user)
+    public function usersBorrowedBooks(UserInterface $user)
     {
         $tmp = [];
         $borrowed = $user->getBorrowed();
 
-        foreach($borrowed as $borrowedBooks){
+        foreach ($borrowed as $borrowedBooks) {
 
             $temp = $borrowedBooks->getBorrowedBooks();
-            foreach($temp as $borrowedBook){
-                $tmp[]= $borrowedBook->getBook();
+            foreach ($temp as $borrowedBook) {
+                $tmp[] = $borrowedBook->getBook();
             }
         }
-
 
 
         return $this->render('user/my_borrowed_books.html.twig', [
@@ -248,4 +253,74 @@ class UserController extends AbstractController
 
     }
 
+    /**
+     * @Route("/profile/add_book/{id}", name="add_book")
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+
+
+    public function addBookToWishlist(UserInterface $user, Book $book, EntityManagerInterface $entityManager)
+    {
+
+        $wishlist = new Wishlist();
+        $wishlist->setUser($user);
+        $wishlist->setBook($book);
+        foreach ($user->getWishlist() as $existingWishlist){
+            if($existingWishlist->getBook() === $wishlist->getBook() && $existingWishlist->getUser() === $wishlist->getUser()){
+                $this->addFlash('warning', 'This book is already in your wish list!');
+                return $this->redirectToRoute('book_index');
+            }
+        }
+        $user->addWishlist($wishlist);
+
+        $entityManager->persist($user);
+
+        $entityManager->flush();
+
+
+        return $this->redirectToRoute('book_index');
+    }
+    /**
+     * @Route("/profile/remove_from_wishlist/{id}", name="remove_from_wishlist")
+     * @param EntityManagerInterface $entityManager
+     * @param Wishlist $wishlist
+     * @return RedirectResponse
+     */
+    public function removeFromWishlist(UserInterface $user, Wishlist $wishlist, EntityManagerInterface $entityManager)
+    {
+
+        $user->removeWishlist($wishlist);
+        $entityManager->merge($user);
+        $entityManager->flush();
+        $this->addFlash('success', 'Successfully removed the book from wish list!');
+        return $this->redirectToRoute('book_index');
+    }
+
+
+    /**
+     * @Route("/profile/my_wishlist", name="my_wishlist")
+     * @param User $user
+     * @return Response
+     */
+    public function usersWishlist(UserInterface $user)
+    {
+        $tmp = [];
+        $wishlist = $user->getWishlist();
+
+        foreach ($wishlist as $books) {
+
+            $tmp[] = $books;
+
+        }
+
+
+        return $this->render('user/wishlist.html.twig', [
+
+            'books' => $tmp
+
+        ]);
+
+
+    }
 }
