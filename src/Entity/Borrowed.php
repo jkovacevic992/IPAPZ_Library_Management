@@ -45,9 +45,9 @@ class Borrowed
      */
     private $borrowedBooks;
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="borrowed")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="borrowed")
      */
-    private $customer;
+    private $user;
     /**
      * @ORM\Column(type="boolean")
      */
@@ -179,17 +179,17 @@ class Borrowed
     /**
      * @return mixed
      */
-    public function getCustomer()
+    public function getUser()
     {
-        return $this->customer;
+        return $this->user;
     }
 
     /**
-     * @param mixed $customer
+     * @param mixed $user
      */
-    public function setCustomer($customer): void
+    public function setUser($user): void
     {
-        $this->customer = $customer;
+        $this->user = $user;
     }
 
 

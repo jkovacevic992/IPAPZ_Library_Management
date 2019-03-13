@@ -137,7 +137,7 @@ class BookController extends AbstractController
         $form = $this->createForm(BookFormType::class, $book);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
-            // $book = $entityManager->find(Book::class, $bookId->getId() );
+
             /** @var Book $book */
             $book = $form->getData();
             $images = [];

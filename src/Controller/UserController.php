@@ -39,7 +39,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("admin/register", name="app_register")
+     * @Route("/register", name="app_register")
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param GuardAuthenticatorHandler $guardHandler
@@ -181,4 +181,24 @@ class UserController extends AbstractController
         $this->addFlash('success', 'Employee deleted!');
         return $this->redirectToRoute('book_index');
     }
+
+    /**
+     * @Route("/admin/make_employee/{id}", name="make_employee")
+     * @param User $user
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function makeEmployee(User $user, EntityManagerInterface $entityManager)
+    {
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->update('App\Entity\User', 'u')
+            ->set('u.roles', '\'["ROLE_EMPLOYEE"]\'')
+            ->where('u.id = :id')
+            ->setParameter('id', $user->getId())
+            ->getQuery()
+            ->getResult();
+        return $this->redirectToRoute('book_index');
+
+    }
+
 }

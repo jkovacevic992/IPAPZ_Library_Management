@@ -14,6 +14,14 @@
                 <p>{{ user.email }}</p>
                 <a href="{{ path('employee_change', {'id': user.id}) }}" class="btn btn-primary">Edit</a>
                 <a href="{{ path('employee_delete', {'id': user.id}) }}" class="btn btn-danger">Delete Employee</a>
+                {% if not user.granted("ROLE_EMPLOYEE") %}
+
+                    <a href="{{ path('make_employee', {'id': user.id}) }}" class="btn btn-danger">Promote to Employee</a>
+                {% else%}
+                    <a href="{{ path('remove_employee', {'id': user.id}) }}" class="btn btn-danger">Demote</a>
+
+                {% endif %}
+
 
 
             </div>

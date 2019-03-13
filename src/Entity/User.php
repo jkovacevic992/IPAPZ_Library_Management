@@ -40,7 +40,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
      */
     private $email;
     /**
@@ -57,6 +57,48 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $admin = 0;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hasBooks = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Borrowed", mappedBy="user", cascade={"remove"})
+     */
+    private $borrowed;
+
+    /**
+     * @param mixed $hasBooks
+     */
+    public function setHasBooks($hasBooks): void
+    {
+        $this->hasBooks = $hasBooks;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHasBooks()
+    {
+        return $this->hasBooks;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBorrowed()
+    {
+        return $this->borrowed;
+    }
+
+    /**
+     * @param mixed $borrowed
+     */
+    public function setBorrowed($borrowed): void
+    {
+        $this->borrowed = $borrowed;
+    }
 
     /**
      * @return int
@@ -197,6 +239,11 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function isGranted($role)
+    {
+        return in_array($role, $this->getRoles());
     }
 
 
