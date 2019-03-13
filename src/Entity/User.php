@@ -67,6 +67,26 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Borrowed", mappedBy="user", cascade={"remove"})
      */
     private $borrowed;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $employee = 0;
+
+    /**
+     * @return mixed
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
+
+    /**
+     * @param mixed $employee
+     */
+    public function setEmployee($employee): void
+    {
+        $this->employee = $employee;
+    }
 
     /**
      * @param mixed $hasBooks

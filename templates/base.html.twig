@@ -79,6 +79,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ path('genres') }}">Genres</a>
                         <a class="dropdown-item" href="{{ path('users') }}">Users</a>
+                        <a class="dropdown-item" href="{{ path('employees') }}">Employees</a>
 
 
                     </div>
@@ -87,7 +88,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
-            {% elseif is_granted('ROLE_USER') %}
+            {% elseif is_granted('ROLE_EMPLOYEE') %}
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -129,7 +130,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
+            {% elseif is_granted('ROLE_USER') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                </li>
+
             {% else %}
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}">Login</a>
 
@@ -137,7 +144,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_register') }}">Registration</a>
                 </li>
-
             {% endif %}
         </ul>
 

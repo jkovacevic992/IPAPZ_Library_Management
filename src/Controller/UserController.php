@@ -98,7 +98,24 @@ class UserController extends AbstractController
     public function users(UserRepository $userRepository)
     {
 
-        $users = $userRepository->findBy(['admin' => false]);
+        $users = $userRepository->findBy(['admin' => false, 'employee' => false]);
+
+        return $this->render('user/users.html.twig', [
+
+            'users' => $users
+
+        ]);
+    }
+
+    /**
+     * @Route("/admin/employees", name="employees")
+     * @param UserRepository $userRepository
+     * @return Response
+     */
+    public function employees(UserRepository $userRepository)
+    {
+
+        $users = $userRepository->findBy(['employee' => 'true']);
 
         return $this->render('employee/employees.html.twig', [
 
@@ -193,6 +210,7 @@ class UserController extends AbstractController
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->update('App\Entity\User', 'u')
             ->set('u.roles', '\'["ROLE_EMPLOYEE"]\'')
+            ->set('u.employee', 1)
             ->where('u.id = :id')
             ->setParameter('id', $user->getId())
             ->getQuery()
