@@ -22,7 +22,7 @@ class GenreController extends AbstractController
 
 
     /**
-     * @Route("/profile/new_genre", name="new_genre")
+     * @Route("/employee/new_genre", name="new_genre")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -49,7 +49,7 @@ class GenreController extends AbstractController
 
 
     /**
-     * @Route("/profile/genres", name="genres")
+     * @Route("/employee/genres", name="genres")
      * @param GenreRepository $genreRepository
      * @return Response
      */
@@ -66,7 +66,7 @@ class GenreController extends AbstractController
     }
 
     /**
-     * @Route("/profile/edit_genre/{id}", name="edit_genre")
+     * @Route("/employee/edit_genre/{id}", name="edit_genre")
      * @param Genre $genreId
      * @param Request $request
      * @param EntityManagerInterface $entityManager
@@ -92,7 +92,7 @@ class GenreController extends AbstractController
     }
 
     /**
-     * @Route("/profile/genre_delete/{id}", name="genre_delete")
+     * @Route("/employee/genre_delete/{id}", name="genre_delete")
      * @param Genre $genre
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
