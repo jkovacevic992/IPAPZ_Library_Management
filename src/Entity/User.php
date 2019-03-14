@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity()
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"username"}, message="A user with that username already exists")
  */
 class User implements UserInterface
 {
@@ -27,10 +28,17 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $id;
+
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
+    private $username;
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     */
+
     private $firstName;
     /**
      * @ORM\Column(type="string")
@@ -77,11 +85,26 @@ class User implements UserInterface
      */
     private $wishlist;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reservation", mappedBy="user", cascade={"persist","remove"})
+     */
+    private $reservation;
+
 
     public function __construct()
     {
         $this->wishlist = new ArrayCollection();
+        $this->reservation = new ArrayCollection();
     }
+
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username): void
+    {
+        $this->username = $username;
+    }
+
 
     /**
      * @return Collection
@@ -107,6 +130,34 @@ class User implements UserInterface
             $this->wishlist->removeElement($wishlist);
             if ($wishlist->getUser() === $this) {
                 $wishlist->setUser(null);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReservation()
+    {
+        return $this->reservation;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservation->contains($reservation)) {
+            $reservation->setUser($this);
+            $this->reservation[] = $reservation;
+        }
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservation->contains($reservation)) {
+            $this->reservation->removeElement($reservation);
+            if ($reservation->getUser() === $this) {
+                $reservation->setUser(null);
             }
         }
         return $this;
@@ -246,7 +297,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string)$this->email;
+        return (string)$this->username;
     }
 
     /**

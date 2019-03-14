@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Book;
 
+use App\Entity\Reservation;
 use App\Entity\User;
 use App\Entity\Wishlist;
 use App\Form\RegistrationFormType;
@@ -19,6 +20,7 @@ use App\Repository\UserRepository;
 use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +29,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Validator\Constraints\Date;
 
 class UserController extends AbstractController
 {
@@ -228,7 +231,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/profile/my_borrowed_books", name="my_borrowed_books")
-     * @param User $user
+     * @param UserInterface $user
      * @return Response
      */
     public function usersBorrowedBooks(UserInterface $user)
@@ -322,5 +325,44 @@ class UserController extends AbstractController
         ]);
 
 
+    }
+
+    /**
+     * @Route("/profile/reserve_book/{id}", name="reserve_book")
+     * @param EntityManagerInterface $entityManager
+     * @param UserInterface $user
+     * @param Book $book
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function reserveBook(UserInterface $user, Book $book, EntityManagerInterface $entityManager)
+    {
+
+        $username = $user->getUsername();
+        $bookId = $book->getId();
+
+
+        $response = $this->redirectToRoute('book_index');
+
+
+        $reservation = new Reservation();
+        $reservation->setUser($user);
+        $reservation->setBook($book);
+        $reservation->setCreatedAt(new \DateTime('now'));
+
+        $user->addReservation($reservation);
+
+        $entityManager->persist($user);
+
+        $entityManager->flush();
+
+        $info = [
+            'username' => $username,
+            'book' => $bookId,
+            'reservation' => $reservation->getId()
+        ];
+        $cookie = new Cookie('reservationInfo', json_encode($info));
+        $response->headers->setCookie($cookie);
+        $this->addFlash('success', 'Reservation successful!');
+        return $response;
     }
 }

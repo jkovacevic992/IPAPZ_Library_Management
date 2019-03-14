@@ -86,6 +86,28 @@ class Book
     private $wishlist;
 
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Reservation", mappedBy="book", cascade={"persist","remove"})
+     */
+    private $reservation;
+
+
+    /**
+     * @return mixed
+     */
+    public function getReservation()
+    {
+        return $this->reservation;
+    }
+
+    /**
+     * @param mixed $reservation
+     */
+    public function setReservation($reservation): void
+    {
+        $this->reservation = $reservation;
+    }
+
 
 
     public function __construct()

@@ -14,6 +14,7 @@ use App\Entity\Borrowed;
 use App\Entity\BorrowedBooks;
 
 
+use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\BookFormType;
 use App\Form\BorrowedFormType;
@@ -22,6 +23,7 @@ use App\Repository\BookRepository;
 
 use App\Repository\UserRepository;
 use App\Service\BookService;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
@@ -30,6 +32,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 class BookController extends AbstractController
@@ -241,16 +244,30 @@ class BookController extends AbstractController
      * @Route("/", methods={"GET","POST"}, name="book_index")
      * @param BookService $query
      * @param BookRepository $bookRepository
-     * @param UserRepository $cuserRepository
+     * @param UserRepository $userRepository
+     * @param UserInterface $user
      * @param Request $request
      * @return Response
      */
-    public function listBookAction(Request $request, BookService $query, BookRepository $bookRepository, UserRepository $userRepository)
+    public function listBookAction(Request $request, BookService $query, BookRepository $bookRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
         $users = $userRepository->findUsers()[0][1];
         $bookNumber = $bookRepository->findBooks()[0][1];
         $availableBooks = $bookRepository->count(['available' => true]);
         $borrowedBooks = $bookRepository->count(['available' => false]);
+        $user = $this->getUser();
+
+
+        if(isset($_COOKIE['reservationInfo'])){
+            $data= json_decode($_COOKIE['reservationInfo']);
+            $bookId = $data->book;
+            $reservationId = $data->reservation;
+            $reservation = $entityManager->find(Reservation::class,$reservationId);
+            $book = $entityManager->find(Book::class,$bookId);
+            $username = $data->username;
+
+        }
+
 
 
         $formSearch = $this->createFormBuilder(null)
@@ -262,6 +279,20 @@ class BookController extends AbstractController
             ])
             ->getForm();
         $formSearch->handleRequest($request);
+
+        if($this->get('security.authorization_checker')->isGranted('ROLE_USER') && isset($_COOKIE['reservationInfo'])
+            && $username === $user->getUsername() && $this->checkBookAvailability($book,$user) ){
+            unset($_COOKIE['reservationInfo']);
+            setcookie('reservationInfo', '', time() - 3600, '/');
+            $user->removeReservation($reservation);
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('success',$book->getName() . ' is available.');
+
+        }
+
+
+
         if($formSearch->isSubmitted() && $formSearch->isValid()) {
 
             $books = $query->returnFoundBooks($request,$formSearch->getData()['query']);
@@ -273,7 +304,8 @@ class BookController extends AbstractController
                 'totalUsers' => $users,
                 'totalBooks' => $bookNumber,
                 'availableBooks' => $availableBooks,
-                'allBorrowedBooks' => $borrowedBooks
+                'allBorrowedBooks' => $borrowedBooks,
+
             ]);
         }else{
             $books = $query->returnBooks($request);
@@ -291,6 +323,24 @@ class BookController extends AbstractController
 
 
 
+    }
+
+    public function checkBookAvailability(Book $book, User $user)
+    {
+
+        $bookAvailable = false;
+        foreach($user->getReservation() as $reservation){
+            if($reservation->getBook() === $book){
+                $bookAvailable = true;
+                break;
+            }
+        }
+
+        if($book->getAvailable()===true && $bookAvailable)
+        {
+            return true;
+        }
+        return false;
     }
 
 
