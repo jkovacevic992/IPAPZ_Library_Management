@@ -11,9 +11,9 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use MongoDB\BSON\Serializable;
+
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 
 /**
  * Class Book
@@ -44,6 +44,12 @@ class Book
      * @Assert\NotBlank()
      */
     private $author;
+
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantity;
 
 
     /**
@@ -107,6 +113,22 @@ class Book
             }
         }
         return $this;
+    }
+
+    /**
+     * @param mixed $quantity
+     */
+    public function setQuantity($quantity): void
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 
     /**

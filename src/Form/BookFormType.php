@@ -44,6 +44,7 @@ class BookFormType extends AbstractType
                 'multiple' => true,
 
             ])
+            ->add('quantity')
 
 
         ;

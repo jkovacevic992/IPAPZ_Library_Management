@@ -13,20 +13,20 @@ use App\Entity\Book;
 use App\Entity\Borrowed;
 use App\Entity\BorrowedBooks;
 
-use App\Entity\Customer;
+
 use App\Entity\User;
 use App\Form\BookFormType;
 use App\Form\BorrowedFormType;
 
 use App\Repository\BookRepository;
-use App\Repository\CustomerRepository;
+
 use App\Repository\UserRepository;
 use App\Service\BookService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -132,23 +132,15 @@ class BookController extends AbstractController
      */
     public function editBook(Book $bookId, Request $request, EntityManagerInterface $entityManager)
     {
-        $book = new Book();
-        $book->setAuthor($bookId->getAuthor());
-        $book->setName($bookId->getName());
-        $book->setSummary($bookId->getSummary());
-        $form = $this->createForm(BookFormType::class, $book);
+
+
+        $form = $this->createForm(BookFormType::class, $bookId);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
-            $bookId = $form->getData();
-            foreach($book->getBookGenre() as $genre){
 
-                if(in_array($genre->getGenre(),  $bookId->getBookGenre())){
-                    $this->addFlash('warning', 'Book already belongs to that genre.');
-                    return $this->redirectToRoute('book_index');
-                }
-            }
             /** @var Book $book */
             $book = $form->getData();
+            $book->setId($bookId->getId());
             $images = [];
             $files = $request->files->get('book_form')['images'];
             $uploads_directory = $this->getParameter('images_directory');
@@ -168,7 +160,7 @@ class BookController extends AbstractController
             $book->setImages($images);
 
 
-
+            $entityManager->merge($book);
             $entityManager->flush();
 
             $this->addFlash('success', 'Book edited!');

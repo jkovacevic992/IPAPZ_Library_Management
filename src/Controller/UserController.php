@@ -9,8 +9,7 @@
 namespace App\Controller;
 
 use App\Entity\Book;
-use App\Entity\Borrowed;
-use App\Entity\BorrowedBooks;
+
 use App\Entity\User;
 use App\Entity\Wishlist;
 use App\Form\RegistrationFormType;
@@ -73,6 +72,7 @@ class UserController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
