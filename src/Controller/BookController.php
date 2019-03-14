@@ -257,15 +257,8 @@ class BookController extends AbstractController
         $borrowedBooks = $bookRepository->count(['available' => false]);
         $user = $this->getUser();
 
-
-        if(isset($_COOKIE['reservationInfo'])){
-            $data= json_decode($_COOKIE['reservationInfo']);
-            $bookId = $data->book;
-            $reservationId = $data->reservation;
-            $reservation = $entityManager->find(Reservation::class,$reservationId);
-            $book = $entityManager->find(Book::class,$bookId);
-            $username = $data->username;
-
+        if($this->get('security.authorization_checker')->isGranted('ROLE_USER') && $this->checkBookAvailability($user)){
+            $this->addFlash('success', 'One of your books is available!');
         }
 
 
@@ -279,17 +272,6 @@ class BookController extends AbstractController
             ])
             ->getForm();
         $formSearch->handleRequest($request);
-
-        if($this->get('security.authorization_checker')->isGranted('ROLE_USER') && isset($_COOKIE['reservationInfo'])
-            && $username === $user->getUsername() && $this->checkBookAvailability($book,$user) ){
-            unset($_COOKIE['reservationInfo']);
-            setcookie('reservationInfo', '', time() - 3600, '/');
-            $user->removeReservation($reservation);
-            $entityManager->persist($user);
-            $entityManager->flush();
-            $this->addFlash('success',$book->getName() . ' is available.');
-
-        }
 
 
 
@@ -325,21 +307,16 @@ class BookController extends AbstractController
 
     }
 
-    public function checkBookAvailability(Book $book, User $user)
+    public function checkBookAvailability(User $user)
     {
 
-        $bookAvailable = false;
+
         foreach($user->getReservation() as $reservation){
-            if($reservation->getBook() === $book){
-                $bookAvailable = true;
-                break;
+            if($reservation->getBook()->getAvailable()){
+                return true;
             }
         }
 
-        if($book->getAvailable()===true && $bookAvailable)
-        {
-            return true;
-        }
         return false;
     }
 

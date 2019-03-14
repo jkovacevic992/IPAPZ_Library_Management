@@ -337,10 +337,6 @@ class UserController extends AbstractController
     public function reserveBook(UserInterface $user, Book $book, EntityManagerInterface $entityManager)
     {
 
-        $username = $user->getUsername();
-        $bookId = $book->getId();
-
-
         $response = $this->redirectToRoute('book_index');
 
 
@@ -355,13 +351,7 @@ class UserController extends AbstractController
 
         $entityManager->flush();
 
-        $info = [
-            'username' => $username,
-            'book' => $bookId,
-            'reservation' => $reservation->getId()
-        ];
-        $cookie = new Cookie('reservationInfo', json_encode($info));
-        $response->headers->setCookie($cookie);
+
         $this->addFlash('success', 'Reservation successful!');
         return $response;
     }
