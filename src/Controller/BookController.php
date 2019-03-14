@@ -108,7 +108,11 @@ class BookController extends AbstractController
             $user->setHasBooks(true);
             /** @var BorrowedBooks $borrowedBook */
             foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
-                $borrowedBook->getBook()->setAvailable(false);
+//                $borrowedBook->getBook()->setAvailable(false);
+                $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity()-1);
+                if($borrowedBook->getBook()->getQuantity() === 0){
+                    $borrowedBook->getBook()->setAvailable(false);
+                }
             }
             $entityManager->persist($borrowed);
 

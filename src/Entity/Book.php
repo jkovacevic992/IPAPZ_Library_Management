@@ -48,6 +48,8 @@ class Book
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\GreaterThan(value="0")
+     * @Assert\NotBlank()
      */
     private $quantity;
 

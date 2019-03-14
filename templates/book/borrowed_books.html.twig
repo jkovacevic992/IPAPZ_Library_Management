@@ -10,9 +10,9 @@
                         <h5 class="card-subtitle mt-2 text-muted">
                             Customer: {{ borrowedBook.user.firstName }} {{ borrowedBook.user.lastName }} </h5>
                         {% for book in borrowedBook.borrowedBooks %}
-                            {% if book.book.available == false %}
+
                                 <h6 class="card-subtitle mt-2 text-muted">{{ book.book.name }}  </h6>
-                            {% endif %}
+
                         {% endfor %}
                         <a href="{{ path('books_details', {'id': borrowedBook.id}) }}"
                            class="btn btn-primary">Details</a>

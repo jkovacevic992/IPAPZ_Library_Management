@@ -55,7 +55,11 @@ class BorrowedController extends AbstractController
         /** Borrowed $borrowedId */
 
         foreach ($borrowedId->getBorrowedBooks() as $borrowedBook) {
-            $borrowedBook->getBook()->setAvailable(true);
+            $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity()+1);
+            if($borrowedBook->getBook()->getQuantity() > 0){
+                $borrowedBook->getBook()->setAvailable(true);
+            }
+
 
         }
         $borrowedId->setActive(false);
@@ -68,31 +72,27 @@ class BorrowedController extends AbstractController
     }
 
     /**
-     * @Route("/employee/return_single_book/{id}/{borrowedId}", name= "return_single_book")
+     * @Route("/employee/return_single_book/{id}/{borrowedId}/{borrowedBooks}", name= "return_single_book")
      * @param Book $book
      * @param Borrowed $borrowedId
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function returnSingleBook(Book $book, Borrowed $borrowedId, EntityManagerInterface $entityManager)
+    public function returnSingleBook(BorrowedBooks $borrowedBooks, Book $book, Borrowed $borrowedId, EntityManagerInterface $entityManager)
     {
-        $book->setAvailable(true);
-
-
-        $counter = 0;
-        foreach ($borrowedId->getBorrowedBooks() as $singleBook) {
-            if ($singleBook->getBook()->getAvailable() === true) {
-                $counter++;
-
-            }
-
+        $book->setQuantity($book->getQuantity()+1);
+        $borrowedId->removeBorrowedBook($borrowedBooks);
+        if($book->getQuantity() > 0){
+            $book->setAvailable(true);
         }
-        if ($counter === count($borrowedId->getBorrowedBooks())) {
+
+        $user = $entityManager->find(User::class, $borrowedId->getUser());
+
+        if(count($borrowedId->getBorrowedBooks()) === 0){
             $borrowedId->setActive(false);
-            $user = $entityManager->find(User::class, $borrowedId->getUser());
             $user->setHasBooks(false);
-
         }
+
         $entityManager->merge($borrowedId);
         $entityManager->merge($book);
         $entityManager->flush();
@@ -144,7 +144,11 @@ class BorrowedController extends AbstractController
 
             /** @var BorrowedBooks $borrowedBook */
             foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
-                $borrowedBook->getBook()->setAvailable(false);
+                $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity()-1);
+                if($borrowedBook->getBook()->getQuantity()===0){
+                    $borrowedBook->getBook()->setAvailable(false);
+                }
+
                 $borrowedId->addBorrowedBook($borrowedBook);
             }
 
