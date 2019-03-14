@@ -53,6 +53,11 @@ class Book
      */
     private $quantity;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $borrowedQuantity = 0;
+
 
     /**
      * @ORM\Column(type="boolean")
@@ -86,6 +91,23 @@ class Book
     public function __construct()
     {
         $this->bookGenre = new ArrayCollection();
+
+    }
+
+    /**
+     * @param mixed $borrowedQuantity
+     */
+    public function setBorrowedQuantity($borrowedQuantity): void
+    {
+        $this->borrowedQuantity = $borrowedQuantity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBorrowedQuantity()
+    {
+        return $this->borrowedQuantity;
     }
 
     /**

@@ -108,7 +108,7 @@ class BookController extends AbstractController
             $user->setHasBooks(true);
             /** @var BorrowedBooks $borrowedBook */
             foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
-//                $borrowedBook->getBook()->setAvailable(false);
+                $borrowedBook->getBook()->setBorrowedQuantity($borrowedBook->getBook()->getBorrowedQuantity()+1);
                 $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity()-1);
                 if($borrowedBook->getBook()->getQuantity() < 0){
                     $this->addFlash('warning', $borrowedBook->getBook()->getName() .' is not available in so many copies.');
@@ -224,16 +224,17 @@ class BookController extends AbstractController
     public function deleteBook(Book $book, EntityManagerInterface $entityManager)
     {
 
-        if ($book->getAvailable() === false) {
-            $this->addFlash('warning', 'Book has to be returned first.');
+
+        if ($book->getAvailable() === false || $book->getBorrowedQuantity() > 0) {
+            $this->addFlash('warning', 'All copies of the book have to be returned first!');
             return $this->redirectToRoute('book_index');
-        } else {
+        }
             $entityManager->remove($book);
             $entityManager->flush();
             $this->addFlash('success', 'Book deleted!');
             return $this->redirectToRoute('book_index');
 
-        }
+
     }
 
     /**

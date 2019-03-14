@@ -56,6 +56,7 @@ class BorrowedController extends AbstractController
 
         foreach ($borrowedId->getBorrowedBooks() as $borrowedBook) {
             $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity()+1);
+            $borrowedBook->getBook()->setBorrowedQuantity($borrowedBook->getBook()->getBorrowedQuantity()-1);
             if($borrowedBook->getBook()->getQuantity() > 0){
                 $borrowedBook->getBook()->setAvailable(true);
             }
@@ -81,6 +82,7 @@ class BorrowedController extends AbstractController
     public function returnSingleBook(BorrowedBooks $borrowedBooks, Book $book, Borrowed $borrowedId, EntityManagerInterface $entityManager)
     {
         $book->setQuantity($book->getQuantity()+1);
+        $book->setBorrowedQuantity($book->getBorrowedQuantity()-1);
         $borrowedId->removeBorrowedBook($borrowedBooks);
         if($book->getQuantity() > 0){
             $book->setAvailable(true);
@@ -144,6 +146,7 @@ class BorrowedController extends AbstractController
 
             /** @var BorrowedBooks $borrowedBook */
             foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
+                $borrowedBook->getBook()->setBorrowedQuantity($borrowedBook->getBook()->getBorrowedQuantity()+1);
                 $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity()-1);
                 if($borrowedBook->getBook()->getQuantity()===0){
                     $borrowedBook->getBook()->setAvailable(false);
