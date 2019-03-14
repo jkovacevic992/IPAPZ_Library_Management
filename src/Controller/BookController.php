@@ -110,6 +110,11 @@ class BookController extends AbstractController
             foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
 //                $borrowedBook->getBook()->setAvailable(false);
                 $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity()-1);
+                if($borrowedBook->getBook()->getQuantity() < 0){
+                    $this->addFlash('warning', $borrowedBook->getBook()->getName() .' is not available in so many copies.');
+                    return $this->redirectToRoute('book_index');
+                    break;
+                }
                 if($borrowedBook->getBook()->getQuantity() === 0){
                     $borrowedBook->getBook()->setAvailable(false);
                 }
