@@ -368,7 +368,8 @@ class UserController extends AbstractController
 
     public function calculateLateFee($borrowedId, $book, EntityManagerInterface $entityManager)
     {
-
+        $time = $book->getBorrowed()->getReturnDate();
+        if($time < new \DateTime('now')){
         $fee = date_diff(new \DateTime('now'), $book->getBorrowed()->getReturnDate());
         $fee = $fee->d*2;
         $qb = $entityManager->createQueryBuilder();
@@ -379,5 +380,6 @@ class UserController extends AbstractController
             ->setParameter('fee', $fee)
             ->getQuery()
             ->execute();
+    }
     }
 }
