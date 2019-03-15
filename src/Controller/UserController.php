@@ -10,6 +10,8 @@ namespace App\Controller;
 
 use App\Entity\Book;
 
+use App\Entity\Borrowed;
+use App\Entity\BorrowedBooks;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Entity\Wishlist;
@@ -234,15 +236,22 @@ class UserController extends AbstractController
      * @param UserInterface $user
      * @return Response
      */
-    public function usersBorrowedBooks(UserInterface $user)
+    public function usersBorrowedBooks(UserInterface $user, EntityManagerInterface $entityManager)
     {
         $tmp = [];
+        $lateFee = [];
         $borrowed = $user->getBorrowed();
+
 
         foreach ($borrowed as $borrowedBooks) {
 
             $temp = $borrowedBooks->getBorrowedBooks();
+
             foreach ($temp as $borrowedBook) {
+
+                $this->calculateLateFee($borrowedBook->getBorrowed()->getId(),$borrowedBook, $entityManager );
+                $lateFee[] = $borrowedBook->getLateFee();
+
                 $tmp[] = $borrowedBook->getBook();
             }
         }
@@ -355,5 +364,20 @@ class UserController extends AbstractController
 
         $this->addFlash('success', 'Reservation successful!');
         return $response;
+    }
+
+    public function calculateLateFee($borrowedId, $book, EntityManagerInterface $entityManager)
+    {
+
+        $fee = date_diff(new \DateTime('now'), $book->getBorrowed()->getReturnDate());
+        $fee = $fee->d*2;
+        $qb = $entityManager->createQueryBuilder();
+        $qb->update('App\Entity\BorrowedBooks','b')
+            ->set('b.lateFee', ':fee' )
+            ->where('b.borrowed = :book')
+            ->setParameter('book', $borrowedId)
+            ->setParameter('fee', $fee)
+            ->getQuery()
+            ->execute();
     }
 }
