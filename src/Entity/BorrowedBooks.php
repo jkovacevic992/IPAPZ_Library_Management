@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class BorrowedBooks
  * @package App\Entity
  * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
  */
 class BorrowedBooks
 {
@@ -34,6 +35,36 @@ class BorrowedBooks
      * @ORM\ManyToOne(targetEntity="App\Entity\Borrowed", inversedBy="borrowedBooks")
      */
     private $borrowed;
+
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function onPrePersist()
+    {
+        $this->createdAt = new \DateTime('now');
+    }
 
     /**
      * @return mixed

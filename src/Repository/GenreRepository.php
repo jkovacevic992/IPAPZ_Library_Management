@@ -22,6 +22,17 @@ class GenreRepository extends ServiceEntityRepository
 
     public function getAvailableGenres()
     {
-        return $this->createQueryBuilder('g');
+        return $this->createQueryBuilder('g')
+            ->orderBy('g.name', 'ASC');
     }
+
+    public function findGenresAscName()
+    {
+        return $this->createQueryBuilder('g')
+            ->orderBy('g.name','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 }

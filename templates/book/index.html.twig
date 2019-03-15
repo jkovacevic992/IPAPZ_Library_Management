@@ -22,6 +22,55 @@
         </div>
     </nav>
     {{ form(formSearch) }}
+<div class="row">
+<aside class="col-lg-2">
+    <div class="block-content">
+        <h3>Genres</h3>
+        <ul>
+            {% for genre in genres %}
+            <li><a href="{{ path('book_index') }}?genre={{ genre.name }}" class="card-link">{{ genre.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</aside>
+    <section class="col-lg-9">
+        {% if topBooks != null %}
+        <h3>Top Books Last Week</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Book</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Details</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for book in topBooks %}
+                <tr>
+                    <td>{% if book[0].images != null %}<img style="max-height: 50px"
+                                                         src="../../uploads/images/{{ book[0].images[0] }}">
+                        {% endif %}
+                        {{ book[0].name }}
+                    </td>
+                    <td>{{ book[0].author }}</td>
+                    <td>
+                        {% for genre in book[0].bookGenre %}
+
+                            <h6 class="card-subtitle mt-2 text-muted">{{ genre.genre.name }}  </h6>
+
+                        {% endfor %}
+                    </td>
+                    <td><a href="{{ path('book_view', {'id': book[0].id}) }}" class="card-link">Details</a></td>
+
+                </tr>
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+        {% endif %}
     <h3>Books in the Library</h3>
 
 
@@ -60,7 +109,8 @@
     <div class="navigation">
         {{ knp_pagination_render(books, 'book/pagination.html.twig') }}
     </div>
-
+    </section>
+</div>
 
 {% endblock %}
 

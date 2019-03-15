@@ -57,4 +57,31 @@ class BookService
         );
         return ($results);
     }
+
+    public function returnBooksByGenre($request,$genre)
+    {
+        $em = $this->em;
+        $container = $this->container;
+
+        $query = $em->createQuery('SELECT b
+        FROM App\Entity\Book b
+        INNER JOIN App\Entity\BookGenre as bg
+                  
+        INNER JOIN App\Entity\Genre as g
+                 
+
+        WHERE g.name = :genre
+        and b.id= bg.book
+        and g.id= bg.genre'
+        )
+
+            ->setParameter('genre', $genre);
+        $paginator = $container->get('knp_paginator');
+        $results = $paginator->paginate(
+            $query,
+            $request->query->getInt('page',1),
+            $request->query->getInt('limit',10)
+        );
+        return ($results);
+    }
 }

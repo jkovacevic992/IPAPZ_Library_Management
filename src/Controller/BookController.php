@@ -21,6 +21,7 @@ use App\Form\BorrowedFormType;
 
 use App\Repository\BookRepository;
 
+use App\Repository\GenreRepository;
 use App\Repository\UserRepository;
 use App\Service\BookService;
 use Doctrine\ORM\EntityManager;
@@ -245,17 +246,32 @@ class BookController extends AbstractController
      * @param BookService $query
      * @param BookRepository $bookRepository
      * @param UserRepository $userRepository
+     * @param EntityManagerInterface $entityManager
+     * @param GenreRepository $genreRepository
      * @param Request $request
      * @return Response
      */
-    public function listBookAction(Request $request, BookService $query, BookRepository $bookRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function listBookAction(Request $request, BookService $query, BookRepository $bookRepository, UserRepository $userRepository, EntityManagerInterface $entityManager, GenreRepository $genreRepository)
     {
+        $genres = $genreRepository->findGenresAscName();
         $users = $userRepository->findUsers()[0][1];
         $bookNumber = $bookRepository->findBooks()[0][1];
         $availableBooks = $bookRepository->count(['available' => true]);
         $borrowedBooks = $bookRepository->count(['available' => false]);
         $user = $this->getUser();
         $book = $this->checkBookAvailability($user, $entityManager);
+
+        $topBooks = $entityManager->createQuery('SELECT b, count(bb.book)
+        FROM App\Entity\Book b
+        INNER JOIN App\Entity\BorrowedBooks as bb
+        where bb.createdAt <= :endWeek
+        and b.id=bb.book
+        group by b
+        order by count(bb.book) desc
+        ')
+        ->setMaxResults(5)
+            ->setParameter('endWeek', new \DateTime('now +7 day'))
+        ->getResult();
 
         if($this->get('security.authorization_checker')->isGranted('ROLE_USER') && $book !== false){
 
@@ -265,7 +281,9 @@ class BookController extends AbstractController
 
 
         $formSearch = $this->createFormBuilder(null)
-            ->add('query', SearchType::class)
+            ->add('query', SearchType::class, [
+                'label' => false
+            ])
             ->add('search', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary'
@@ -288,17 +306,27 @@ class BookController extends AbstractController
                 'totalBooks' => $bookNumber,
                 'availableBooks' => $availableBooks,
                 'allBorrowedBooks' => $borrowedBooks,
+                'genres' => $genres,
+                'topBooks' => null
 
             ]);
         }else{
-            $books = $query->returnBooks($request);
+            if(isset($_GET['genre'])){
+                $books = $query->returnBooksByGenre($request, $_GET['genre']);
+                $topBooks = null;
+            }else{
+                $books = $query->returnBooks($request);
+            }
+
             return $this->render('book/index.html.twig', [
                 'books' => $books,
                 'totalUsers' => $users,
                 'totalBooks' => $bookNumber,
                 'availableBooks' => $availableBooks,
                 'allBorrowedBooks' => $borrowedBooks,
-                'formSearch' => $formSearch->createView()
+                'genres' => $genres,
+                'formSearch' => $formSearch->createView(),
+                'topBooks' => $topBooks
 
             ]);
         }
@@ -308,21 +336,22 @@ class BookController extends AbstractController
 
     }
 
-    public function checkBookAvailability(User $user, EntityManagerInterface $entityManager)
+    public function checkBookAvailability($user, EntityManagerInterface $entityManager)
     {
 
-
-        foreach($user->getReservation() as $reservation){
-            if($reservation->getBook()->getAvailable()){
-                /** @var Reservation $reservation $book */
-               $book = $reservation->getBook();
-               $book->setNotification(false);
-               $user->removeReservation($reservation);
-               $reservation->setBook(null);
-               $entityManager->persist($user);
-               $entityManager->persist($reservation);
-               $entityManager->flush();
-               return $book;
+        if($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            foreach ($user->getReservation() as $reservation) {
+                if ($reservation->getBook()->getAvailable()) {
+                    /** @var Reservation $reservation $book */
+                    $book = $reservation->getBook();
+                    $book->setNotification(false);
+                    $user->removeReservation($reservation);
+                    $reservation->setBook(null);
+                    $entityManager->persist($user);
+                    $entityManager->persist($reservation);
+                    $entityManager->flush();
+                    return $book;
+                }
             }
         }
 

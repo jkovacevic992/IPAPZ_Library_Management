@@ -38,4 +38,18 @@ class BookRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('b');
     }
+
+    public function getTopBooks()
+    {
+        return $this->createQueryBuilder('b')
+            ->select('bb.id')
+            ->innerJoin('b.borrowedBooks', 'bb')
+            ->where('bb.createdAt <= :endWeek')
+            ->andWhere('bb.book = b.id')
+            ->setParameter('endWeek', new \DateTime('now +7 day'))
+            ->setMaxResults(5)
+            ->orderBy('count(bb.createdAt)','desc')
+            ->getQuery()
+            ->getResult();
+    }
 }
