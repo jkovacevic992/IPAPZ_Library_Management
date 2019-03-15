@@ -54,7 +54,9 @@ class BorrowedController extends AbstractController
     {
         /** Borrowed $borrowedId */
 
+
         foreach ($borrowedId->getBorrowedBooks() as $borrowedBook) {
+            $borrowedId->removeBorrowedBook($borrowedBook);
             $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity()+1);
             $borrowedBook->getBook()->setBorrowedQuantity($borrowedBook->getBook()->getBorrowedQuantity()-1);
             if($borrowedBook->getBook()->getQuantity() > 0){

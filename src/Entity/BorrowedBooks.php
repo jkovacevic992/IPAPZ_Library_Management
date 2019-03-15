@@ -43,6 +43,27 @@ class BorrowedBooks
     private $createdAt;
 
     /**
+     * @ORM\Column(type="decimal", precision=7,scale=2)
+     */
+    private $lateFee = 0;
+
+    /**
+     * @param mixed $lateFee
+     */
+    public function setLateFee($lateFee): void
+    {
+        $this->lateFee = $lateFee;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLateFee()
+    {
+        return $this->lateFee;
+    }
+
+    /**
      * @return mixed
      */
     public function getCreatedAt()

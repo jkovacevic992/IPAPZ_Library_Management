@@ -30,6 +30,11 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $membership = false;
+
+    /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
@@ -95,6 +100,23 @@ class User implements UserInterface
     {
         $this->wishlist = new ArrayCollection();
         $this->reservation = new ArrayCollection();
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getMembership()
+    {
+        return $this->membership;
+    }
+
+    /**
+     * @param mixed $membership
+     */
+    public function setMembership($membership): void
+    {
+        $this->membership = $membership;
     }
 
     /**

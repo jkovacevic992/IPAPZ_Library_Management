@@ -259,19 +259,9 @@ class BookController extends AbstractController
         $availableBooks = $bookRepository->count(['available' => true]);
         $borrowedBooks = $bookRepository->count(['available' => false]);
         $user = $this->getUser();
-        $book = $this->checkBookAvailability($user, $entityManager);
+       $book = $this->checkBookAvailability($user, $entityManager);
+        $topBooks = $bookRepository->getTopBooks();
 
-        $topBooks = $entityManager->createQuery('SELECT b, count(bb.book)
-        FROM App\Entity\Book b
-        INNER JOIN App\Entity\BorrowedBooks as bb
-        where bb.createdAt <= :endWeek
-        and b.id=bb.book
-        group by b
-        order by count(bb.book) desc
-        ')
-        ->setMaxResults(5)
-            ->setParameter('endWeek', new \DateTime('now +7 day'))
-        ->getResult();
 
         if($this->get('security.authorization_checker')->isGranted('ROLE_USER') && $book !== false){
 
@@ -315,7 +305,7 @@ class BookController extends AbstractController
                 $books = $query->returnBooksByGenre($request, $_GET['genre']);
                 $topBooks = null;
             }else{
-                $books = $query->returnBooks($request);
+                    $books = $query->returnBooks($request);
             }
 
             return $this->render('book/index.html.twig', [

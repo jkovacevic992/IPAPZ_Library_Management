@@ -31,7 +31,11 @@ class BookRepository extends ServiceEntityRepository
     public function getAvailableBooks()
     {
         return $this->createQueryBuilder('b')
+            ->select('b')
+            ->addSelect('r')
+            ->leftJoin('b.reservation','r')
             ->where('b.available=true');
+
     }
 
     public function getBooks()
@@ -42,14 +46,18 @@ class BookRepository extends ServiceEntityRepository
     public function getTopBooks()
     {
         return $this->createQueryBuilder('b')
-            ->select('bb.id')
+            ->select('b')
+            ->addSelect('count(bb.book)')
             ->innerJoin('b.borrowedBooks', 'bb')
             ->where('bb.createdAt <= :endWeek')
             ->andWhere('bb.book = b.id')
+            ->groupBy('b')
             ->setParameter('endWeek', new \DateTime('now +7 day'))
             ->setMaxResults(5)
-            ->orderBy('count(bb.createdAt)','desc')
+            ->orderBy('count(bb.book)','desc')
             ->getQuery()
             ->getResult();
     }
+
+
 }
