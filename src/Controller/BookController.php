@@ -245,7 +245,6 @@ class BookController extends AbstractController
      * @param BookService $query
      * @param BookRepository $bookRepository
      * @param UserRepository $userRepository
-     * @param UserInterface $user
      * @param Request $request
      * @return Response
      */
@@ -256,9 +255,11 @@ class BookController extends AbstractController
         $availableBooks = $bookRepository->count(['available' => true]);
         $borrowedBooks = $bookRepository->count(['available' => false]);
         $user = $this->getUser();
+        $book = $this->checkBookAvailability($user, $entityManager);
 
-        if($this->get('security.authorization_checker')->isGranted('ROLE_USER') && $this->checkBookAvailability($user)){
-            $this->addFlash('success', 'One of your books is available!');
+        if($this->get('security.authorization_checker')->isGranted('ROLE_USER') && $book !== false){
+
+            $this->addFlash('success', $book->getName(). ' is available!');
         }
 
 
@@ -307,13 +308,21 @@ class BookController extends AbstractController
 
     }
 
-    public function checkBookAvailability(User $user)
+    public function checkBookAvailability(User $user, EntityManagerInterface $entityManager)
     {
 
 
         foreach($user->getReservation() as $reservation){
             if($reservation->getBook()->getAvailable()){
-                return true;
+                /** @var Reservation $reservation $book */
+               $book = $reservation->getBook();
+               $book->setNotification(false);
+               $user->removeReservation($reservation);
+               $reservation->setBook(null);
+               $entityManager->persist($user);
+               $entityManager->persist($reservation);
+               $entityManager->flush();
+               return $book;
             }
         }
 

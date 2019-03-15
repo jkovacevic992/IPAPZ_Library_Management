@@ -91,6 +91,27 @@ class Book
      */
     private $reservation;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $notification = false;
+
+
+    /**
+     * @return mixed
+     */
+    public function getNotification()
+    {
+        return $this->notification;
+    }
+
+    /**
+     * @param mixed $notification
+     */
+    public function setNotification($notification): void
+    {
+        $this->notification = $notification;
+    }
 
     /**
      * @return mixed

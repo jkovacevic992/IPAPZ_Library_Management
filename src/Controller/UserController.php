@@ -344,9 +344,10 @@ class UserController extends AbstractController
         $reservation->setUser($user);
         $reservation->setBook($book);
         $reservation->setCreatedAt(new \DateTime('now'));
-
+        $book->setNotification(true);
         $user->addReservation($reservation);
 
+        $entityManager->persist($book);
         $entityManager->persist($user);
 
         $entityManager->flush();
