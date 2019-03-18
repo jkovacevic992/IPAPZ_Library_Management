@@ -54,6 +54,23 @@ class PaypalTransaction
     private $amount;
 
     /**
+     * @param mixed $amount
+     */
+    public function setAmount($amount): void
+    {
+        $this->amount = $amount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+
+    /**
      * @return mixed
      */
     public function getUser()

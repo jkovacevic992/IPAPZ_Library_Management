@@ -7,24 +7,30 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-subtitle mt-2 text-muted">{{ book.author }}</h6>
-                        <h6 class="card-text">{{ book.name }}</h6>
-                        <h6 class="card-text">Genres:
-                            {% for genre in book.bookGenre %}
+        {% for borrowedBook in book.borrowedBooks %}
 
-                                <h6 class="card-text">{{ genre.genre.name }}  </h6>
+                            <h6 class="card-subtitle mt-2 text-muted">{{ borrowedBook.book.author }}</h6>
+                            <h6 class="card-text">{{ borrowedBook.book.name }}</h6>
 
-                            {% endfor %}
-                        </h6>
+
+
+
+        {% endfor %}
                         <h6 class="card-text">Late Fee:
-                            {{ lateFee[book.id] }} USD
+                        {{ lateFee[book.id] }} USD
 
 
 
                         </h6>
+
+                        <a href="{{ path('paypal') }}" class="btn btn-primary ">Pay</a>
+
+
                     </div>
                 </div>
             </div>
         </div>
+
+
     {% endfor %}
 {% endblock %}

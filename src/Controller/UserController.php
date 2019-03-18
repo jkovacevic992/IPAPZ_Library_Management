@@ -19,6 +19,7 @@ use App\Entity\Wishlist;
 use App\Form\RegistrationFormType;
 
 use App\Form\UserWishlistFormType;
+use App\Repository\BorrowedRepository;
 use App\Repository\UserRepository;
 use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,6 +35,9 @@ use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Exception\PayPalConnectionException;
 use PayPal\Rest\ApiContext;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -248,32 +252,34 @@ class UserController extends AbstractController
      * @param UserInterface $user
      * @return Response
      */
-    public function usersBorrowedBooks(UserInterface $user)
+    public function usersBorrowedBooks(EntityManagerInterface $entityManager,Request $request, UserInterface $user, BorrowedRepository $borrowedRepository)
     {
-        $tmp = [];
+
         $lateFee = [];
-        $borrowed = $user->getBorrowed();
+        $borrowed = $borrowedRepository->findBy(['user' => $user->getId(), 'active' => true]);
+
 
 
         foreach ($borrowed as $borrowedBooks) {
 
-            $temp = $borrowedBooks->getBorrowedBooks();
+            $time = $borrowedBooks->getReturnDate();
+            $timeDiff = date_diff(new \DateTime('now'), $time)->d ;
+            if($time < new \DateTime('now')) {
+                $lateFee[$borrowedBooks->getId()] = sprintf("%.2f",$timeDiff* 0.5 * count($borrowedBooks->getBorrowedBooks()));
 
-            foreach ($temp as $borrowedBook) {
-
-
-                $lateFee[$borrowedBook->getBook()->getId()] = $this->calculateLateFee($borrowedBook);
-
-                $tmp[] = $borrowedBook->getBook();
-
-
+            }else{
+                $lateFee[$borrowedBooks->getId()] = sprintf("%.2f",0);
             }
+
+
         }
+
+
 
 
         return $this->render('user/my_borrowed_books.html.twig', [
 
-            'books' => $tmp,
+            'books' => $borrowed,
             'lateFee' => $lateFee
 
 

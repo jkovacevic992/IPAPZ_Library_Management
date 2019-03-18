@@ -28,7 +28,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class PaypalTransactionController extends AbstractController
 {
 
-    public function paypalApi()
+    public static function paypalApi()
     {
         $api = new ApiContext(
             new OAuthTokenCredential(
@@ -82,7 +82,7 @@ class PaypalTransactionController extends AbstractController
 
         try{
 
-            $payment->create($this->paypalApi());
+            $payment->create(self::paypalApi());
 
             $hash = md5($payment->getId());
             $_SESSION ['paypal_hash'] = $hash;
@@ -92,6 +92,7 @@ class PaypalTransactionController extends AbstractController
             $paypalTransaction->setHash($hash);
             $paypalTransaction->setComplete(0);
             $paypalTransaction->setPayment($payment->getId());
+            $paypalTransaction->setAmount($totalAmount);
             $entityManager->persist($paypalTransaction);
             $entityManager->flush();
 
@@ -109,7 +110,7 @@ class PaypalTransactionController extends AbstractController
 
 
         }
-        return $this->redirect($redirectUrl);
+        return self::redirect($redirectUrl);
     }
 
     /**
@@ -131,12 +132,12 @@ class PaypalTransactionController extends AbstractController
                     ->getResult();
 
 
-                $payment = Payment::get($paymentId[0]['payment'], $this->paypalApi());
+                $payment = Payment::get($paymentId[0]['payment'], self::paypalApi());
 
                 $execution = new PaymentExecution();
                 $execution->setPayerId($payerId);
 
-                $payment->execute($execution, $this->paypalApi());
+                $payment->execute($execution, self::paypalApi());
 
                 $entityManager->createQueryBuilder()
                     ->update('App\Entity\PaypalTransaction', 'p')
