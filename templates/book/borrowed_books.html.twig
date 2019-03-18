@@ -10,7 +10,7 @@
                         <h5 class="card-subtitle mt-2 text-muted">
                             User: {{ borrowedBook.user.firstName }} {{ borrowedBook.user.lastName }} </h5>
                         <h5 class="card-subtitle mt-2 text-muted">Days Late: {{ daysLate[borrowedBook.id] }} </h5>
-                        <h5 class="card-subtitle mt-2 text-muted">Fee: {{ lateFee[borrowedBook.id] }} HRK</h5>
+                        <h5 class="card-subtitle mt-2 text-muted">Fee: {{ lateFee[borrowedBook.id] }} USD</h5>
                         <h5 class="card-subtitle mt-2 text-muted">Books:</h5>
                         <ul>
                         {% for book in borrowedBook.borrowedBooks %}

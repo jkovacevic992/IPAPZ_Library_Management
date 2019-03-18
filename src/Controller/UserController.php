@@ -386,7 +386,7 @@ class UserController extends AbstractController
     {
         $time = $book->getBorrowed()->getReturnDate();
         if($time < new \DateTime('now')){
-        $fee = date_diff(new \DateTime('now'), $book->getBorrowed()->getReturnDate())->d*2;
+        $fee = date_diff(new \DateTime('now'), $book->getBorrowed()->getReturnDate())->d*0.5;
 
 
         return $fee;
@@ -399,134 +399,7 @@ class UserController extends AbstractController
 
 
 
-    /**
-     * @Route("/profile/paypal", name="paypal")
-     */
-    public function payment(EntityManagerInterface $entityManager, UserInterface $user)
-    {
-        $api = new ApiContext(
-            new OAuthTokenCredential(
-                'AZP_hxOHbXw1VmplKx7E99xQKF6tyd2L6NTOHHpOOVUAvovo3XpOdzgd4EABOSJLaf6-iJw9XB5M2bEt',
-                'ENRfCoA3NIKRcVzevi8xqFSza7LV2j6HKIIroDBmBkVIXVQn5QMfr3VwS9W9n90V209gF-pNnYR5bF74'
-            )
-        );
 
-        $api->setConfig([
-            'mode' => 'sandbox',
-            'http.ConnectionTimeOut' => 30,
-            'log.LogEnabled' => false,
-            'log.File' => '',
-            'log.LogLevel' => 'FINE',
-            'validation.level' => 'log'
-        ]);
-
-        $payer = new Payer();
-        $details = new Details();
-        $amount = new Amount();
-        $transaction = new Transaction();
-        $payment = new Payment();
-        $redirectUrls = new RedirectUrls();
-
-        $payer->setPaymentMethod('paypal');
-
-
-        $details->setShipping('2.00')
-            ->setTax('0.00')
-            ->setSubtotal('5.00');
-
-        $amount->setCurrency('USD')
-            ->setTotal('7.00')
-            ->setDetails($details);
-
-        $transaction->setAmount($amount)
-            ->setDescription('Membership');
-
-        $payment->setIntent('sale')
-            ->setPayer($payer)
-            ->setTransactions([$transaction]);
-
-        $redirectUrls->setReturnUrl('http://zavrsni.inchoo4u.net/index.php/profile/pay?approved=true')
-            ->setCancelUrl('http://zavrsni.inchoo4u.net/index.php/index.php/profile/pay?approved=false');
-
-        $payment->setRedirectUrls($redirectUrls);
-
-        try{
-
-            $payment->create($api);
-
-            $hash = md5($payment->getId());
-            $_SESSION ['paypal_hash'] = $hash;
-
-            $paypalTransaction = new PaypalTransaction();
-            $paypalTransaction->setUser($user);
-            $paypalTransaction->setHash($hash);
-            $paypalTransaction->setComplete(0);
-            $paypalTransaction->setPayment($payment->getId());
-            $entityManager->persist($paypalTransaction);
-            $entityManager->flush();
-
-
-        }catch(PayPalConnectionException $e){
-            $e->getMessage();
-        }
-
-
-        foreach($payment->getLinks() as $link){
-
-            if($link->getRel() === 'approval_url'){
-                $redirectUrl = $link->getHref();
-            }
-
-
-        }
-        return $this->redirect($redirectUrl);
-    }
-
-    /**
-     * @Route("/profile/pay", name="pay")
-     * @param EntityManagerInterface $entityManager
-     * @return Response
-     */
-    public function pay(EntityManagerInterface $entityManager)
-    {
-        $api = new ApiContext(
-            new OAuthTokenCredential(
-                'AZP_hxOHbXw1VmplKx7E99xQKF6tyd2L6NTOHHpOOVUAvovo3XpOdzgd4EABOSJLaf6-iJw9XB5M2bEt',
-                'ENRfCoA3NIKRcVzevi8xqFSza7LV2j6HKIIroDBmBkVIXVQn5QMfr3VwS9W9n90V209gF-pNnYR5bF74'
-            )
-        );
-
-        $api->setConfig([
-            'mode' => 'sandbox',
-            'http.ConnectionTimeOut' => 30,
-            'log.LogEnabled' => false,
-            'log.File' => '',
-            'log.LogLevel' => 'FINE',
-            'validation.level' => 'log'
-        ]);
-        if(isset($_GET['approved'])){
-            $approved = $_GET['approved'] === 'true';
-
-            if($approved){
-                $payerId = $_GET['PayerID'];
-
-                $paymentId = $entityManager->createQuery('select p.payment from App\Entity\PaypalTransaction p where p.hash=:hash')
-                ->setParameter('hash', $_SESSION['paypal_hash'])
-                ->getResult();
-
-
-                $payment = Payment::get($paymentId[0]['payment'], $api);
-
-                $execution = new PaymentExecution();
-                $execution->setPayerId($payerId);
-
-                $payment->execute($execution, $api);
-                return $this->render('paypal/success.html.twig');
-            }else{
-               return  $this->render('paypal/cancelled.html.twig');
-            }
-        }
-    }
 
 
 }

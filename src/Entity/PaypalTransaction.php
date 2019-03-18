@@ -49,6 +49,11 @@ class PaypalTransaction
     private $complete;
 
     /**
+     * @ORM\Column(type="float")
+     */
+    private $amount;
+
+    /**
      * @return mixed
      */
     public function getUser()
