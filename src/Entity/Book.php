@@ -96,6 +96,14 @@ class Book
      */
     private $notification = false;
 
+    /**
+     * @return mixed
+     */
+    public function getBorrowedBooks()
+    {
+        return $this->borrowedBooks;
+    }
+
 
     /**
      * @return mixed

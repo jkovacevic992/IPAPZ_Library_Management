@@ -236,7 +236,7 @@ class UserController extends AbstractController
      * @param UserInterface $user
      * @return Response
      */
-    public function usersBorrowedBooks(UserInterface $user, EntityManagerInterface $entityManager)
+    public function usersBorrowedBooks(UserInterface $user)
     {
         $tmp = [];
         $lateFee = [];
@@ -249,17 +249,21 @@ class UserController extends AbstractController
 
             foreach ($temp as $borrowedBook) {
 
-                $this->calculateLateFee($borrowedBook->getBorrowed()->getId(),$borrowedBook, $entityManager );
-                $lateFee[] = $borrowedBook->getLateFee();
+
+                $lateFee[$borrowedBook->getBook()->getId()] = $this->calculateLateFee($borrowedBook);
 
                 $tmp[] = $borrowedBook->getBook();
+
+
             }
         }
 
 
         return $this->render('user/my_borrowed_books.html.twig', [
 
-            'books' => $tmp
+            'books' => $tmp,
+            'lateFee' => $lateFee
+
 
         ]);
 
@@ -366,20 +370,15 @@ class UserController extends AbstractController
         return $response;
     }
 
-    public function calculateLateFee($borrowedId, $book, EntityManagerInterface $entityManager)
+    public function calculateLateFee($book)
     {
         $time = $book->getBorrowed()->getReturnDate();
         if($time < new \DateTime('now')){
-        $fee = date_diff(new \DateTime('now'), $book->getBorrowed()->getReturnDate());
-        $fee = $fee->d*2;
-        $qb = $entityManager->createQueryBuilder();
-        $qb->update('App\Entity\BorrowedBooks','b')
-            ->set('b.lateFee', ':fee' )
-            ->where('b.borrowed = :book')
-            ->setParameter('book', $borrowedId)
-            ->setParameter('fee', $fee)
-            ->getQuery()
-            ->execute();
+        $fee = date_diff(new \DateTime('now'), $book->getBorrowed()->getReturnDate())->d*2;
+
+
+        return $fee;
+
     }
     }
 }

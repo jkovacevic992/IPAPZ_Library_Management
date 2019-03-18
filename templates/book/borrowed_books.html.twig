@@ -8,7 +8,9 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-subtitle mt-2 text-muted">
-                            Customer: {{ borrowedBook.user.firstName }} {{ borrowedBook.user.lastName }} </h5>
+                            User: {{ borrowedBook.user.firstName }} {{ borrowedBook.user.lastName }} </h5>
+                        <h5 class="card-subtitle mt-2 text-muted">Late: </h5>
+                        <h5 class="card-subtitle mt-2 text-muted">Fee: {{ lateFee[borrowedBook.id] }} HRK</h5>
                         {% for book in borrowedBook.borrowedBooks %}
 
                                 <h6 class="card-subtitle mt-2 text-muted">{{ book.book.name }}  </h6>
