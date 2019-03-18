@@ -9,17 +9,19 @@
                     <div class="card-body">
                         <h5 class="card-subtitle mt-2 text-muted">
                             User: {{ borrowedBook.user.firstName }} {{ borrowedBook.user.lastName }} </h5>
-                        <h5 class="card-subtitle mt-2 text-muted">Late: </h5>
+                        <h5 class="card-subtitle mt-2 text-muted">Days Late: {{ daysLate[borrowedBook.id] }} </h5>
                         <h5 class="card-subtitle mt-2 text-muted">Fee: {{ lateFee[borrowedBook.id] }} HRK</h5>
+                        <h5 class="card-subtitle mt-2 text-muted">Books:</h5>
+                        <ul>
                         {% for book in borrowedBook.borrowedBooks %}
 
-                                <h6 class="card-subtitle mt-2 text-muted">{{ book.book.name }}  </h6>
+                                <li class="card-subtitle mt-2 text-muted">{{ book.book.name }}  </li>
 
                         {% endfor %}
-                        <a href="{{ path('books_details', {'id': borrowedBook.id}) }}"
+                        </ul>
+                            <a href="{{ path('books_details', {'id': borrowedBook.id}) }}"
                            class="btn btn-primary">Details</a>
-                        <a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all
-                            books</a>
+                        <a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all books</a>
                     </div>
                 </div>
             </div>

@@ -36,21 +36,26 @@ class BorrowedController extends AbstractController
 
         $borrowedBooks = $borrowedRepository->findBy(['active' => true]);
         $lateFee = [];
+        $daysLate = [];
+
         foreach($borrowedBooks as $item){
 
             $time = $item->getReturnDate();
+            $timeDiff =date_diff(new \DateTime('now'), $time)->d ;
             if($time < new \DateTime('now')) {
-                $lateFee[$item->getId()] = sprintf("%.2f",date_diff(new \DateTime('now'), $time)->d * 2 * count($item->getBorrowedBooks()));
-
+                $lateFee[$item->getId()] = sprintf("%.2f",$timeDiff* 2 * count($item->getBorrowedBooks()));
+                $daysLate[$item->getId()] =  $timeDiff;
             }else{
                 $lateFee[$item->getId()] = sprintf("%.2f",0);
+                $daysLate[$item->getId()] = 0;
             }
         }
 
         return $this->render('book/borrowed_books.html.twig', [
 
             'borrowed' => $borrowedBooks,
-            'lateFee' => $lateFee
+            'lateFee' => $lateFee,
+            'daysLate' => $daysLate
 
         ]);
     }
