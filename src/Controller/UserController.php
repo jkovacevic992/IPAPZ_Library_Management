@@ -22,10 +22,12 @@ use App\Form\UserWishlistFormType;
 use App\Repository\UserRepository;
 use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
 use PayPal\Api\Payer;
 use PayPal\Api\Payment;
+use PayPal\Api\PaymentExecution;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Auth\OAuthTokenCredential;
@@ -395,6 +397,8 @@ class UserController extends AbstractController
 
 
 
+
+
     /**
      * @Route("/profile/paypal", name="paypal")
      */
@@ -415,6 +419,7 @@ class UserController extends AbstractController
             'log.LogLevel' => 'FINE',
             'validation.level' => 'log'
         ]);
+
         $payer = new Payer();
         $details = new Details();
         $amount = new Amount();
@@ -440,8 +445,8 @@ class UserController extends AbstractController
             ->setPayer($payer)
             ->setTransactions([$transaction]);
 
-        $redirectUrls->setReturnUrl('http://zavrsni.inchoo4u.net/')
-            ->setCancelUrl('http://zavrsni.inchoo4u.net/index.php/view_book/30');
+        $redirectUrls->setReturnUrl('http://zavrsni.inchoo4u.net/index.php/profile/pay?approved=true')
+            ->setCancelUrl('http://zavrsni.inchoo4u.net/index.php/index.php/profile/pay?approved=false');
 
         $payment->setRedirectUrls($redirectUrls);
 
@@ -476,4 +481,53 @@ class UserController extends AbstractController
         }
         return $this->redirect($redirectUrl);
     }
+
+    /**
+     * @Route("/profile/pay", name="pay")
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    public function pay(EntityManagerInterface $entityManager)
+    {
+        $api = new ApiContext(
+            new OAuthTokenCredential(
+                'AZP_hxOHbXw1VmplKx7E99xQKF6tyd2L6NTOHHpOOVUAvovo3XpOdzgd4EABOSJLaf6-iJw9XB5M2bEt',
+                'ENRfCoA3NIKRcVzevi8xqFSza7LV2j6HKIIroDBmBkVIXVQn5QMfr3VwS9W9n90V209gF-pNnYR5bF74'
+            )
+        );
+
+        $api->setConfig([
+            'mode' => 'sandbox',
+            'http.ConnectionTimeOut' => 30,
+            'log.LogEnabled' => false,
+            'log.File' => '',
+            'log.LogLevel' => 'FINE',
+            'validation.level' => 'log'
+        ]);
+        if(isset($_GET['approved'])){
+            $approved = $_GET['approved'] === 'true';
+
+            if($approved){
+                $payerId = $_GET['PayerID'];
+
+                $paymentId = $entityManager->createQuery('select p.payment from App\Entity\PaypalTransaction p where p.hash=:hash')
+                ->setParameter('hash', $_SESSION['paypal_hash'])
+                ->getResult();
+
+
+                $payment = Payment::get($paymentId[0]['payment'], $api);
+
+                $execution = new PaymentExecution();
+                $execution->setPayerId($payerId);
+
+                $payment->execute($execution, $api);
+                return $this->render('paypal/success.html.twig');
+            }else{
+               return  $this->render('paypal/cancelled.html.twig');
+            }
+        }
+    }
+
+
 }
+
