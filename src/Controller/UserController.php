@@ -12,6 +12,7 @@ use App\Entity\Book;
 
 use App\Entity\Borrowed;
 use App\Entity\BorrowedBooks;
+use App\Entity\PaypalTransaction;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Entity\Wishlist;
@@ -21,6 +22,15 @@ use App\Form\UserWishlistFormType;
 use App\Repository\UserRepository;
 use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use PayPal\Api\Amount;
+use PayPal\Api\Details;
+use PayPal\Api\Payer;
+use PayPal\Api\Payment;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Transaction;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Exception\PayPalConnectionException;
+use PayPal\Rest\ApiContext;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -380,5 +390,90 @@ class UserController extends AbstractController
         return $fee;
 
     }
+    }
+
+
+
+
+    /**
+     * @Route("/profile/paypal", name="paypal")
+     */
+    public function payment(EntityManagerInterface $entityManager, UserInterface $user)
+    {
+        $api = new ApiContext(
+            new OAuthTokenCredential(
+                'AZP_hxOHbXw1VmplKx7E99xQKF6tyd2L6NTOHHpOOVUAvovo3XpOdzgd4EABOSJLaf6-iJw9XB5M2bEt',
+                'ENRfCoA3NIKRcVzevi8xqFSza7LV2j6HKIIroDBmBkVIXVQn5QMfr3VwS9W9n90V209gF-pNnYR5bF74'
+            )
+        );
+
+        $api->setConfig([
+            'mode' => 'sandbox',
+            'http.ConnectionTimeOut' => 30,
+            'log.LogEnabled' => false,
+            'log.File' => '',
+            'log.LogLevel' => 'FINE',
+            'validation.level' => 'log'
+        ]);
+        $payer = new Payer();
+        $details = new Details();
+        $amount = new Amount();
+        $transaction = new Transaction();
+        $payment = new Payment();
+        $redirectUrls = new RedirectUrls();
+
+        $payer->setPaymentMethod('paypal');
+
+
+        $details->setShipping('2.00')
+            ->setTax('0.00')
+            ->setSubtotal('5.00');
+
+        $amount->setCurrency('USD')
+            ->setTotal('7.00')
+            ->setDetails($details);
+
+        $transaction->setAmount($amount)
+            ->setDescription('Membership');
+
+        $payment->setIntent('sale')
+            ->setPayer($payer)
+            ->setTransactions([$transaction]);
+
+        $redirectUrls->setReturnUrl('http://zavrsni.inchoo4u.net/')
+            ->setCancelUrl('http://zavrsni.inchoo4u.net/index.php/view_book/30');
+
+        $payment->setRedirectUrls($redirectUrls);
+
+        try{
+
+            $payment->create($api);
+
+            $hash = md5($payment->getId());
+            $_SESSION ['paypal_hash'] = $hash;
+
+            $paypalTransaction = new PaypalTransaction();
+            $paypalTransaction->setUser($user);
+            $paypalTransaction->setHash($hash);
+            $paypalTransaction->setComplete(0);
+            $paypalTransaction->setPayment($payment->getId());
+            $entityManager->persist($paypalTransaction);
+            $entityManager->flush();
+
+
+        }catch(PayPalConnectionException $e){
+            $e->getMessage();
+        }
+
+
+        foreach($payment->getLinks() as $link){
+
+            if($link->getRel() === 'approval_url'){
+                $redirectUrl = $link->getHref();
+            }
+
+
+        }
+        return $this->redirect($redirectUrl);
     }
 }

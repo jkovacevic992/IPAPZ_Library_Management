@@ -95,6 +95,11 @@ class User implements UserInterface
      */
     private $reservation;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PaypalTransaction", mappedBy="user", cascade={"persist","remove"})
+     */
+    private $paypalTransaction;
+
 
     public function __construct()
     {
