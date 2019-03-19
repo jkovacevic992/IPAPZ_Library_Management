@@ -153,6 +153,8 @@ class BorrowedController extends AbstractController
         $borrowed->setReturnDate($borrowedId->getReturnDate());
         $form = $this->createForm(BorrowedFormType::class, $borrowed);
 
+
+
         $form->handleRequest($request);
 
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted()) {

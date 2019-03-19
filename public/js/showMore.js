@@ -1,15 +1,22 @@
 $(function () {
-    $(".genre").slice(0, 4).show();
+    $(".genre").slice(0, 5).show();
+
     $("#loadMore").on('click', function (e) {
         e.preventDefault();
-        $(".genre:hidden").slice(0,4).slideDown();
-        if($(".genre:hidden").length === 0){
+        if($(".genre:hidden").length !== 0){
+            $(".genre:hidden").slideDown();
+            $("#loadMore").text("Show less");
+        }else{
 
+            $(".genre").slice(5,$(".genre").length).slideUp();
+            $("#loadMore").text("Show more");
 
-            $("#loadMore").fadeOut();
         }
 
+
     });
+
+
 
 
 });
