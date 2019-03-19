@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Date;
 
 class BorrowedController extends AbstractController
 {
@@ -37,11 +38,13 @@ class BorrowedController extends AbstractController
         $borrowedBooks = $borrowedRepository->findBy(['active' => true]);
         $lateFee = [];
         $daysLate = [];
+        $borrowedFor = [];
 
         foreach($borrowedBooks as $item){
 
             $time = $item->getReturnDate();
-            $timeDiff =date_diff(new \DateTime('now'), $time)->d ;
+            $timeDiff =date_diff(new \DateTime('now'), $time)->d;
+            $borrowedFor[$item->getId()] = date_diff(new \DateTime('now'),$item->getBorrowDate())->d;
             if($time < new \DateTime('now')) {
                 $lateFee[$item->getId()] = sprintf("%.2f",$timeDiff* 0.5 * count($item->getBorrowedBooks()));
                 $daysLate[$item->getId()] =  $timeDiff;
@@ -55,7 +58,8 @@ class BorrowedController extends AbstractController
 
             'borrowed' => $borrowedBooks,
             'lateFee' => $lateFee,
-            'daysLate' => $daysLate
+            'daysLate' => $daysLate,
+            'borrowedFor' => $borrowedFor
 
         ]);
     }

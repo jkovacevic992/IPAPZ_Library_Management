@@ -2,29 +2,41 @@
 
 {% block body %}
     <h3>Borrowed books</h3>
+    <table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">User</th>
+        <th scope="col">Books</th>
+        <th scope="col">Fee</th>
+        <th scope="col">Details</th>
+        <th scope="col">Return All</th>
+    </tr>
+    </thead>
+        <tbody>
     {% for borrowedBook in borrowed %}
-        <div class="row mt-3">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-subtitle mt-2 text-muted">
-                            User: {{ borrowedBook.user.firstName }} {{ borrowedBook.user.lastName }} </h5>
-                        <h5 class="card-subtitle mt-2 text-muted">Days Late: {{ daysLate[borrowedBook.id] }} </h5>
-                        <h5 class="card-subtitle mt-2 text-muted">Fee: {{ lateFee[borrowedBook.id] }} USD</h5>
-                        <h5 class="card-subtitle mt-2 text-muted">Books:</h5>
-                        <ul>
-                        {% for book in borrowedBook.borrowedBooks %}
+        <tr>
+            <td>{{ borrowedBook.user.firstName }} {{ borrowedBook.user.lastName }}</td>
+            <td>
+                {% for book in borrowedBook.borrowedBooks %}
 
-                                <li class="card-subtitle mt-2 text-muted">{{ book.book.name }}  </li>
+                    {{ book.book.name }}<br>
 
-                        {% endfor %}
-                        </ul>
-                            <a href="{{ path('books_details', {'id': borrowedBook.id}) }}"
-                           class="btn btn-primary">Details</a>
-                        <a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all books</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+                {% endfor %}
+            </td>
+            <td>
+                Borrowed for: {{ borrowedFor[borrowedBook.id] }} days<br>
+                Late: {{ daysLate[borrowedBook.id] }} days<br>
+                {{ lateFee[borrowedBook.id] }} USD
+            </td>
+            <td>
+                <a href="{{ path('books_details', {'id': borrowedBook.id}) }}"
+                   class="btn btn-primary">Details</a>
+            </td>
+            <td><a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all books</a></td>
+        </tr>
+
+
     {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
