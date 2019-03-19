@@ -9,6 +9,8 @@
         <th scope="col">Books</th>
         <th scope="col">Fee</th>
         <th scope="col">Details</th>
+        <th scope="col">Invoice</th>
+        <th scope="col">Payment Method</th>
         <th scope="col">Return All</th>
     </tr>
     </thead>
@@ -32,12 +34,27 @@
                 <a href="{{ path('books_details', {'id': borrowedBook.id}) }}"
                    class="btn btn-primary">Details</a>
             </td>
-
             <td>
+                {% if borrowedBook.paymentMethod == 'notPaid' %}
                 <a href="{{ path('invoice', {'id': borrowedBook.id}) }}"
                    class="btn btn-primary">Invoice</a>
+                {% else %}
+                    Paid
+                    {% endif %}
             </td>
-            <td><a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all books</a></td>
+
+            <td>
+                {% if borrowedBook.paymentMethod != 'notPaid' %}
+                {{ borrowedBook.paymentMethod }}
+                {% else %}
+                    Not paid
+                    {% endif %}
+            </td>
+            {% if borrowedBook.paymentMethod == 'notPaid' %}
+               <td>Cannot return</td>
+            {% else %}
+                <td><a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all books</a></td>
+            {% endif %}
         </tr>
 
 

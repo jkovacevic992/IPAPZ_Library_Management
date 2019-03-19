@@ -9,14 +9,19 @@
 </head>
 {% block body %}
     <h2>Invoice</h2>
+    <h4>Invoice ID: {{ onDeliveryTransaction.id }}</h4>
+    <h4>Issue Date: {{ issueDate|date('d.m.Y. H:m') }}</h4>
     <h4>User:</h4>
     <p>{{ borrowed.user.firstName }} {{ borrowed.user.lastName }}</p><br>
-    <h4>Books:</h4>
-    {% for borrowedBook in borrowed.borrowedBooks %}
-    {{ borrowedBook.book.name }}<br>
 
+    <h4>Books:</h4>
+<ul>
+    {% for borrowedBook in borrowed.borrowedBooks %}
+    <li>{{ borrowedBook.book.name }}
+    </li>
 
     {% endfor %}
+</ul>
     <h4>Late Fee:</h4>
     <p>{{ lateFee }} USD</p>
 {% endblock %}

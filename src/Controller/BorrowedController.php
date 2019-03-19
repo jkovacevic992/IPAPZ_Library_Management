@@ -178,8 +178,8 @@ class BorrowedController extends AbstractController
             }
 
             $borrowed->setId($borrowedId->getId());
-            $entityManager->merge($borrowed);
-            try {
+            $entityManager->persist($borrowed);
+               try {
                 $entityManager->flush();
             } catch (\Exception $exception) {
                 $this->addFlash('warning', 'Date fields cannot be empty!');

@@ -53,11 +53,32 @@ class Borrowed
      */
     private $active = true;
 
+    /**
+     * @ORM\Column(type="string")
+     *
+     */
+    private $paymentMethod = 'notPaid';
+
     public function __construct()
     {
         $this->borrowedBooks = new ArrayCollection();
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPaymentMethod()
+    {
+        return $this->paymentMethod;
+    }
+
+    /**
+     * @param mixed $paymentMethod
+     */
+    public function setPaymentMethod($paymentMethod): void
+    {
+        $this->paymentMethod = $paymentMethod;
+    }
     /**
      * @return mixed
      */
