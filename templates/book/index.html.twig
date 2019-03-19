@@ -27,11 +27,13 @@
 <aside class="col-lg-2">
     <div class="block-content">
         <h3>Genres</h3>
+
         <ul>
             {% for genre in genres %}
-            <li><a href="{{ path('book_index') }}?genre={{ genre.name }}" class="card-link">{{ genre.name }}</a></li>
+            <div class= "genre" id = "genre" style="display: none"><li><a href="{{ path('book_index') }}?genre={{ genre.name }}" class="card-link">{{ genre.name }}</a></li></div>
             {% endfor %}
         </ul>
+        <a href="#" id="loadMore">Show More</a>
     </div>
 </aside>
     <section class="col-lg-9">
@@ -114,5 +116,26 @@
 
 {% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $(".genre").slice(0, 4).show();
+            $("#loadMore").on('click', function (e) {
+                e.preventDefault();
+                $(".genre:hidden").slice(0,4).slideDown();
+                if($(".genre:hidden").length === 0){
+
+
+                $("#loadMore").fadeOut();
+                }
+
+            });
+
+
+        });
+    </script>
+{% endblock %}
 
 
