@@ -32,6 +32,11 @@
                 <a href="{{ path('books_details', {'id': borrowedBook.id}) }}"
                    class="btn btn-primary">Details</a>
             </td>
+
+            <td>
+                <a href="{{ path('invoice', {'id': borrowedBook.id}) }}"
+                   class="btn btn-primary">Invoice</a>
+            </td>
             <td><a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all books</a></td>
         </tr>
 
