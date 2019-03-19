@@ -10,9 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Book;
 
-use App\Entity\Borrowed;
-use App\Entity\BorrowedBooks;
-use App\Entity\PaypalTransaction;
+
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Entity\Wishlist;
@@ -23,22 +21,9 @@ use App\Repository\BorrowedRepository;
 use App\Repository\UserRepository;
 use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Entity;
-use PayPal\Api\Amount;
-use PayPal\Api\Details;
-use PayPal\Api\Payer;
-use PayPal\Api\Payment;
-use PayPal\Api\PaymentExecution;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\Transaction;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Exception\PayPalConnectionException;
-use PayPal\Rest\ApiContext;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\Cookie;
+
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,7 +32,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Validator\Constraints\Date;
+
 
 class UserController extends AbstractController
 {

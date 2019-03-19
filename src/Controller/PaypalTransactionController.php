@@ -51,7 +51,7 @@ class PaypalTransactionController extends AbstractController
     /**
      * @Route("/profile/paypal", name="paypal")
      */
-    public function payment(EntityManagerInterface $entityManager, UserInterface $user, $totalAmount)
+    public function payment(EntityManagerInterface $entityManager, UserInterface $user)
     {
 
 
@@ -65,7 +65,7 @@ class PaypalTransactionController extends AbstractController
         $payer->setPaymentMethod('paypal');
 
         $amount->setCurrency('USD')
-            ->setTotal($totalAmount);
+            ->setTotal('5.00');
 
 
         $transaction->setAmount($amount)
@@ -92,7 +92,7 @@ class PaypalTransactionController extends AbstractController
             $paypalTransaction->setHash($hash);
             $paypalTransaction->setComplete(0);
             $paypalTransaction->setPayment($payment->getId());
-            $paypalTransaction->setAmount($totalAmount);
+            $paypalTransaction->setAmount($amount->getTotal());
             $entityManager->persist($paypalTransaction);
             $entityManager->flush();
 
