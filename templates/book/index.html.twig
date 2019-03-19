@@ -119,23 +119,7 @@
 {% block javascripts %}
 {{ parent() }}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script>
-        $(function () {
-            $(".genre").slice(0, 4).show();
-            $("#loadMore").on('click', function (e) {
-                e.preventDefault();
-                $(".genre:hidden").slice(0,4).slideDown();
-                if($(".genre:hidden").length === 0){
-
-
-                $("#loadMore").fadeOut();
-                }
-
-            });
-
-
-        });
-    </script>
+    <script src="{{ asset('js/showMore.js') }}"></script>
 {% endblock %}
 
 
