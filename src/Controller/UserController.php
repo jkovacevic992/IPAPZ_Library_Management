@@ -258,7 +258,7 @@ class UserController extends AbstractController
         $lateFee = [];
         $borrowed = $borrowedRepository->findBy(['user' => $user->getId(), 'active' => true]);
 
-
+        //DOVRŠITI
 
         foreach ($borrowed as $borrowedBooks) {
 

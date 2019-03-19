@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    <div class="row">
+    <div class="col-lg-3">
     <h3>Users</h3>
+    </div>
+    <div class="col-lg-3">
+        <h3>Membership</h3>
+    </div>
+    </div>
     {% for user in users %}
         <div class="row mt-3">
-            <div class="col-lg-6">
+            <div class="col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-subtitle mt-2 text-muted">{{ user.firstName }} {{ user.lastName }}</h6>
@@ -13,6 +19,19 @@
 
                     </div>
                 </div>
+            </div>
+
+            <div class="col-lg-1">
+                <div class="card">
+                    <div class="card-body">
+                        {% if user.membership == false %}
+                            <h6>NOT PAID</h6>
+                        {% else %}
+                            <h3>OK</h3>
+                            {% endif %}
+                    </div>
+                </div>
+
             </div>
         </div>
     {% endfor %}
