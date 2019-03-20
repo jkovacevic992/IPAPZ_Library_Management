@@ -91,7 +91,49 @@ public function calculateLateFeeBorrowed($borrowed)
 
     return $lateFee;
 }
+    /**
+     * @Route("/user/pay-premium", name="payPremium")
+     */
+public function premiumMembership(UserInterface $user, EntityManagerInterface $entityManager)
+{
+    $gateway = self::gateway();
+    $nonce = $_POST["payment_method_nonce"];
+    $amount = '10.00';
+    $result = $gateway->transaction()->sale([
+        'amount' => $amount,
+        'paymentMethodNonce' => $nonce
+    ]);
+    $transaction = $result->transaction;
 
+    $paypalTransaction = new PaypalTransaction();
+    $paypalTransaction->setAmount($amount);
+    $paypalTransaction->setComplete(true);
+    $paypalTransaction->setPayment($transaction->id);
+    $paypalTransaction->setUser($user);
+    $user->setRoles(['ROLE_PREMIUM_USER']);
+    $entityManager->persist($user);
+    $entityManager->persist($paypalTransaction);
+    $entityManager->flush();
+
+    $this->addFlash('success','You are now a premium member, please login.');
+    return $this->redirectToRoute('logout');
+}
+
+    /**
+     * @Route("/user/premium-membership", name="premiumMembership")
+     * @return Response
+     */
+    public function paypalPremium()
+    {
+
+
+        $gateway = self::gateway();
+
+        return $this->render('paypal/paypal_premium.html.twig',[
+            'gateway' => $gateway
+
+        ]);
+    }
 
 
 }
