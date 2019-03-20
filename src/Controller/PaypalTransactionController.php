@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Borrowed;
 use App\Entity\PaypalTransaction;
 use Doctrine\ORM\EntityManagerInterface;
 use PayPal\Api\Amount;
@@ -187,56 +188,60 @@ public function paypal()
 }
 
     /**
-         * @Route("/profile/pay", name="pay")
-
-         * @return Response
-         */
-    public function paypalShow()
+     * @Route("/profile/pay/{id}", name="pay")
+     * @return Response
+     */
+    public function paypalShow(Borrowed $borrowed)
 {
-    $gateway = new \Braintree_Gateway([
-    'environment' => 'sandbox',
-    'merchantId' => 'kzftwpnnt5t7gfrf',
-    'publicKey' => 'x267p4jntgzy7thj',
-    'privateKey' => 'dfc284aeeb9f8c71709bf19987541f88'
-]);
+
+    $lateFee= self::calculateLateFeeBorrowed($borrowed);
+    $gateway = self::gateway();
+
     return $this->render('paypal/paypal.html.twig',[
-        'gateway' => $gateway
+        'gateway' => $gateway,
+        'borrowed' => $borrowed,
+        'fee' => $lateFee
     ]);
 }
 
 
     /**
-     * @Route("/profile/payment", name="payment")
+     * @Route("/profile/payment/{id}", name="payment")
      */
-public function payment()
+public function payment(Borrowed $borrowed)
 {
-    $gateway = new \Braintree_Gateway([
+    $lateFee= self::calculateLateFeeBorrowed($borrowed);
+    $gateway = self::gateway();
+    $amount = $lateFee;
+    $nonce = $_POST["payment_method_nonce"];
+    $gateway->transaction()->sale([
+        'amount' => $amount,
+        'paymentMethodNonce' => $nonce
+    ]);
+
+$this->addFlash('success','Payment successful!');
+    return $this->redirectToRoute('book_index');
+}
+
+public function gateway()
+{
+    return $gateway = new \Braintree_Gateway([
         'environment' => 'sandbox',
         'merchantId' => 'kzftwpnnt5t7gfrf',
         'publicKey' => 'x267p4jntgzy7thj',
         'privateKey' => 'dfc284aeeb9f8c71709bf19987541f88'
     ]);
-    $amount = $_POST["amount"];
-    $nonce = $_POST["payment_method_nonce"];
-    $result = $gateway->transaction()->sale([
-        'amount' => $amount,
-        'paymentMethodNonce' => $nonce
-    ]);
-    if ($result->success || !is_null($result->transaction)) {
-
-        header("Location: index.php");
-    } else {
-        $errorString = "";
-        foreach($result->errors->deepAll() as $error) {
-            $errorString .= 'Error: ' . $error->code . ": " . $error->message . "\n";
-        }
-        $_SESSION["errors"] = $errorString;
-        header("Location: index.php");
-    }
-
-    return $this->render('paypal/text.html.twig',[
-        'code' => var_dump($_POST)
-        ]);
 }
+
+public function calculateLateFeeBorrowed($borrowed)
+{
+    $time = $borrowed->getReturnDate();
+    $timeDiff = date_diff(new \DateTime('now'), $time)->d;
+    $lateFee = sprintf("%.2f",$timeDiff* 0.5 * count($borrowed->getBorrowedBooks()));
+
+    return $lateFee;
+}
+
+
 
 }
