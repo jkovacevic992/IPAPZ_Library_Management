@@ -156,6 +156,87 @@ class PaypalTransactionController extends AbstractController
 //    }
 
 
+public function paypal()
+{
 
+    $gateway = new \Braintree_Gateway([
+        'environment' => 'sandbox',
+        'merchantId' => 'kzftwpnnt5t7gfrf',
+        'publicKey' => 'x267p4jntgzy7thj',
+        'privateKey' => 'dfc284aeeb9f8c71709bf19987541f88'
+    ]);
+
+
+    $result = $gateway->transaction()->sale([
+        'amount' => $_POST['amount'],
+        'paymentMethodNonce' => $_POST['payment_method_nonce'],
+        'orderId' => $_POST["Mapped to PayPal Invoice Number"],
+        'options' => [
+            'submitForSettlement' => True,
+            'paypal' => [
+                'customField' => $_POST["PayPal custom field"],
+                'description' => $_POST["Description for PayPal email receipt"],
+            ],
+        ],
+    ]);
+    if ($result->success) {
+        print_r("Success ID: " . $result->transaction->id);
+    } else {
+        print_r("Error Message: " . $result->message);
+    }
+}
+
+    /**
+         * @Route("/profile/pay", name="pay")
+
+         * @return Response
+         */
+    public function paypalShow()
+{
+    $gateway = new \Braintree_Gateway([
+    'environment' => 'sandbox',
+    'merchantId' => 'kzftwpnnt5t7gfrf',
+    'publicKey' => 'x267p4jntgzy7thj',
+    'privateKey' => 'dfc284aeeb9f8c71709bf19987541f88'
+]);
+    return $this->render('paypal/paypal.html.twig',[
+        'gateway' => $gateway
+    ]);
+}
+
+
+    /**
+     * @Route("/profile/payment", name="payment")
+     */
+public function payment()
+{
+    $gateway = new \Braintree_Gateway([
+        'environment' => 'sandbox',
+        'merchantId' => 'kzftwpnnt5t7gfrf',
+        'publicKey' => 'x267p4jntgzy7thj',
+        'privateKey' => 'dfc284aeeb9f8c71709bf19987541f88'
+    ]);
+    $amount = $_POST["amount"];
+    $nonce = $_POST["payment_method_nonce"];
+    $result = $gateway->transaction()->sale([
+        'amount' => $amount,
+        'paymentMethodNonce' => $nonce
+    ]);
+    if ($result->success || !is_null($result->transaction)) {
+
+        header("Location: index.php");
+    } else {
+        $errorString = "";
+        foreach($result->errors->deepAll() as $error) {
+            $errorString .= 'Error: ' . $error->code . ": " . $error->message . "\n";
+        }
+        $_SESSION["errors"] = $errorString;
+        header("Location: index.php");
+    }
+
+    return $this->render('paypal/text.html.twig',[
+        'code' => var_dump($_POST)
+        ]);
+}
 
 }

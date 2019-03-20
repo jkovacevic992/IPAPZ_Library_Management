@@ -1,4 +1,7 @@
 {
+    "braintree/braintree_php": {
+        "version": "3.39.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
