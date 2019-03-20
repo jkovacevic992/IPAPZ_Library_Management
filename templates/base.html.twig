@@ -44,7 +44,7 @@
         <ul class="navbar-nav ml-auto">
 
             {% if is_granted('ROLE_ADMIN') %}
-              
+
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -127,7 +127,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
-            {% elseif is_granted('ROLE_USER') %}
+            {% elseif is_granted('ROLE_PREMIUM_USER') %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('my_borrowed_books') }}">My Borrowed Books</a>
                 </li>
@@ -138,15 +138,22 @@
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
 
-            {% else %}
-
+            {% elseif is_granted('ROLE_USER') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_login') }}">Login</a>
-
+                    <a class="nav-link" href="{{ path('app_logout') }}">Become Premium Member</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_register') }}">Registration</a>
+                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
+
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_register') }}">Registration</a>
+                    </li>
             {% endif %}
         </ul>
 
