@@ -39,10 +39,7 @@ class PaypalTransaction
      */
     private $payment;
 
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $hash;
+
     /**
      * @ORM\Column(type="boolean")
      */
@@ -94,13 +91,6 @@ class PaypalTransaction
         return $this->complete;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getHash()
-    {
-        return $this->hash;
-    }
 
     /**
      * @return mixed
@@ -134,13 +124,7 @@ class PaypalTransaction
         $this->complete = $complete;
     }
 
-    /**
-     * @param mixed $hash
-     */
-    public function setHash($hash): void
-    {
-        $this->hash = $hash;
-    }
+
 
     /**
      * @param mixed $payment

@@ -16,16 +16,18 @@
 
 
         {% endfor %}
-                        <h6 class="card-text">Late Fee:
-                        {{ lateFee[book.id] }} USD
+
 
 
 
                         </h6>
-
+                        {%  if book.paymentMethod != "PayPal"  %}
+                        <h6 class="card-text">Late Fee:
+                            {{ lateFee[book.id] }} USD<br>
                         <a href="{{ path('pay',{'id': book.id}) }}" class="btn btn-primary ">Pay</a>
-
-
+                            {% else %}
+                            <h6>Late fee paid, you can return your books.</h6>
+                       {% endif %}
                     </div>
                 </div>
             </div>
