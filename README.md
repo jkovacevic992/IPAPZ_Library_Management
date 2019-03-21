@@ -21,3 +21,6 @@ Opcionalne funkcionalnosti:
 3. Export u Excel omogućuje ispis svih knjiga s ukupnim brojem dana u godini koliko su bili na posudbi (za danu godinu)
 4. Svakoj knjizi se može dodijeliti pokemon
 5. Svakom korisniku se po vraćanju knjige šalje izvještaj o vraćenim knjigama u pdfu.
+
+
+phpcs src

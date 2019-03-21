@@ -8,7 +8,6 @@
 
 namespace App\Service;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -30,13 +29,14 @@ class BookService
         $em = $this->em;
         $container = $this->container;
 
-        $query = $em->createQuery('SELECT b from App\Entity\Book b order by b.name asc'
+        $query = $em->createQuery(
+            'SELECT b from App\Entity\Book b order by b.name asc'
         );
         $paginator = $container->get('knp_paginator');
         $results = $paginator->paginate(
             $query,
-            $request->query->getInt('page',1),
-            $request->query->getInt('limit',10)
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 10)
         );
         return ($results);
     }
@@ -46,24 +46,26 @@ class BookService
         $em = $this->em;
         $container = $this->container;
 
-        $query = $em->createQuery('SELECT b from App\Entity\Book b where b.name like :name or b.author like :name'
+        $query = $em->createQuery(
+            'SELECT b from App\Entity\Book b where b.name like :name or b.author like :name'
         )
-        ->setParameter('name', '%'.$name.'%');
+            ->setParameter('name', '%' . $name . '%');
         $paginator = $container->get('knp_paginator');
         $results = $paginator->paginate(
             $query,
-            $request->query->getInt('page',1),
-            $request->query->getInt('limit',10)
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 10)
         );
         return ($results);
     }
 
-    public function returnBooksByGenre($request,$genre)
+    public function returnBooksByGenre($request, $genre)
     {
         $em = $this->em;
         $container = $this->container;
 
-        $query = $em->createQuery('SELECT b
+        $query = $em->createQuery(
+            'SELECT b
         FROM App\Entity\Book b
         INNER JOIN App\Entity\BookGenre as bg
                   
@@ -74,13 +76,12 @@ class BookService
         and b.id= bg.book
         and g.id= bg.genre'
         )
-
             ->setParameter('genre', $genre);
         $paginator = $container->get('knp_paginator');
         $results = $paginator->paginate(
             $query,
-            $request->query->getInt('page',1),
-            $request->query->getInt('limit',10)
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 10)
         );
         return ($results);
     }

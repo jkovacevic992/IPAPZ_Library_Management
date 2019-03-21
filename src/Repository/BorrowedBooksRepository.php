@@ -8,7 +8,6 @@
 
 namespace App\Repository;
 
-
 use App\Entity\BorrowedBooks;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -19,7 +18,4 @@ class BorrowedBooksRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, BorrowedBooks::class);
     }
-
-
-
 }

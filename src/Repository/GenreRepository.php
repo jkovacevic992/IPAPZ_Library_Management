@@ -8,7 +8,6 @@
 
 namespace App\Repository;
 
-
 use App\Entity\Genre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -29,10 +28,8 @@ class GenreRepository extends ServiceEntityRepository
     public function findGenresAscName()
     {
         return $this->createQueryBuilder('g')
-            ->orderBy('g.name','ASC')
+            ->orderBy('g.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
-
-
 }

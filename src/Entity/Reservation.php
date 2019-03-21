@@ -9,9 +9,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Class Reservation
- * @package App\Entity
+ *
+ * @package      App\Entity
  * @ORM\Entity()
  */
 class Reservation

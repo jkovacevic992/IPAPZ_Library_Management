@@ -9,9 +9,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Class Wishlist
- * @package App\Entity
+ *
+ * @package      App\Entity
  * @ORM\Entity()
  */
 class Wishlist
@@ -26,7 +28,10 @@ class Wishlist
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Book", inversedBy="wishlist")
      */
-    private $book; /** User $user */
+    private $book;
+    /**
+     * User $user
+     */
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="wishlist")
@@ -80,7 +85,4 @@ class Wishlist
     {
         $this->user = $user;
     }
-
-
-
 }

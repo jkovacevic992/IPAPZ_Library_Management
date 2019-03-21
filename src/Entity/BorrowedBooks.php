@@ -12,7 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class BorrowedBooks
- * @package App\Entity
+ *
+ * @package                     App\Entity
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  */
@@ -126,5 +127,4 @@ class BorrowedBooks
     {
         $this->borrowed = $borrowed;
     }
-
 }

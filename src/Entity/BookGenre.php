@@ -8,11 +8,12 @@
 
 namespace App\Entity;
 
-
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Class BookGenre
- * @package App\Entity
+ *
+ * @package      App\Entity
  * @ORM\Entity()
  */
 class BookGenre

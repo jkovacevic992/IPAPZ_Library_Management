@@ -16,7 +16,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Class Borrowed
- * @package App\Entity
+ *
+ * @package      App\Entity
  * @ORM\Entity()
  */
 class Borrowed
@@ -30,7 +31,6 @@ class Borrowed
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
-     *
      */
     private $borrowDate;
     /**
@@ -41,7 +41,7 @@ class Borrowed
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\BorrowedBooks", mappedBy="borrowed", cascade={"persist", "remove"})
-     * @var Collection
+     * @var                                                    Collection
      */
     private $borrowedBooks;
     /**
@@ -55,7 +55,6 @@ class Borrowed
 
     /**
      * @ORM\Column(type="string")
-     *
      */
     private $paymentMethod = 'notPaid';
 
@@ -79,6 +78,7 @@ class Borrowed
     {
         $this->paymentMethod = $paymentMethod;
     }
+
     /**
      * @return mixed
      */
@@ -134,7 +134,9 @@ class Borrowed
             $available = false;
         }
 
-        /** @var BorrowedBooks $borrowedBook */
+        /**
+         * @var BorrowedBooks $borrowedBook
+         */
         foreach ($this->borrowedBooks as $borrowedBook) {
             if ($borrowedBook->getBook() === null) {
                 $available = false;
@@ -144,8 +146,6 @@ class Borrowed
             $context->buildViolation('No available books.')
                 ->addViolation();
         }
-
-
     }
 
     /**
@@ -212,6 +212,4 @@ class Borrowed
     {
         $this->user = $user;
     }
-
-
 }

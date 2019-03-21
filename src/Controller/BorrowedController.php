@@ -8,7 +8,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Book;
 use App\Entity\Borrowed;
 use App\Entity\BorrowedBooks;
@@ -16,21 +15,18 @@ use App\Entity\Customer;
 use App\Entity\User;
 use App\Form\BorrowedFormType;
 use App\Repository\BorrowedRepository;
-use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
-
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Routing\Annotation\Route;
 
 class BorrowedController extends AbstractController
 {
     /**
      * @Route("/employee/borrowed_books", name="borrowed_books")
-     * @param BorrowedRepository $borrowedRepository
-     * @return Response
+     * @param                             BorrowedRepository $borrowedRepository
+     * @return                            Response
      */
     public function borrowedBooks(BorrowedRepository $borrowedRepository)
     {
@@ -40,50 +36,52 @@ class BorrowedController extends AbstractController
         $daysLate = [];
         $borrowedFor = [];
 
-        foreach($borrowedBooks as $item){
-
+        foreach ($borrowedBooks as $item) {
             $time = $item->getReturnDate();
-            $timeDiff =date_diff(new \DateTime('now'), $time)->d;
-            $borrowedFor[$item->getId()] = date_diff(new \DateTime('now'),$item->getBorrowDate())->d;
-            if($time < new \DateTime('now')) {
-                $lateFee[$item->getId()] = sprintf("%.2f",$timeDiff* 0.5 * count($item->getBorrowedBooks()));
-                $daysLate[$item->getId()] =  $timeDiff;
-            }else{
-                $lateFee[$item->getId()] = sprintf("%.2f",0);
+            $timeDiff = date_diff(new \DateTime('now'), $time)->d;
+            $borrowedFor[$item->getId()] = date_diff(new \DateTime('now'), $item->getBorrowDate())->d;
+            if ($time < new \DateTime('now')) {
+                $lateFee[$item->getId()] = sprintf("%.2f", $timeDiff * 0.5 * count($item->getBorrowedBooks()));
+                $daysLate[$item->getId()] = $timeDiff;
+            } else {
+                $lateFee[$item->getId()] = sprintf("%.2f", 0);
                 $daysLate[$item->getId()] = 0;
             }
         }
 
-        return $this->render('book/borrowed_books.html.twig', [
+        return $this->render(
+            'book/borrowed_books.html.twig',
+            [
 
-            'borrowed' => $borrowedBooks,
-            'lateFee' => $lateFee,
-            'daysLate' => $daysLate,
-            'borrowedFor' => $borrowedFor
+                'borrowed' => $borrowedBooks,
+                'lateFee' => $lateFee,
+                'daysLate' => $daysLate,
+                'borrowedFor' => $borrowedFor
 
-        ]);
+            ]
+        );
     }
 
     /**
      * @Route("/employee/return_books/{id}", name="return_books")
-     * @param Borrowed $borrowedId
-     * @param EntityManagerInterface $entityManager
-     * @return Response
+     * @param                                Borrowed $borrowedId
+     * @param                                EntityManagerInterface $entityManager
+     * @return                               Response
      */
     public function returnBooks(Borrowed $borrowedId, EntityManagerInterface $entityManager)
     {
-        /** Borrowed $borrowedId */
+        /**
+         * Borrowed $borrowedId
+         */
 
 
         foreach ($borrowedId->getBorrowedBooks() as $borrowedBook) {
             $borrowedId->removeBorrowedBook($borrowedBook);
-            $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity()+1);
-            $borrowedBook->getBook()->setBorrowedQuantity($borrowedBook->getBook()->getBorrowedQuantity()-1);
-            if($borrowedBook->getBook()->getQuantity() > 0){
+            $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity() + 1);
+            $borrowedBook->getBook()->setBorrowedQuantity($borrowedBook->getBook()->getBorrowedQuantity() - 1);
+            if ($borrowedBook->getBook()->getQuantity() > 0) {
                 $borrowedBook->getBook()->setAvailable(true);
             }
-
-
         }
         $borrowedId->setActive(false);
         $user = $entityManager->find(User::class, $borrowedId->getUser());
@@ -96,23 +94,27 @@ class BorrowedController extends AbstractController
 
     /**
      * @Route("/employee/return_single_book/{id}/{borrowedId}/{borrowedBooks}", name= "return_single_book")
-     * @param Book $book
-     * @param Borrowed $borrowedId
-     * @param EntityManagerInterface $entityManager
-     * @return Response
+     * @param                                                                   Book $book
+     * @param                                                                   Borrowed $borrowedId
+     * @param                                                                   EntityManagerInterface $entityManager
+     * @return                                                                  Response
      */
-    public function returnSingleBook(BorrowedBooks $borrowedBooks, Book $book, Borrowed $borrowedId, EntityManagerInterface $entityManager)
-    {
-        $book->setQuantity($book->getQuantity()+1);
-        $book->setBorrowedQuantity($book->getBorrowedQuantity()-1);
+    public function returnSingleBook(
+        BorrowedBooks $borrowedBooks,
+        Book $book,
+        Borrowed $borrowedId,
+        EntityManagerInterface $entityManager
+    ) {
+        $book->setQuantity($book->getQuantity() + 1);
+        $book->setBorrowedQuantity($book->getBorrowedQuantity() - 1);
         $borrowedId->removeBorrowedBook($borrowedBooks);
-        if($book->getQuantity() > 0){
+        if ($book->getQuantity() > 0) {
             $book->setAvailable(true);
         }
 
         $user = $entityManager->find(User::class, $borrowedId->getUser());
 
-        if(count($borrowedId->getBorrowedBooks()) === 0){
+        if (count($borrowedId->getBorrowedBooks()) === 0) {
             $borrowedId->setActive(false);
             $user->setHasBooks(false);
         }
@@ -122,28 +124,29 @@ class BorrowedController extends AbstractController
         $entityManager->flush();
         $this->addFlash('success', 'Successfully returned one book!');
         return $this->redirectToRoute('borrowed_books');
-
-
     }
 
     /**
      * @Route("/employee/books_details/{id}", name="books_details")
-     * @param Borrowed $borrowed
-     * @return Response
+     * @param                                 Borrowed $borrowed
+     * @return                                Response
      */
     public function booksDetails(Borrowed $borrowed)
     {
-        return $this->render('book/books_details.html.twig', [
-            'borrowed' => $borrowed
-        ]);
+        return $this->render(
+            'book/books_details.html.twig',
+            [
+                'borrowed' => $borrowed
+            ]
+        );
     }
 
     /**
      * @Route("/employee/edit_borrowed/{id}", name="edit_borrowed")
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
-     * @param Borrowed $borrowedId
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @param                                 Request $request
+     * @param                                 EntityManagerInterface $entityManager
+     * @param                                 Borrowed $borrowedId
+     * @return                                \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editBorrowed(Borrowed $borrowedId, Request $request, EntityManagerInterface $entityManager)
     {
@@ -154,11 +157,12 @@ class BorrowedController extends AbstractController
         $form = $this->createForm(BorrowedFormType::class, $borrowed);
 
 
-
         $form->handleRequest($request);
 
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted()) {
-            /** @var Borrowed $borrowed */
+            /**
+             * @var Borrowed $borrowed
+             */
             $borrowed = $form->getData();
 
             if ($borrowed->getUser() !== $borrowedId->getUser()) {
@@ -168,11 +172,13 @@ class BorrowedController extends AbstractController
             $user = $entityManager->find(User::class, $userId);
             $user->setHasBooks(true);
 
-            /** @var BorrowedBooks $borrowedBook */
+            /**
+             * @var BorrowedBooks $borrowedBook
+             */
             foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
-                $borrowedBook->getBook()->setBorrowedQuantity($borrowedBook->getBook()->getBorrowedQuantity()+1);
-                $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity()-1);
-                if($borrowedBook->getBook()->getQuantity()===0){
+                $borrowedBook->getBook()->setBorrowedQuantity($borrowedBook->getBook()->getBorrowedQuantity() + 1);
+                $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity() - 1);
+                if ($borrowedBook->getBook()->getQuantity() === 0) {
                     $borrowedBook->getBook()->setAvailable(false);
                 }
 
@@ -181,7 +187,7 @@ class BorrowedController extends AbstractController
 
             $borrowed->setId($borrowedId->getId());
             $entityManager->persist($borrowed);
-               try {
+            try {
                 $entityManager->flush();
             } catch (\Exception $exception) {
                 $this->addFlash('warning', 'Date fields cannot be empty!');
@@ -193,10 +199,11 @@ class BorrowedController extends AbstractController
             return $this->redirectToRoute('book_index');
         }
 
-        return $this->render('book/lend_book.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return $this->render(
+            'book/lend_book.html.twig',
+            [
+                'form' => $form->createView()
+            ]
+        );
     }
-
-
 }

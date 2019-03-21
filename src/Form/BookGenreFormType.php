@@ -8,7 +8,6 @@
 
 namespace App\Form;
 
-
 use App\Entity\BookGenre;
 use App\Entity\Genre;
 use App\Repository\GenreRepository;
@@ -21,22 +20,26 @@ class BookGenreFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('genre', EntityType::class,[
-            'class' => Genre::class,
-            'choice_label' => 'name',
-            'query_builder' => function (GenreRepository $genreRepository) {
-                return $genreRepository->getAvailableGenres();
-            }
+        $builder->add(
+            'genre',
+            EntityType::class,
+            [
+                'class' => Genre::class,
+                'choice_label' => 'name',
+                'query_builder' => function (GenreRepository $genreRepository) {
+                    return $genreRepository->getAvailableGenres();
+                }
 
-        ]);
+            ]
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => BookGenre::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => BookGenre::class,
+            ]
+        );
     }
-
-
 }

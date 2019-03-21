@@ -8,7 +8,6 @@
 
 namespace App\Repository;
 
-
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -33,9 +32,8 @@ class BookRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->select('b')
             ->addSelect('r')
-            ->leftJoin('b.reservation','r')
+            ->leftJoin('b.reservation', 'r')
             ->where('b.available=true');
-
     }
 
     public function getBooks()
@@ -54,10 +52,8 @@ class BookRepository extends ServiceEntityRepository
             ->groupBy('b')
             ->setParameter('endWeek', new \DateTime('now +7 day'))
             ->setMaxResults(5)
-            ->orderBy('count(bb.book)','desc')
+            ->orderBy('count(bb.book)', 'desc')
             ->getQuery()
             ->getResult();
     }
-
-
 }

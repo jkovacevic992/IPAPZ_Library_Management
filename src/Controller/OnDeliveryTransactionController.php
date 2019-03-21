@@ -8,7 +8,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Borrowed;
 use App\Entity\OnDeliveryTransaction;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,9 +21,8 @@ class OnDeliveryTransactionController extends AbstractController
 
     /**
      * @Route("/employee/invoice/{id}", name="invoice")
-     * @param Borrowed $borrowed
-     * @param EntityManagerInterface $entityManager
-     *
+     * @param                           Borrowed $borrowed
+     * @param                           EntityManagerInterface $entityManager
      */
     public function createInvoice(Borrowed $borrowed, EntityManagerInterface $entityManager)
     {
@@ -34,9 +32,9 @@ class OnDeliveryTransactionController extends AbstractController
         $issueDate->format('d.M.yy');
 
         $time = $borrowed->getReturnDate();
-        $timeDiff =date_diff(new \DateTime('now'), $time)->d;
-        $lateFee = sprintf("%.2f",0.00);
-        if($time < new \DateTime('now')) {
+        $timeDiff = date_diff(new \DateTime('now'), $time)->d;
+        $lateFee = sprintf("%.2f", 0.00);
+        if ($time < new \DateTime('now')) {
             $lateFee = sprintf("%.2f", $timeDiff * 0.5 * count($borrowed->getBorrowedBooks()));
         }
 
@@ -50,26 +48,31 @@ class OnDeliveryTransactionController extends AbstractController
 
 
         $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont','Arial');
+        $pdfOptions->set('defaultFont', 'Arial');
 
         $domPdf = new Dompdf($pdfOptions);
-        $html = $this->renderView('pdf/mypdf.html.twig',[
-            'title' => 'Something',
-            'borrowed' => $borrowed,
-            'lateFee' => $lateFee,
-            'onDeliveryTransaction' => $onDeliveryTransaction,
-            'issueDate' => $issueDate
-        ]);
+        $html = $this->renderView(
+            'pdf/mypdf.html.twig',
+            [
+                'title' => 'Something',
+                'borrowed' => $borrowed,
+                'lateFee' => $lateFee,
+                'onDeliveryTransaction' => $onDeliveryTransaction,
+                'issueDate' => $issueDate
+            ]
+        );
 
         $domPdf->loadHtml($html);
 
-        $domPdf->setPaper('A4','portrait');
+        $domPdf->setPaper('A4', 'portrait');
 
         $domPdf->render();
 
-        $domPdf->stream("mypdf.pdf",[
-            'Attachment' => false
-        ]);
-
+        $domPdf->stream(
+            "mypdf.pdf",
+            [
+                'Attachment' => false
+            ]
+        );
     }
 }

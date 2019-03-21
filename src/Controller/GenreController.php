@@ -23,16 +23,18 @@ class GenreController extends AbstractController
 
     /**
      * @Route("/employee/new_genre", name="new_genre")
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @param                        Request $request
+     * @param                        EntityManagerInterface $entityManager
+     * @return                       \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function newGenre(Request $request, EntityManagerInterface $entityManager)
     {
         $form = $this->createForm(GenreFormType::class);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
-            /** @var Genre $genre */
+            /**
+             * @var Genre $genre
+             */
             $genre = $form->getData();
             $entityManager->persist($genre);
 
@@ -42,34 +44,40 @@ class GenreController extends AbstractController
             return $this->redirectToRoute('book_index');
         }
 
-        return $this->render('genre/new_genre.html.twig', [
-            'genreForm' => $form->createView()
-        ]);
+        return $this->render(
+            'genre/new_genre.html.twig',
+            [
+                'genreForm' => $form->createView()
+            ]
+        );
     }
 
 
     /**
      * @Route("/employee/genres", name="genres")
-     * @param GenreRepository $genreRepository
-     * @return Response
+     * @param                     GenreRepository $genreRepository
+     * @return                    Response
      */
     public function genres(GenreRepository $genreRepository)
     {
 
         $genres = $genreRepository->findAll();
 
-        return $this->render('genre/genres.html.twig', [
+        return $this->render(
+            'genre/genres.html.twig',
+            [
 
-            'genres' => $genres
+                'genres' => $genres
 
-        ]);
+            ]
+        );
     }
 
     /**
      * @Route("/employee/edit_genre/{id}", name="edit_genre")
-     * @param Genre $genreId
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
+     * @param                              Genre $genreId
+     * @param                              Request $request
+     * @param                              EntityManagerInterface $entityManager
      * * @return Response
      */
     public function editGenre(Genre $genreId, Request $request, EntityManagerInterface $entityManager)
@@ -78,24 +86,25 @@ class GenreController extends AbstractController
         $form = $this->createForm(GenreFormType::class, $genreId);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
-
-
             $entityManager->flush();
 
             $this->addFlash('success', 'Genre edited!');
             return $this->redirectToRoute('genres');
         }
 
-        return $this->render('genre/edit_genre.twig', [
-            'form' => $form->createView()
-        ]);
+        return $this->render(
+            'genre/edit_genre.twig',
+            [
+                'form' => $form->createView()
+            ]
+        );
     }
 
     /**
      * @Route("/employee/genre_delete/{id}", name="genre_delete")
-     * @param Genre $genre
-     * @param EntityManagerInterface $entityManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param                                Genre $genre
+     * @param                                EntityManagerInterface $entityManager
+     * @return                               \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteGenre(Genre $genre, EntityManagerInterface $entityManager)
     {
@@ -106,11 +115,8 @@ class GenreController extends AbstractController
             $this->addFlash('success', 'Genre deleted!');
             return $this->redirectToRoute('book_index');
         } else {
-
             $this->addFlash('warning', 'Some books are using this genre and it cannot be deleted! Sorry!');
             return $this->redirectToRoute('book_index');
-
         }
     }
-
 }

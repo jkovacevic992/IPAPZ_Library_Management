@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"},    message="There is already an account with this email")
  * @UniqueEntity(fields={"username"}, message="A user with that username already exists")
  */
 class User implements UserInterface
@@ -53,11 +53,11 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
-     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
+     * @Assert\Email(message      = "The email '{{ value }}' is not a valid email.")
      */
     private $email;
     /**
-     * @var string The hashed password
+     * @var                       string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
@@ -388,6 +388,4 @@ class User implements UserInterface
     {
         return in_array($role, $this->getRoles());
     }
-
-
 }

@@ -8,7 +8,6 @@
 
 namespace App\Form;
 
-
 use App\Entity\Genre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,13 +19,14 @@ class GenreFormType extends AbstractType
     {
         $builder
             ->add('name');
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Genre::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Genre::class,
+            ]
+        );
     }
 }

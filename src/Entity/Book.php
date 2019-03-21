@@ -11,13 +11,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
  * Class Book
- * @package App\Entity
+ *
+ * @package                                                     App\Entity
  * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
  */
 class Book
@@ -66,7 +65,6 @@ class Book
 
     /**
      * @ORM\Column(type="array", nullable=true)
-     *
      */
     private $images = [];
 
@@ -138,11 +136,9 @@ class Book
     }
 
 
-
     public function __construct()
     {
         $this->bookGenre = new ArrayCollection();
-
     }
 
     /**
@@ -309,8 +305,4 @@ class Book
     {
         $this->author = $author;
     }
-
-
-
-
 }
