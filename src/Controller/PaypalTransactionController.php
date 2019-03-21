@@ -26,7 +26,7 @@ class PaypalTransactionController extends AbstractController
      * @param Borrowed $borrowed
      * @return                     Response
      */
-    public function paypalShow(Borrowed $borrowed)
+    public function paypalDisplay(Borrowed $borrowed)
     {
 
         $lateFee = self::calculateLateFeeBorrowed($borrowed);

@@ -192,7 +192,7 @@ class BorrowedController extends AbstractController
 
         if (count($borrowedId->getBorrowedBooks()) === 0) {
             $borrowedId->setActive(false);
-            $borrowedId->setPaymentMethod('onDelivery');
+            $borrowedId->setPaymentMethod('On Delivery');
         }
         $temp = true;
         foreach ($user->getBorrowed() as $borrowed) {
