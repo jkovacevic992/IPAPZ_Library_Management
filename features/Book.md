@@ -1,4 +1,5 @@
 Books have quantity, they can belong to multiple genres.
+
 BookController functions:
 
 - Admin can create new books (newBook())
@@ -7,5 +8,6 @@ BookController functions:
 - Every book can have an array of images and one can be set to be the main image which is displayed next to the book on
   the landing page (setMainImage())
 - Admin can delete books (deleteBook())
-- listBookAction() lists all books in the library (paginated, 10 books per page)
+- listBookAction() lists all books in the library (paginated, 10 books per page) and renders a search bar where
+users can search by authors' names or book names.
 - checkBookAvailability() checks if book is available
