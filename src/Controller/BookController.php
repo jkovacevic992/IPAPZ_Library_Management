@@ -154,6 +154,7 @@ class BookController extends AbstractController
     /**
      * @Route("/employee/set_image/{id}/{imageName}", name="set_main_image")
      * @param                                         Book $book
+     * @param String $imageName
      * @param                                         EntityManagerInterface $entityManager
      * @return                                        Response
      */

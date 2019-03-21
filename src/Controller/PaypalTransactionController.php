@@ -23,6 +23,7 @@ class PaypalTransactionController extends AbstractController
 
     /**
      * @Route("/profile/pay/{id}", name="pay")
+     * @param Borrowed $borrowed
      * @return                     Response
      */
     public function paypalShow(Borrowed $borrowed)
@@ -44,6 +45,10 @@ class PaypalTransactionController extends AbstractController
 
     /**
      * @Route("/profile/payment/{id}", name="payment")
+     * @param UserInterface $user
+     * @param Borrowed $borrowed
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function payment(UserInterface $user, Borrowed $borrowed, EntityManagerInterface $entityManager)
     {
@@ -99,6 +104,10 @@ class PaypalTransactionController extends AbstractController
 
     /**
      * @Route("/user/pay-premium", name="payPremium")
+     * @param UserInterface $user
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      */
     public function premiumMembership(UserInterface $user, EntityManagerInterface $entityManager)
     {

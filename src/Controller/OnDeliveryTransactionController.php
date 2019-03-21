@@ -23,6 +23,7 @@ class OnDeliveryTransactionController extends AbstractController
      * @Route("/employee/invoice/{id}", name="invoice")
      * @param                           Borrowed $borrowed
      * @param                           EntityManagerInterface $entityManager
+     * @throws \Exception
      */
     public function createInvoice(Borrowed $borrowed, EntityManagerInterface $entityManager)
     {

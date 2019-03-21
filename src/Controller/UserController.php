@@ -15,6 +15,7 @@ use App\Entity\Wishlist;
 use App\Form\RegistrationFormType;
 use App\Form\UserWishlistFormType;
 use App\Repository\BorrowedRepository;
+use App\Repository\PaymentMethodRepository;
 use App\Repository\UserRepository;
 use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -48,16 +49,12 @@ class UserController extends AbstractController
      * @Route("/register", name="app_register")
      * @param              Request $request
      * @param              UserPasswordEncoderInterface $passwordEncoder
-     * @param              GuardAuthenticatorHandler $guardHandler
-     * @param              AppCustomAuthenticator $authenticator
      * @param              EntityManagerInterface $entityManager
      * @return             null|Response
      */
     public function register(
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
-        GuardAuthenticatorHandler $guardHandler,
-        AppCustomAuthenticator $authenticator,
         EntityManagerInterface $entityManager
     ) {
         $user = new User();
@@ -249,19 +246,21 @@ class UserController extends AbstractController
     /**
      * @Route("/profile/my_borrowed_books", name="my_borrowed_books")
      * @param                               UserInterface $user
+     * @param BorrowedRepository $borrowedRepository
+     * @param PaymentMethodRepository $paymentMethodRepository
      * @return                              Response
+     * @throws \Exception
      */
     public function usersBorrowedBooks(
-        EntityManagerInterface $entityManager,
-        Request $request,
         UserInterface $user,
-        BorrowedRepository $borrowedRepository
+        BorrowedRepository $borrowedRepository,
+        PaymentMethodRepository $paymentMethodRepository
     ) {
 
         $lateFee = [];
         $borrowed = $borrowedRepository->findBy(['user' => $user->getId(), 'active' => true]);
+        $paymentMethods = $paymentMethodRepository->findAll();
 
-        //DOVRŠITI
 
         foreach ($borrowed as $borrowedBooks) {
             $time = $borrowedBooks->getReturnDate();
@@ -282,7 +281,8 @@ class UserController extends AbstractController
             [
 
                 'books' => $borrowed,
-                'lateFee' => $lateFee
+                'lateFee' => $lateFee,
+                'paymentMethods' => $paymentMethods
 
 
             ]
@@ -291,6 +291,8 @@ class UserController extends AbstractController
 
     /**
      * @Route("/profile/add_book/{id}", name="add_book")
+     * @param UserInterface $user
+     * @param Book $book
      * @param                           EntityManagerInterface $entityManager
      * @return                          \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
@@ -321,8 +323,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/profile/remove_from_wishlist/{id}", name="remove_from_wishlist")
-     * @param                                       EntityManagerInterface $entityManager
+     * @param UserInterface $user
      * @param                                       Wishlist $wishlist
+     * @param                                       EntityManagerInterface $entityManager
      * @return                                      RedirectResponse
      */
     public function removeFromWishlist(UserInterface $user, Wishlist $wishlist, EntityManagerInterface $entityManager)
@@ -338,7 +341,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/profile/my_wishlist", name="my_wishlist")
-     * @param                         User $user
+     * @param UserInterface $user
      * @return                        Response
      */
     public function usersWishlist(UserInterface $user)
@@ -363,10 +366,11 @@ class UserController extends AbstractController
 
     /**
      * @Route("/profile/reserve_book/{id}", name="reserve_book")
-     * @param                               EntityManagerInterface $entityManager
      * @param                               UserInterface $user
      * @param                               Book $book
+     * @param                               EntityManagerInterface $entityManager
      * @return                              \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      */
     public function reserveBook(UserInterface $user, Book $book, EntityManagerInterface $entityManager)
     {
