@@ -11,6 +11,7 @@ namespace App\Controller;
 use App\Entity\Borrowed;
 use App\Entity\BorrowedBooks;
 use App\Entity\OnDeliveryTransaction;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -38,13 +39,24 @@ class OnDeliveryTransactionController extends AbstractController
         $entityManager->flush();
 
 
-        self::createDomPdf($borrowed, $array['lateFee'], $array['onDeliveryTransaction'], $array['issueDate']);
+        self::createDomPdf(
+            $borrowed,
+            $array['lateFee'],
+            $array['onDeliveryTransaction'],
+            $array['issueDate'],
+            $entityManager
+        );
         $this->addFlash('success', 'Invoice successfully generated!');
         return $this->redirectToRoute('borrowed_books');
     }
 
-    public function createDomPdf($borrowed, $lateFee, $onDeliveryTransaction, $issueDate)
-    {
+    public function createDomPdf(
+        $borrowed,
+        $lateFee,
+        $onDeliveryTransaction,
+        $issueDate,
+        EntityManagerInterface $entityManager
+    ) {
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
 
@@ -60,6 +72,8 @@ class OnDeliveryTransactionController extends AbstractController
             ]
         );
 
+        $user =  $user = $entityManager->find(User::class, $borrowed->getUser());
+        $pdfName = rand(1, 100) . $user->getId() . rand(1, 100000) . '.pdf';
         $domPdf->loadHtml($html);
 
         $domPdf->setPaper('A4', 'portrait');
@@ -68,7 +82,7 @@ class OnDeliveryTransactionController extends AbstractController
 
         $output = $domPdf->output();
 
-        file_put_contents('../public/pdf/test.pdf', $output);
+        file_put_contents('../public/pdf/'. $pdfName, $output);
     }
 
     /**
@@ -90,7 +104,13 @@ class OnDeliveryTransactionController extends AbstractController
         $entityManager->persist($array['onDeliveryTransaction']);
         $entityManager->flush();
 
-        self::createDomPdf($borrowed, $array['lateFee'], $array['onDeliveryTransaction'], $array['issueDate']);
+        self::createDomPdf(
+            $borrowed,
+            $array['lateFee'],
+            $array['onDeliveryTransaction'],
+            $array['issueDate'],
+            $entityManager
+        );
         $this->addFlash('success', 'Invoice successfully generated!');
         return $this->redirectToRoute('books_details', ['id' => $borrowed->getId()]);
     }
