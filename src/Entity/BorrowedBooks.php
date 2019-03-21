@@ -49,6 +49,27 @@ class BorrowedBooks
     private $lateFee = 0;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $paid = false;
+
+    /**
+     * @return mixed
+     */
+    public function getPaid()
+    {
+        return $this->paid;
+    }
+
+    /**
+     * @param mixed $paid
+     */
+    public function setPaid($paid): void
+    {
+        $this->paid = $paid;
+    }
+
+    /**
      * @param mixed $lateFee
      */
     public function setLateFee($lateFee): void

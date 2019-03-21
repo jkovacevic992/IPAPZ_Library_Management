@@ -14,14 +14,14 @@
     <h4>User:</h4>
     <p>{{ borrowed.user.firstName }} {{ borrowed.user.lastName }}</p><br>
 
-    <h4>Books:</h4>
-<ul>
-    {% for borrowedBook in borrowed.borrowedBooks %}
-    <li>{{ borrowedBook.book.name }}
-    </li>
+    {#<h4>Books:</h4>#}
+{#<ul>#}
+    {#{% for borrowedBook in borrowed.borrowedBooks %}#}
+    {#<li>{{ borrowedBook.book.name }}#}
+    {#</li>#}
 
-    {% endfor %}
-</ul>
+    {#{% endfor %}#}
+{#</ul>#}
     <h4>Late Fee:</h4>
     <p>{{ lateFee }} EUR</p>
 {% endblock %}

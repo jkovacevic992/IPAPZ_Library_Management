@@ -11,8 +11,11 @@
                         {% for book in borrowed.borrowedBooks %}
 
                             <h6 class="card-subtitle mt-2 text-muted">{{ book.book.name }}  </h6>
+                            <a href="{{ path('single_book_invoice', {'id': borrowed.id, 'borrowedBooks' : book.id} ) }}"
+                               class="btn btn-primary">Invoice</a>
+                            {% if book.paid %}
                             <a href="{{ path('return_single_book',{id: book.book.id, borrowedId: borrowed.id, borrowedBooks: book.id}) }}" class="btn btn-danger">Return this book</a>
-
+                            {% endif %}
 
                         {% endfor %}
                         <br/><a href="{{ path('edit_borrowed', {'id': borrowed.id}) }}" class="btn btn-primary">Edit</a>

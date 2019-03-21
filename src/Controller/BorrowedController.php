@@ -150,8 +150,18 @@ class BorrowedController extends AbstractController
         }
         $borrowedId->setActive(false);
         $user = $entityManager->find(User::class, $borrowedId->getUser());
-        $user->setHasBooks(false);
-        $entityManager->merge($borrowedId);
+        $temp = true;
+        foreach ($user->getBorrowed() as $borrowed) {
+            if (count($borrowed->getBorrowedBooks()) !== 0 || $borrowed->getActive() === true) {
+                $temp = false;
+                break;
+            }
+        }
+        if ($temp) {
+            $user->setHasBooks(false);
+        }
+        $entityManager->persist($borrowedId);
+        $entityManager->persist($user);
         $entityManager->flush();
         $this->addFlash('success', 'Successfully returned all books!');
         return $this->redirectToRoute('borrowed_books');
@@ -159,6 +169,7 @@ class BorrowedController extends AbstractController
 
     /**
      * @Route("/employee/return_single_book/{id}/{borrowedId}/{borrowedBooks}", name= "return_single_book")
+     * @param BorrowedBooks $borrowedBooks
      * @param                                                                   Book $book
      * @param                                                                   Borrowed $borrowedId
      * @param                                                                   EntityManagerInterface $entityManager
@@ -181,11 +192,22 @@ class BorrowedController extends AbstractController
 
         if (count($borrowedId->getBorrowedBooks()) === 0) {
             $borrowedId->setActive(false);
+            $borrowedId->setPaymentMethod('onDelivery');
+        }
+        $temp = true;
+        foreach ($user->getBorrowed() as $borrowed) {
+            if (count($borrowed->getBorrowedBooks()) !== 0 || $borrowed->getActive() === true) {
+                $temp = false;
+                break;
+            }
+        }
+        if ($temp) {
             $user->setHasBooks(false);
         }
 
-        $entityManager->merge($borrowedId);
-        $entityManager->merge($book);
+        $entityManager->persist($borrowedId);
+        $entityManager->persist($book);
+        $entityManager->persist($user);
         $entityManager->flush();
         $this->addFlash('success', 'Successfully returned one book!');
         return $this->redirectToRoute('borrowed_books');
