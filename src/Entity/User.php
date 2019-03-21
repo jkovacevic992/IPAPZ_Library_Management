@@ -29,10 +29,7 @@ class User implements UserInterface
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $membership = false;
+
 
     /**
      * @ORM\Column(type="string")
@@ -105,6 +102,13 @@ class User implements UserInterface
      */
     private $onDeliveryTransaction;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Subscription", mappedBy="user", cascade={"persist","remove"})
+     */
+    private $subscription;
+
+
+
 
     public function __construct()
     {
@@ -113,21 +117,7 @@ class User implements UserInterface
     }
 
 
-    /**
-     * @return mixed
-     */
-    public function getMembership()
-    {
-        return $this->membership;
-    }
 
-    /**
-     * @param mixed $membership
-     */
-    public function setMembership($membership): void
-    {
-        $this->membership = $membership;
-    }
 
     /**
      * @param mixed $username

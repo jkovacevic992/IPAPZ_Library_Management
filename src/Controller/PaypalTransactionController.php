@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Borrowed;
 use App\Entity\PaypalTransaction;
+use App\Entity\Subscription;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -118,12 +119,16 @@ class PaypalTransactionController extends AbstractController
         $paypalTransaction->setPayment($transaction->id);
         $paypalTransaction->setUser($user);
         $user->setRoles(['ROLE_PREMIUM_USER']);
+        $subscription = new Subscription();
+        $subscription->setUser($user);
+        $subscription->setCreatedAt(new \DateTime('now'));
+        $entityManager->persist($subscription);
         $entityManager->persist($user);
         $entityManager->persist($paypalTransaction);
         $entityManager->flush();
 
-        $this->addFlash('success', 'You are now a premium member, please login.');
-        return $this->redirectToRoute('logout');
+        $this->addFlash('success', 'You are now a premium member, please relog.');
+        return $this->redirectToRoute('book_index');
     }
 
     /**
