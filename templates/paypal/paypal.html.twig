@@ -15,6 +15,10 @@
                 </p>
             </header>
             <h3>Amount: {{ fee }} EUR</h3>
+            <h3>Books:</h3>
+            {% for borrowedBooks in borrowed.borrowedBooks %}
+            <p>{{ borrowedBooks.book.name }}</p>
+            {% endfor %}
             <form method="post" id="payment-form" action="{{ path('payment', {'id': borrowed.id}) }}">
                 <section>
 
@@ -25,7 +29,7 @@
                 </section>
 
                 <input id="nonce" name="payment_method_nonce" type="hidden" />
-                <button class="btn btn-primary" type="submit"><span>Test Transaction</span></button>
+                <button class="btn btn-primary" type="submit"><span>Complete Transaction</span></button>
             </form>
         </div>
     </div>

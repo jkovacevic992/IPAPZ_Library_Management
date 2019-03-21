@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>Payment Methods</h3>
+    {% for paymentMethod in paymentMethods %}
+        <div class="row mt-3">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mt-2 text-muted">{{ paymentMethod.method }}</h6>
+                        {% if paymentMethod.active %}
+                            <br/><a href="{{ path('disable_payment', {'id' : paymentMethod.id}) }}" class="btn btn-danger">Disable</a>
+                        {% else %}
+                            <br/><a href="{{ path('enable_payment', {'id' : paymentMethod.id}) }}" class="btn btn-primary">Enable</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

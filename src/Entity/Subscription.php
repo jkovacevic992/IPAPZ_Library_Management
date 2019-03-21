@@ -34,6 +34,26 @@ class Subscription
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active = true;
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active): void
+    {
+        $this->active = $active;
+    }
 
     /**
      * @param mixed $user

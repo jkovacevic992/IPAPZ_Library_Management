@@ -80,63 +80,7 @@ class BookController extends AbstractController
     }
 
 
-    /**
-     * @Route("/employee/lend_book", name="lend_book")
-     * @param                        Request $request
-     * @param                        EntityManagerInterface $entityManager
-     * @return                       \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     */
 
-
-    public function lendBook(Request $request, EntityManagerInterface $entityManager)
-    {
-        $borrowed = new Borrowed();
-        try {
-            $borrowed->setBorrowDate(new \DateTime('now'));
-        } catch (\Exception $e) {
-            $e->getMessage();
-        }
-        $form = $this->createForm(BorrowedFormType::class, $borrowed);
-        $form->handleRequest($request);
-        if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var Borrowed $borrowed
-             */
-            $borrowed = $form->getData();
-            $userId = $borrowed->getUser();
-            $user = $entityManager->find(User::class, $userId);
-            $user->setHasBooks(true);
-            /**
-             * @var BorrowedBooks $borrowedBook
-             */
-            foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
-                $borrowedBook->getBook()->setBorrowedQuantity($borrowedBook->getBook()->getBorrowedQuantity() + 1);
-                $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity() - 1);
-                if ($borrowedBook->getBook()->getQuantity() < 0) {
-                    $this->addFlash('warning', $borrowedBook->getBook()
-                            ->getName() . ' is not available in so many copies.');
-                    return $this->redirectToRoute('book_index');
-                    break;
-                }
-                if ($borrowedBook->getBook()->getQuantity() === 0) {
-                    $borrowedBook->getBook()->setAvailable(false);
-                }
-            }
-            $entityManager->persist($borrowed);
-
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Nice!');
-            return $this->redirectToRoute('book_index');
-        }
-
-        return $this->render(
-            'book/lend_book.html.twig',
-            [
-                'form' => $form->createView()
-            ]
-        );
-    }
 
     /**
      * @Route("/employee/edit_book/{id}", name="edit_book")
@@ -269,7 +213,7 @@ class BookController extends AbstractController
         $users = $userRepository->findUsers()[0][1];
         $bookNumber = $bookRepository->findBooks()[0][1];
         $availableBooks = $bookRepository->count(['available' => true]);
-        $borrowedBooks = $bookRepository->count(['available' => false]);
+
         $user = $this->getUser();
         $book = $this->checkBookAvailability($user, $entityManager);
         $topBooks = $bookRepository->getTopBooks();
@@ -311,7 +255,6 @@ class BookController extends AbstractController
                     'totalUsers' => $users,
                     'totalBooks' => $bookNumber,
                     'availableBooks' => $availableBooks,
-                    'allBorrowedBooks' => $borrowedBooks,
                     'genres' => $genres,
                     'topBooks' => null
 
@@ -332,7 +275,6 @@ class BookController extends AbstractController
                     'totalUsers' => $users,
                     'totalBooks' => $bookNumber,
                     'availableBooks' => $availableBooks,
-                    'allBorrowedBooks' => $borrowedBooks,
                     'genres' => $genres,
                     'formSearch' => $formSearch->createView(),
                     'topBooks' => $topBooks

@@ -28,19 +28,21 @@
             <td>
                 Borrowed for: {{ borrowedFor[borrowedBook.id] }} days<br>
                 Late: {{ daysLate[borrowedBook.id] }} days<br>
-                {{ lateFee[borrowedBook.id] }} USD
+                {{ lateFee[borrowedBook.id] }} EUR
             </td>
             <td>
                 <a href="{{ path('books_details', {'id': borrowedBook.id}) }}"
                    class="btn btn-primary">Details</a>
             </td>
             <td>
-                {% if borrowedBook.paymentMethod == 'notPaid' %}
+                {% if borrowedBook.paymentMethod == 'notPaid' and paymentMethods[1].active %}
                 <a href="{{ path('invoice', {'id': borrowedBook.id}) }}"
                    class="btn btn-primary">Invoice</a>
+                {% elseif paymentMethods[1].active == false %}
+                    <p>Payment on Delivery Disabled</p>
                 {% else %}
-                    Paid
-                    {% endif %}
+                    <p>Paid</p>
+                {% endif %}
             </td>
 
             <td>

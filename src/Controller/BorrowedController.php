@@ -15,6 +15,7 @@ use App\Entity\Customer;
 use App\Entity\User;
 use App\Form\BorrowedFormType;
 use App\Repository\BorrowedRepository;
+use App\Repository\PaymentMethodRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,11 +27,15 @@ class BorrowedController extends AbstractController
     /**
      * @Route("/employee/borrowed_books", name="borrowed_books")
      * @param                             BorrowedRepository $borrowedRepository
+     * @param PaymentMethodRepository $paymentMethodRepository
      * @return                            Response
+     * @throws \Exception
      */
-    public function borrowedBooks(BorrowedRepository $borrowedRepository)
-    {
-
+    public function borrowedBooks(
+        BorrowedRepository $borrowedRepository,
+        PaymentMethodRepository $paymentMethodRepository
+    ) {
+        $paymentMethods = $paymentMethodRepository->findAll();
         $borrowedBooks = $borrowedRepository->findBy(['active' => true]);
         $lateFee = [];
         $daysLate = [];
@@ -56,8 +61,68 @@ class BorrowedController extends AbstractController
                 'borrowed' => $borrowedBooks,
                 'lateFee' => $lateFee,
                 'daysLate' => $daysLate,
-                'borrowedFor' => $borrowedFor
+                'borrowedFor' => $borrowedFor,
+                'paymentMethods' => $paymentMethods
 
+            ]
+        );
+    }
+
+    /**
+     * @Route("/employee/lend_book", name="lend_book")
+     * @param                        Request $request
+     * @param                        EntityManagerInterface $entityManager
+     * @return                       \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+
+
+    public function lendBook(Request $request, EntityManagerInterface $entityManager)
+    {
+        $borrowed = new Borrowed();
+        try {
+            $borrowed->setBorrowDate(new \DateTime('now'));
+            $borrowed->setReturnDate(new \DateTime('now + 15 day'));
+        } catch (\Exception $e) {
+            $e->getMessage();
+        }
+        $form = $this->createForm(BorrowedFormType::class, $borrowed);
+        $form->handleRequest($request);
+        if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
+            /**
+             * @var Borrowed $borrowed
+             */
+            $borrowed = $form->getData();
+            $userId = $borrowed->getUser();
+            $user = $entityManager->find(User::class, $userId);
+            $user->setHasBooks(true);
+            /**
+             * @var BorrowedBooks $borrowedBook
+             */
+            foreach ($borrowed->getBorrowedBooks() as $borrowedBook) {
+                $borrowedBook->getBook()->setBorrowedQuantity($borrowedBook->getBook()->getBorrowedQuantity() + 1);
+                $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity() - 1);
+                if ($borrowedBook->getBook()->getQuantity() < 0) {
+                    $this->addFlash('warning', $borrowedBook->getBook()
+                            ->getName() . ' is not available in so many copies.');
+                    return $this->redirectToRoute('book_index');
+                    break;
+                }
+                if ($borrowedBook->getBook()->getQuantity() === 0) {
+                    $borrowedBook->getBook()->setAvailable(false);
+                }
+            }
+            $entityManager->persist($borrowed);
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Nice!');
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render(
+            'book/lend_book.html.twig',
+            [
+                'form' => $form->createView()
             ]
         );
     }
@@ -147,6 +212,7 @@ class BorrowedController extends AbstractController
      * @param                                 EntityManagerInterface $entityManager
      * @param                                 Borrowed $borrowedId
      * @return                                \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      */
     public function editBorrowed(Borrowed $borrowedId, Request $request, EntityManagerInterface $entityManager)
     {

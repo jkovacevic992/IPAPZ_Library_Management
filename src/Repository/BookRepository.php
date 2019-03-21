@@ -23,6 +23,7 @@ class BookRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('b')
             ->select('count(b.id)')
+            ->where('b.quantity != b.borrowedQuantity')
             ->getQuery()
             ->getResult();
     }
