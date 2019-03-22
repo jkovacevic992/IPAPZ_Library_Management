@@ -29,8 +29,8 @@ class PaypalTransactionController extends AbstractController
     public function paypalDisplay(Borrowed $borrowed)
     {
 
-        $lateFee = self::calculateLateFeeBorrowed($borrowed);
-        $gateway = self::gateway();
+        $lateFee = $this->calculateLateFeeBorrowed($borrowed);
+        $gateway = $this->gateway();
 
         return $this->render(
             'paypal/paypal.html.twig',
@@ -52,8 +52,8 @@ class PaypalTransactionController extends AbstractController
      */
     public function payment(UserInterface $user, Borrowed $borrowed, EntityManagerInterface $entityManager)
     {
-        $lateFee = self::calculateLateFeeBorrowed($borrowed);
-        $gateway = self::gateway();
+        $lateFee = $this->calculateLateFeeBorrowed($borrowed);
+        $gateway = $this->gateway();
         $amount = $lateFee;
         $nonce = $_POST["payment_method_nonce"];
         $result = $gateway->transaction()->sale(
@@ -107,7 +107,7 @@ class PaypalTransactionController extends AbstractController
      */
     public function premiumMembership(UserInterface $user, EntityManagerInterface $entityManager)
     {
-        $gateway = self::gateway();
+        $gateway = $this->gateway();
         $nonce = $_POST["payment_method_nonce"];
         $amount = '10.00';
         $result = $gateway->transaction()->sale(
@@ -118,7 +118,7 @@ class PaypalTransactionController extends AbstractController
         );
         $transaction = $result->transaction;
 
-        $paypalTransaction = self::paypalTransaction($amount, $transaction, $user);
+        $paypalTransaction = $this->payPalTransaction($amount, $transaction, $user);
         $user->setRoles(['ROLE_PREMIUM_USER']);
         $subscription = new Subscription();
         $subscription->setUser($user);

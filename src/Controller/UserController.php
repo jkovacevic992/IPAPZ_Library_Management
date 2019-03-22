@@ -198,7 +198,7 @@ class UserController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash('success', 'Employee edited!');
+            $this->addFlash('success', 'User edited!');
             return $this->redirectToRoute('book_index');
         }
 
@@ -220,7 +220,7 @@ class UserController extends AbstractController
     {
         $entityManager->remove($user);
         $entityManager->flush();
-        $this->addFlash('success', 'Employee deleted!');
+        $this->addFlash('success', 'User deleted!');
         return $this->redirectToRoute('book_index');
     }
 

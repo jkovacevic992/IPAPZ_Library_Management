@@ -4,6 +4,8 @@
     <list default="true" id="ed7e72de-b7c3-4449-a8f5-684cf487040f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/PaypalTransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PaypalTransactionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/my_borrowed_books.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/my_borrowed_books.html.twig" afterDir="false" />
     </list>
     <list id="c8cf934a-cf53-4a15-80f5-34441611fb9a" name="Revert &quot;Genres on index now have show more/show less option&quot;" comment="Revert &quot;Genres on index now have show more/show less option&quot;&#10;&#10;This reverts commit d93df3ad" />
     <list id="48974687-cc20-4b66-aa27-42bb2247e704" name="Revert &quot;Search bar now works (user can search for books/authors)&quot;" comment="Revert &quot;Search bar now works (user can search for books/authors)&quot;&#10;&#10;This reverts commit d59c0f8f" />
@@ -57,20 +59,57 @@
         <item name="library_management: schema" type="76f4a085:MysqlImplModel$Schema" />
         <item name="subscription: table" type="285a2a93:MysqlImplModel$Table" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="library_management@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="library_management: schema" type="76f4a085:MysqlImplModel$Schema" />
+        <item name="user: table" type="285a2a93:MysqlImplModel$Table" />
+      </path>
     </expand>
     <select />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/PaypalTransactionController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="134" column="49" selection-start-line="134" selection-start-column="49" selection-end-line="134" selection-end-column="49" />
+            <state relative-caret-position="-1695">
+              <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
               <folding>
                 <element signature="e#116#140#0#PHP" expanded="true" />
-                <element signature="e#4273#4285#1#PHP" expanded="true" />
-                <element signature="e#4618#4630#1#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/user/my_borrowed_books.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="540">
+              <caret line="154" column="56" selection-start-line="154" selection-start-column="56" selection-end-line="154" selection-end-column="56" />
+              <folding>
+                <element signature="e#5172#5195#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/security/login.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#12#26#0#Twig" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,11 +154,9 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/Controller/BookController.php" />
         <option value="$PROJECT_DIR$/src/Controller/SecurityController.php" />
-        <option value="$PROJECT_DIR$/src/Controller/UserController.php" />
         <option value="$PROJECT_DIR$/templates/pdf/mypdf.html.twig" />
         <option value="$PROJECT_DIR$/src/Entity/BorrowedBooks.php" />
         <option value="$PROJECT_DIR$/templates/book/books_details.html.twig" />
-        <option value="$PROJECT_DIR$/templates/user/my_borrowed_books.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/BorrowedController.php" />
         <option value="$PROJECT_DIR$/features/OnDeliveryTransaction.md" />
         <option value="$PROJECT_DIR$/features/PaymentMethod.md" />
@@ -140,7 +177,9 @@
         <option value="$PROJECT_DIR$/templates/book/borrowed_books.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php" />
         <option value="$PROJECT_DIR$/templates/pdf/invoice.html.twig" />
+        <option value="$PROJECT_DIR$/src/Controller/UserController.php" />
         <option value="$PROJECT_DIR$/src/Controller/PaypalTransactionController.php" />
+        <option value="$PROJECT_DIR$/templates/user/my_borrowed_books.html.twig" />
       </list>
     </option>
   </component>
@@ -258,6 +297,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -332,7 +372,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -389,14 +428,8 @@
       <workItem from="1553062330155" duration="1103000" />
       <workItem from="1553063457253" duration="24096000" />
       <workItem from="1553152632640" duration="25152000" />
-      <workItem from="1553238454443" duration="6444000" />
-    </task>
-    <task id="LOCAL-00006" summary="Fixed genre deletion">
-      <created>1552466003161</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1552466003161</updated>
+      <workItem from="1553238454443" duration="8244000" />
+      <workItem from="1553257886577" duration="2442000" />
     </task>
     <task id="LOCAL-00007" summary="Users can now be promoted to employees by admin">
       <created>1552476354074</created>
@@ -734,17 +767,24 @@
       <option name="project" value="LOCAL" />
       <updated>1553244693303</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Bug fixing">
+      <created>1553245890974</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1553245890974</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="201266000" />
+    <option name="totallyTimeSpent" value="205508000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1040" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49909255" visible="true" weight="0.23105656" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49909255" visible="true" weight="0.23372465" />
       <window_info id="Structure" order="1" sideWeight="0.5009074" side_tool="true" weight="0.2113127" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -757,8 +797,8 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" weight="0.32969433" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.4994664" weight="0.32969433" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49573106" visible="true" weight="0.3231441" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50426894" side_tool="true" visible="true" weight="0.3231441" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49519745" visible="true" weight="0.3231441" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5048026" side_tool="true" visible="true" weight="0.3231441" />
       <window_info anchor="bottom" id="Database Console" order="12" sideWeight="0.4994664" weight="0.3220524" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -810,7 +850,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Admin can now see late days" />
     <MESSAGE value="Connected to paypal" />
     <MESSAGE value="payment now goes through" />
     <MESSAGE value="Added amount to paypal_transaction" />
@@ -835,16 +874,21 @@
     <MESSAGE value="User can now only return a single book if they paid on delivery." />
     <MESSAGE value="Created .md files for entities for general info." />
     <MESSAGE value="Admin can now see invoice before charging the client" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin can now see invoice before charging the client" />
+    <MESSAGE value="Bug fixing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixing" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/src/Controller/UserController.php</url>
+          <line>38</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="das://64ffc5f3-2796-49ea-96a2-11ac1866ccbb/schema/library_management/table/on_delivery_transaction">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/dompdf/dompdf/src/Dompdf.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -895,13 +939,6 @@
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/user/my_borrowed_books.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="49" />
         </state>
       </provider>
     </entry>
@@ -994,16 +1031,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4914">
-          <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
-          <folding>
-            <element signature="e#115#135#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/features/User.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1044,14 +1071,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Migrations/Version20190312144621.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Migrations/Version20190322071805.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-675" />
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Migrations/Version20190312144621.php" />
+    <entry file="file://$PROJECT_DIR$/src/Migrations/Version20190322071805.php" />
     <entry file="file://$PROJECT_DIR$/public/js/genres.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1095,16 +1116,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/PaypalTransaction.php">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="das://64ffc5f3-2796-49ea-96a2-11ac1866ccbb/schema/library_management/table/user">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-          <column-attributes>
-            <column name="roles" languageId="JSON" />
-          </column-attributes>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
@@ -1154,33 +1165,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/pdf/mypdf.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="8" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="154" column="56" selection-start-line="154" selection-start-column="56" selection-end-line="154" selection-end-column="56" />
-          <folding>
-            <element signature="e#5172#5195#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/user/users.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
@@ -1210,15 +1194,77 @@
         </state>
       </provider>
     </entry>
+    <entry file="das://64ffc5f3-2796-49ea-96a2-11ac1866ccbb/schema/library_management/table/user">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+          <column-attributes>
+            <column name="roles" languageId="JSON" />
+          </column-attributes>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/pdf/mypdf.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/user/users.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="34" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+            <element signature="e#561#574#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="154" column="56" selection-start-line="154" selection-start-column="56" selection-end-line="154" selection-end-column="56" />
+          <folding>
+            <element signature="e#5172#5195#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="34" column="29" selection-start-line="34" selection-start-column="29" selection-end-line="34" selection-end-column="29" />
+          <folding>
+            <element signature="e#115#135#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/security/login.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/PaypalTransactionController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="134" column="49" selection-start-line="134" selection-start-column="49" selection-end-line="134" selection-end-column="49" />
+        <state relative-caret-position="-1695">
+          <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
           <folding>
             <element signature="e#116#140#0#PHP" expanded="true" />
-            <element signature="e#4273#4285#1#PHP" expanded="true" />
-            <element signature="e#4618#4630#1#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/user/my_borrowed_books.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
         </state>
       </provider>
     </entry>
