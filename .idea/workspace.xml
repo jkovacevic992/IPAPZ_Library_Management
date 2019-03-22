@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ed7e72de-b7c3-4449-a8f5-684cf487040f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/book/borrowed_books.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book/borrowed_books.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PaypalTransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PaypalTransactionController.php" afterDir="false" />
     </list>
     <list id="c8cf934a-cf53-4a15-80f5-34441611fb9a" name="Revert &quot;Genres on index now have show more/show less option&quot;" comment="Revert &quot;Genres on index now have show more/show less option&quot;&#10;&#10;This reverts commit d93df3ad" />
     <list id="48974687-cc20-4b66-aa27-42bb2247e704" name="Revert &quot;Search bar now works (user can search for books/authors)&quot;" comment="Revert &quot;Search bar now works (user can search for books/authors)&quot;&#10;&#10;This reverts commit d59c0f8f" />
@@ -63,78 +62,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Form/RegistrationFormType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/registration/register.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
-              <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/Subscription.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-270" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="128" column="5" selection-start-line="128" selection-start-column="5" selection-end-line="128" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/user/users.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
-              <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php">
+        <entry file="file://$PROJECT_DIR$/src/Controller/PaypalTransactionController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="159" column="33" lean-forward="true" selection-start-line="159" selection-start-column="33" selection-end-line="159" selection-end-column="33" />
+            <state relative-caret-position="295">
+              <caret line="134" column="49" selection-start-line="134" selection-start-column="49" selection-end-line="134" selection-end-column="49" />
               <folding>
-                <element signature="e#5292#5313#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/book/borrowed_books.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="57" column="37" selection-start-line="57" selection-start-column="37" selection-end-line="57" selection-end-column="37" />
-              <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
-                <element signature="e#1073#1086#0#Twig" expanded="true" />
-                <element signature="e#1336#1343#0#Twig" expanded="true" />
-                <element signature="e#2052#2064#0#Twig" expanded="true" />
-                <element signature="e#2254#2265#0#Twig" expanded="true" />
+                <element signature="e#116#140#0#PHP" expanded="true" />
+                <element signature="e#4273#4285#1#PHP" expanded="true" />
+                <element signature="e#4618#4630#1#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -154,7 +90,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/paypal/test.html.twig" />
         <option value="$PROJECT_DIR$/public/js/paypal.js" />
         <option value="$PROJECT_DIR$/templates/paypal/text.html.twig" />
         <option value="$PROJECT_DIR$/src/Entity/PaypalTransaction.php" />
@@ -199,12 +134,13 @@
         <option value="$PROJECT_DIR$/src/Form/RegistrationFormType.php" />
         <option value="$PROJECT_DIR$/templates/registration/register.html.twig" />
         <option value="$PROJECT_DIR$/src/Entity/User.php" />
-        <option value="$PROJECT_DIR$/src/Controller/PaypalTransactionController.php" />
         <option value="$PROJECT_DIR$/src/Controller/SubscriptionController.php" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
         <option value="$PROJECT_DIR$/templates/user/users.html.twig" />
         <option value="$PROJECT_DIR$/templates/book/borrowed_books.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php" />
+        <option value="$PROJECT_DIR$/templates/pdf/invoice.html.twig" />
+        <option value="$PROJECT_DIR$/src/Controller/PaypalTransactionController.php" />
       </list>
     </option>
   </component>
@@ -332,6 +268,17 @@
             <path>
               <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
               <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="pdf" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -362,6 +309,12 @@
               <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="book" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="pdf" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
@@ -436,14 +389,7 @@
       <workItem from="1553062330155" duration="1103000" />
       <workItem from="1553063457253" duration="24096000" />
       <workItem from="1553152632640" duration="25152000" />
-      <workItem from="1553238454443" duration="5207000" />
-    </task>
-    <task id="LOCAL-00005" summary="Books can now have multiple genres">
-      <created>1552463298233</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1552463298233</updated>
+      <workItem from="1553238454443" duration="6444000" />
     </task>
     <task id="LOCAL-00006" summary="Fixed genre deletion">
       <created>1552466003161</created>
@@ -781,11 +727,18 @@
       <option name="project" value="LOCAL" />
       <updated>1553242380597</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Admin can now see invoice before charging the client">
+      <created>1553244693303</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1553244693303</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="200029000" />
+    <option name="totallyTimeSpent" value="201266000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1040" extended-state="6" />
@@ -857,7 +810,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Admins and users can now see late fee" />
     <MESSAGE value="Admin can now see late days" />
     <MESSAGE value="Connected to paypal" />
     <MESSAGE value="payment now goes through" />
@@ -882,27 +834,14 @@
     <MESSAGE value="Pdf is now created when clicking on Invoice. User hasBooks property fixed." />
     <MESSAGE value="User can now only return a single book if they paid on delivery." />
     <MESSAGE value="Created .md files for entities for general info." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created .md files for entities for general info." />
+    <MESSAGE value="Admin can now see invoice before charging the client" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin can now see invoice before charging the client" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Entity/PaymentMethod.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1065">
-          <caret line="84" selection-start-line="84" selection-end-line="84" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://64ffc5f3-2796-49ea-96a2-11ac1866ccbb/schema/library_management/table/on_delivery_transaction">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/pdf/mypdf.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" selection-start-line="16" selection-end-line="16" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -1154,30 +1093,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Form/RegistrationFormType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/registration/register.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/PaypalTransaction.php">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/Subscription.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-270" />
-      </provider>
     </entry>
     <entry file="das://64ffc5f3-2796-49ea-96a2-11ac1866ccbb/schema/library_management/table/user">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
@@ -1186,13 +1103,6 @@
           <column-attributes>
             <column name="roles" languageId="JSON" />
           </column-attributes>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="128" column="5" selection-start-line="128" selection-start-column="5" selection-end-line="128" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -1232,19 +1142,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/PaypalTransactionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="133" column="35" selection-start-line="133" selection-start-column="35" selection-end-line="133" selection-end-column="35" />
-          <folding>
-            <element signature="e#116#140#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/OnDeliveryTransaction.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-720" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/pdf/invoice.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/pdf/mypdf.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="8" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="154" column="56" selection-start-line="154" selection-start-column="56" selection-end-line="154" selection-end-column="56" />
+          <folding>
+            <element signature="e#5172#5195#0#PHP" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/user/users.html.twig">
@@ -1257,12 +1181,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php">
+    <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="159" column="33" lean-forward="true" selection-start-line="159" selection-start-column="33" selection-end-line="159" selection-end-column="33" />
+        <state relative-caret-position="540">
+          <caret line="128" column="5" selection-start-line="128" selection-start-column="5" selection-end-line="128" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Subscription.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-270" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/registration/register.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
           <folding>
-            <element signature="e#5292#5313#0#PHP" expanded="true" />
+            <element signature="e#12#26#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Form/RegistrationFormType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/PaypalTransactionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="134" column="49" selection-start-line="134" selection-start-column="49" selection-end-line="134" selection-end-column="49" />
+          <folding>
+            <element signature="e#116#140#0#PHP" expanded="true" />
+            <element signature="e#4273#4285#1#PHP" expanded="true" />
+            <element signature="e#4618#4630#1#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

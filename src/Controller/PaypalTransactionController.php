@@ -64,11 +64,7 @@ class PaypalTransactionController extends AbstractController
         );
         $transaction = $result->transaction;
 
-        $paypalTransaction = new PaypalTransaction();
-        $paypalTransaction->setAmount($amount);
-        $paypalTransaction->setComplete(true);
-        $paypalTransaction->setPayment($transaction->id);
-        $paypalTransaction->setUser($user);
+        $paypalTransaction = self::payPalTransaction($amount, $transaction, $user);
 
         $borrowed->setPaymentMethod('PayPal');
         $entityManager->persist($borrowed);
@@ -122,11 +118,7 @@ class PaypalTransactionController extends AbstractController
         );
         $transaction = $result->transaction;
 
-        $paypalTransaction = new PaypalTransaction();
-        $paypalTransaction->setAmount($amount);
-        $paypalTransaction->setComplete(true);
-        $paypalTransaction->setPayment($transaction->id);
-        $paypalTransaction->setUser($user);
+        $paypalTransaction = self::paypalTransaction($amount, $transaction, $user);
         $user->setRoles(['ROLE_PREMIUM_USER']);
         $subscription = new Subscription();
         $subscription->setUser($user);
@@ -139,6 +131,20 @@ class PaypalTransactionController extends AbstractController
 
         $this->addFlash('success', 'You are now a premium member, please relog.');
         return $this->redirectToRoute('book_index');
+    }
+
+    public function payPalTransaction($amount, $transaction, $user)
+    {
+
+        $paypalTransaction = new PaypalTransaction();
+        $paypalTransaction->setAmount($amount);
+        $paypalTransaction->setComplete(true);
+
+        $paypalTransaction->setPayment($transaction->id);
+
+        $paypalTransaction->setUser($user);
+
+        return $paypalTransaction;
     }
 
     /**
