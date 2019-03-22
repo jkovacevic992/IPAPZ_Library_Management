@@ -131,6 +131,7 @@ class PaypalTransactionController extends AbstractController
         $subscription = new Subscription();
         $subscription->setUser($user);
         $subscription->setCreatedAt(new \DateTime('now'));
+        $user->setMembership(true);
         $entityManager->persist($subscription);
         $entityManager->persist($user);
         $entityManager->persist($paypalTransaction);

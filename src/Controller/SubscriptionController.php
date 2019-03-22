@@ -40,6 +40,7 @@ class SubscriptionController extends AbstractController
             if ($diff > 30) {
                 $user = $subscription->getUser();
                 $user->setRoles([]);
+                $user->setMembership(false);
                 $subscription->setActive(false);
                 $entityManager->persist($user);
                 $entityManager->persist($subscription);

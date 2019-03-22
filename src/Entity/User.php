@@ -107,6 +107,26 @@ class User implements UserInterface
      */
     private $subscription;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $membership = false;
+
+    /**
+     * @return mixed
+     */
+    public function getMembership()
+    {
+        return $this->membership;
+    }
+
+    /**
+     * @param mixed $membership
+     */
+    public function setMembership($membership): void
+    {
+        $this->membership = $membership;
+    }
 
 
 
@@ -114,6 +134,7 @@ class User implements UserInterface
     {
         $this->wishlist = new ArrayCollection();
         $this->reservation = new ArrayCollection();
+        $this->subscription = new ArrayCollection();
     }
 
 
@@ -134,6 +155,14 @@ class User implements UserInterface
     public function getWishlist(): Collection
     {
         return $this->wishlist;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubscription()
+    {
+        return $this->subscription;
     }
 
 
