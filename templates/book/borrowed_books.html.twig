@@ -10,9 +10,10 @@
         <th scope="col">Books</th>
         <th scope="col">Fee</th>
         <th scope="col">Details</th>
-        <th scope="col">Invoice</th>
+        <th scope="col">Charge</th>
         <th scope="col">Payment Method</th>
         <th scope="col">Return All</th>
+        <th scole="col">Invoice</th>
     </tr>
     </thead>
         <tbody>
@@ -58,6 +59,9 @@
             {% else %}
                 <td><a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all books</a></td>
             {% endif %}
+            <td>
+                <a href="{{ path('see_invoice', {'id': borrowedBook.id}) }}" class="btn btn-danger">Invoice</a>
+            </td>
         </tr>
 
 
