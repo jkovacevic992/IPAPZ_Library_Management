@@ -110,6 +110,7 @@ class Borrowed
             $borrowedBooks->setBorrowed($this);
             $this->borrowedBooks[] = $borrowedBooks;
         }
+
         return $this;
     }
 
@@ -121,6 +122,7 @@ class Borrowed
                 $borrowedBooks->setBorrowed(null);
             }
         }
+
         return $this;
     }
 
@@ -142,6 +144,7 @@ class Borrowed
                 $available = false;
             }
         }
+
         if (!$available) {
             $context->buildViolation('No available books.')
                 ->addViolation();

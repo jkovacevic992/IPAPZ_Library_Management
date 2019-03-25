@@ -172,6 +172,7 @@ class User implements UserInterface
             $wishlist->setUser($this);
             $this->wishlist[] = $wishlist;
         }
+
         return $this;
     }
 
@@ -183,6 +184,7 @@ class User implements UserInterface
                 $wishlist->setUser(null);
             }
         }
+
         return $this;
     }
 
@@ -200,6 +202,7 @@ class User implements UserInterface
             $reservation->setUser($this);
             $this->reservation[] = $reservation;
         }
+
         return $this;
     }
 
@@ -211,6 +214,7 @@ class User implements UserInterface
                 $reservation->setUser(null);
             }
         }
+
         return $this;
     }
 

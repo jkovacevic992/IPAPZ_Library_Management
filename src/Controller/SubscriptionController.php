@@ -46,6 +46,7 @@ class SubscriptionController extends AbstractController
                 $entityManager->persist($subscription);
             }
         }
+
         $entityManager->flush();
 
         return $this->redirectToRoute('book_index');

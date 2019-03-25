@@ -85,6 +85,7 @@ class BorrowedController extends AbstractController
         } catch (\Exception $e) {
             $e->getMessage();
         }
+
         $form = $this->createForm(BorrowedFormType::class, $borrowed);
         $form->handleRequest($request);
         if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
@@ -102,15 +103,18 @@ class BorrowedController extends AbstractController
                 $borrowedBook->getBook()->setBorrowedQuantity($borrowedBook->getBook()->getBorrowedQuantity() + 1);
                 $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity() - 1);
                 if ($borrowedBook->getBook()->getQuantity() < 0) {
-                    $this->addFlash('warning', $borrowedBook->getBook()
-                            ->getName() . ' is not available in so many copies.');
+                    $this->addFlash(
+                        'warning', $borrowedBook->getBook()
+                        ->getName() . ' is not available in so many copies.'
+                    );
                     return $this->redirectToRoute('book_index');
-                    break;
                 }
+
                 if ($borrowedBook->getBook()->getQuantity() === 0) {
                     $borrowedBook->getBook()->setAvailable(false);
                 }
             }
+
             $entityManager->persist($borrowed);
 
             $entityManager->flush();
@@ -148,6 +152,7 @@ class BorrowedController extends AbstractController
                 $borrowedBook->getBook()->setAvailable(true);
             }
         }
+
         $borrowedId->setActive(false);
         $user = $entityManager->find(User::class, $borrowedId->getUser());
         $temp = true;
@@ -157,9 +162,11 @@ class BorrowedController extends AbstractController
                 break;
             }
         }
+
         if ($temp) {
             $user->setHasBooks(false);
         }
+
         $entityManager->persist($borrowedId);
         $entityManager->persist($user);
         $entityManager->flush();
@@ -194,6 +201,7 @@ class BorrowedController extends AbstractController
             $borrowedId->setActive(false);
             $borrowedId->setPaymentMethod('On Delivery');
         }
+
         $temp = true;
         foreach ($user->getBorrowed() as $borrowed) {
             if (count($borrowed->getBorrowedBooks()) !== 0 || $borrowed->getActive() === true) {
@@ -201,6 +209,7 @@ class BorrowedController extends AbstractController
                 break;
             }
         }
+
         if ($temp) {
             $user->setHasBooks(false);
         }
@@ -256,6 +265,7 @@ class BorrowedController extends AbstractController
             if ($borrowed->getUser() !== $borrowedId->getUser()) {
                 $borrowedId->getUser()->setHasBooks(false);
             }
+
             $userId = $borrowed->getUser();
             $user = $entityManager->find(User::class, $userId);
             $user->setHasBooks(true);

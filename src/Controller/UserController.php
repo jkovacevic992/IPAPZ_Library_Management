@@ -80,6 +80,7 @@ class UserController extends AbstractController
             //            );
             return $this->redirectToRoute('book_index');
         }
+
         return $this->render(
             'registration/register.html.twig',
             [
@@ -311,6 +312,7 @@ class UserController extends AbstractController
                 return $this->redirectToRoute('book_index');
             }
         }
+
         $user->addWishlist($wishlist);
 
         $entityManager->persist($user);

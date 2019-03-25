@@ -48,17 +48,18 @@ class BookController extends AbstractController
              */
             $book = $form->getData();
             $files = $request->files->get('book_form')['images'];
-            $uploads_directory = $this->getParameter('images_directory');
+            $uploadsDirectory = $this->getParameter('images_directory');
             $images = [];
             foreach ($files as $file) {
                 $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
                 $file->move(
-                    $uploads_directory,
+                    $uploadsDirectory,
                     $fileName
                 );
                 $images[] = $fileName;
             }
+
             if ($images !== null) {
                 $book->setImages($images);
             }
@@ -104,13 +105,13 @@ class BookController extends AbstractController
             $book->setId($bookId->getId());
             $images = [];
             $files = $request->files->get('book_form')['images'];
-            $uploads_directory = $this->getParameter('images_directory');
+            $uploadsDirectory = $this->getParameter('images_directory');
 
             foreach ($files as $file) {
                 $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
                 $file->move(
-                    $uploads_directory,
+                    $uploadsDirectory,
                     $fileName
                 );
                 $images[] = $fileName;
@@ -186,6 +187,7 @@ class BookController extends AbstractController
             $this->addFlash('warning', 'All copies of the book have to be returned first!');
             return $this->redirectToRoute('book_index');
         }
+
         $entityManager->remove($book);
         $entityManager->flush();
         $this->addFlash('success', 'Book deleted!');
@@ -223,6 +225,7 @@ class BookController extends AbstractController
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER') && $book !== false) {
             $this->addFlash('success', $book->getName() . ' is available!');
         }
+
         $formSearch = $this->createFormBuilder(null)
             ->add(
                 'query',

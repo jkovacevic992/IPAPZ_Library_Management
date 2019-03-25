@@ -2,9 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed7e72de-b7c3-4449-a8f5-684cf487040f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/inchooRuleset.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grumphp.yml" beforeDir="false" afterPath="$PROJECT_DIR$/grumphp.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/BookController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BookController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/BorrowedController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BorrowedController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PaymentMethodController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PaymentMethodController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SubscriptionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SubscriptionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Book.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Book.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Borrowed.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Borrowed.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <list id="c8cf934a-cf53-4a15-80f5-34441611fb9a" name="Revert &quot;Genres on index now have show more/show less option&quot;" comment="Revert &quot;Genres on index now have show more/show less option&quot;&#10;&#10;This reverts commit d93df3ad" />
     <list id="48974687-cc20-4b66-aa27-42bb2247e704" name="Revert &quot;Search bar now works (user can search for books/authors)&quot;" comment="Revert &quot;Search bar now works (user can search for books/authors)&quot;&#10;&#10;This reverts commit d59c0f8f" />
@@ -70,29 +77,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/security/login.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/inchooRuleset.xml">
+        <entry file="file://$PROJECT_DIR$/src/Controller/BorrowedController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2323">
-              <caret line="327" column="11" selection-start-line="327" selection-start-column="11" selection-end-line="327" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grumphp.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="40" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
+            <state relative-caret-position="465">
+              <caret line="285" column="34" lean-forward="true" selection-start-line="285" selection-start-column="34" selection-end-line="285" selection-end-column="34" />
+              <folding>
+                <element signature="e#4078#4090#1#PHP" expanded="true" />
+                <element signature="e#4459#4471#1#PHP" expanded="true" />
+                <element signature="e#4527#4553#0#PHP" expanded="true" />
+                <element signature="e#6242#6258#1#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -102,6 +97,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>gateway</find>
+      <find>uploads</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -131,12 +127,10 @@
         <option value="$PROJECT_DIR$/templates/payment/payments.html.twig" />
         <option value="$PROJECT_DIR$/src/Entity/PaymentMethod.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/Controller/BookController.php" />
         <option value="$PROJECT_DIR$/src/Controller/SecurityController.php" />
         <option value="$PROJECT_DIR$/templates/pdf/mypdf.html.twig" />
         <option value="$PROJECT_DIR$/src/Entity/BorrowedBooks.php" />
         <option value="$PROJECT_DIR$/templates/book/books_details.html.twig" />
-        <option value="$PROJECT_DIR$/src/Controller/BorrowedController.php" />
         <option value="$PROJECT_DIR$/features/OnDeliveryTransaction.md" />
         <option value="$PROJECT_DIR$/features/PaymentMethod.md" />
         <option value="$PROJECT_DIR$/features/PayPalTransaction.md" />
@@ -162,6 +156,8 @@
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/64ffc5f3-2796-49ea-96a2-11ac1866ccbb/console.sql" />
         <option value="$PROJECT_DIR$/grumphp.yml" />
         <option value="$PROJECT_DIR$/inchooRuleset.xml" />
+        <option value="$PROJECT_DIR$/src/Controller/BookController.php" />
+        <option value="$PROJECT_DIR$/src/Controller/BorrowedController.php" />
       </list>
     </option>
   </component>
@@ -286,6 +282,17 @@
               <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
               <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Controller" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -350,14 +357,8 @@
       <workItem from="1553238454443" duration="8244000" />
       <workItem from="1553257886577" duration="4029000" />
       <workItem from="1553497535288" duration="127000" />
-      <workItem from="1553501287664" duration="251000" />
-    </task>
-    <task id="LOCAL-00009" summary="Customer Entity deleted; security changes">
-      <created>1552478819717</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1552478819717</updated>
+      <workItem from="1553501287664" duration="1833000" />
+      <workItem from="1553504440597" duration="535000" />
     </task>
     <task id="LOCAL-00010" summary="Admin can see users and employees">
       <created>1552480400570</created>
@@ -695,16 +696,24 @@
       <option name="project" value="LOCAL" />
       <updated>1553265427575</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="inchooRuleset.xml">
+      <created>1553501539593</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1553501539593</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="207473000" />
+    <option name="totallyTimeSpent" value="209590000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1040" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49909255" visible="true" weight="0.23906083" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49909255" visible="true" weight="0.24172892" />
       <window_info id="Structure" order="1" sideWeight="0.5009074" side_tool="true" weight="0.2113127" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -717,13 +726,13 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" sideWeight="0.4994664" weight="0.32969433" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.4994664" weight="0.32969433" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49466383" visible="true" weight="0.3231441" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50533617" side_tool="true" visible="true" weight="0.3231441" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.4903949" visible="true" weight="0.3231441" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5096051" side_tool="true" visible="true" weight="0.3231441" />
       <window_info active="true" anchor="bottom" id="Database Console" order="12" sideWeight="0.49893278" visible="true" weight="0.3220524" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" visible="true" weight="0.22198506" />
+      <window_info anchor="right" id="Database" order="3" weight="0.22198506" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -809,13 +818,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="das://64ffc5f3-2796-49ea-96a2-11ac1866ccbb/schema/library_management/table/borrowed_books">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/book/books_details.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -835,23 +837,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/features/Book.php" />
-    <entry file="file://$PROJECT_DIR$/src/Controller/BookController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="191" column="39" lean-forward="true" selection-start-line="191" selection-start-column="39" selection-end-line="191" selection-end-column="39" />
-          <folding>
-            <element signature="e#5911#5923#1#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/BorrowedController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="120" lean-forward="true" selection-start-line="120" selection-end-line="120" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/GenreController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-519" />
@@ -1148,20 +1133,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="154" column="56" selection-start-line="154" selection-start-column="56" selection-end-line="154" selection-end-column="56" />
-          <folding>
-            <element signature="e#5172#5195#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/security/login.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
         </state>
       </provider>
     </entry>
@@ -1172,10 +1148,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="92" column="22" selection-start-line="92" selection-start-column="22" selection-end-line="92" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/inchooRuleset.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2323">
-          <caret line="327" column="11" selection-start-line="327" selection-start-column="11" selection-end-line="327" selection-end-column="11" />
+        <state relative-caret-position="540">
+          <caret line="338" column="10" selection-start-line="338" selection-start-column="10" selection-end-line="338" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/security/login.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/BookController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="227" column="8" selection-start-line="227" selection-start-column="8" selection-end-line="227" selection-end-column="8" />
+          <folding>
+            <element signature="e#5911#5923#1#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/BorrowedController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="285" column="34" lean-forward="true" selection-start-line="285" selection-start-column="34" selection-end-line="285" selection-end-column="34" />
+          <folding>
+            <element signature="e#4078#4090#1#PHP" expanded="true" />
+            <element signature="e#4459#4471#1#PHP" expanded="true" />
+            <element signature="e#4527#4553#0#PHP" expanded="true" />
+            <element signature="e#6242#6258#1#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

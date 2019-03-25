@@ -61,8 +61,10 @@ class PaymentMethodController extends AbstractController
     {
         $paymentMethods = $paymentMethodRepository->findAll();
 
-        return $this->render('payment/payments.html.twig', [
+        return $this->render(
+            'payment/payments.html.twig', [
             "paymentMethods" => $paymentMethods
-        ]);
+            ]
+        );
     }
 }

@@ -172,6 +172,7 @@ class Book
             $bookGenre->setBook($this);
             $this->bookGenre[] = $bookGenre;
         }
+
         return $this;
     }
 
@@ -183,6 +184,7 @@ class Book
                 $bookGenre->setBook(null);
             }
         }
+
         return $this;
     }
 
