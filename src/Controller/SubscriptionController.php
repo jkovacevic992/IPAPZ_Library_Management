@@ -11,8 +11,6 @@ namespace App\Controller;
 use App\Repository\SubscriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class SubscriptionController
@@ -22,11 +20,11 @@ class SubscriptionController extends AbstractController
 {
 
     /**
-     * @Route("/subscription", name="subscription")
+     * @Symfony\Component\Routing\Annotation\Route("/subscription", name="subscription")
      * @param SubscriptionRepository $subscriptionRepository
      * @param EntityManagerInterface $entityManager
      * @throws \Exception
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function checkSubscription(
         SubscriptionRepository $subscriptionRepository,

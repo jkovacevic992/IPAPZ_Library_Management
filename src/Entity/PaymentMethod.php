@@ -8,29 +8,27 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Class PaymentMethod
  * @package App\Entity
- * @ORM\Entity()
+ * @Doctrine\ORM\Mapping\Entity()
  */
 class PaymentMethod
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @Doctrine\ORM\Mapping\Id()
+     * @Doctrine\ORM\Mapping\GeneratedValue()
+     * @Doctrine\ORM\Mapping\Column(type="integer")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @Doctrine\ORM\Mapping\Column(type="text")
      */
     private $method;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Doctrine\ORM\Mapping\Column(type="boolean")
      */
     private $active;
 

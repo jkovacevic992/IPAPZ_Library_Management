@@ -8,25 +8,23 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Class Wishlist
  *
  * @package      App\Entity
- * @ORM\Entity()
+ * @Doctrine\ORM\Mapping\Entity()
  */
 class Wishlist
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @Doctrine\ORM\Mapping\Id()
+     * @Doctrine\ORM\Mapping\GeneratedValue()
+     * @Doctrine\ORM\Mapping\Column(type="integer")
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Book", inversedBy="wishlist")
+     * @Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Book", inversedBy="wishlist")
      */
     private $book;
     /**
@@ -34,7 +32,7 @@ class Wishlist
      */
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="wishlist")
+     * @Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\User", inversedBy="wishlist")
      */
     private $user;
 

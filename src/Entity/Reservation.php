@@ -8,38 +8,36 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Class Reservation
  *
  * @package      App\Entity
- * @ORM\Entity()
+ * @Doctrine\ORM\Mapping\Entity()
  */
 class Reservation
 {
 
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @Doctrine\ORM\Mapping\Id()
+     * @Doctrine\ORM\Mapping\GeneratedValue()
+     * @Doctrine\ORM\Mapping\Column(type="integer")
      */
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Book", inversedBy="reservation")
+     * @Doctrine\ORM\Mapping\OneToOne(targetEntity="App\Entity\Book", inversedBy="reservation")
      */
     private $book;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reservation")
+     * @Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\User", inversedBy="reservation")
      */
     private $user;
 
 
     /**
-     * @ORM\Column(type="datetime")
+     * @Doctrine\ORM\Mapping\Column(type="datetime")
      */
     private $createdAt;
 

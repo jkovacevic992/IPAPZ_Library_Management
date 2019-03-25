@@ -13,8 +13,7 @@ use App\Entity\PaypalTransaction;
 use App\Entity\Subscription;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class PaypalTransactionController extends AbstractController
@@ -22,9 +21,9 @@ class PaypalTransactionController extends AbstractController
 
 
     /**
-     * @Route("/profile/pay/{id}", name="pay")
+     * @Symfony\Component\Routing\Annotation\Route("/profile/pay/{id}", name="pay")
      * @param Borrowed $borrowed
-     * @return                     Response
+     * @return                     \Symfony\Component\HttpFoundation\Response
      */
     public function paypalDisplay(Borrowed $borrowed)
     {
@@ -44,18 +43,23 @@ class PaypalTransactionController extends AbstractController
 
 
     /**
-     * @Route("/profile/payment/{id}", name="payment")
+     * @Symfony\Component\Routing\Annotation\Route("/profile/payment/{id}", name="payment")
      * @param UserInterface $user
      * @param Borrowed $borrowed
      * @param EntityManagerInterface $entityManager
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function payment(UserInterface $user, Borrowed $borrowed, EntityManagerInterface $entityManager)
-    {
+    public function payment(
+        UserInterface $user,
+        Borrowed $borrowed,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ) {
         $lateFee = $this->calculateLateFeeBorrowed($borrowed);
         $gateway = $this->gateway();
         $amount = $lateFee;
-        $nonce = $_POST["payment_method_nonce"];
+        $nonce = $request->get('payment_method_nonce');
         $result = $gateway->transaction()->sale(
             [
                 'amount' => $amount,
@@ -99,16 +103,17 @@ class PaypalTransactionController extends AbstractController
     }
 
     /**
-     * @Route("/user/pay-premium", name="payPremium")
+     * @Symfony\Component\Routing\Annotation\Route("/user/pay-premium", name="payPremium")
      * @param UserInterface $user
      * @param EntityManagerInterface $entityManager
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      */
-    public function premiumMembership(UserInterface $user, EntityManagerInterface $entityManager)
+    public function premiumMembership(UserInterface $user, EntityManagerInterface $entityManager, Request $request)
     {
         $gateway = $this->gateway();
-        $nonce = $_POST["payment_method_nonce"];
+        $nonce = $request->get('payment_method_nonce');
         $amount = '10.00';
         $result = $gateway->transaction()->sale(
             [
@@ -128,6 +133,7 @@ class PaypalTransactionController extends AbstractController
         $entityManager->persist($user);
         $entityManager->persist($paypalTransaction);
         $entityManager->flush();
+        session_destroy();
 
         $this->addFlash('success', 'You are now a premium member, please relog.');
         return $this->redirectToRoute('book_index');
@@ -148,8 +154,8 @@ class PaypalTransactionController extends AbstractController
     }
 
     /**
-     * @Route("/user/premium-membership", name="premiumMembership")
-     * @return                            Response
+     * @Symfony\Component\Routing\Annotation\Route("/user/premium-membership", name="premiumMembership")
+     * @return                            \Symfony\Component\HttpFoundation\Response
      */
     public function paypalPremium()
     {

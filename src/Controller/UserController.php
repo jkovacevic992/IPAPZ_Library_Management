@@ -13,30 +13,24 @@ use App\Entity\Reservation;
 use App\Entity\User;
 use App\Entity\Wishlist;
 use App\Form\RegistrationFormType;
-use App\Form\UserWishlistFormType;
 use App\Repository\BorrowedRepository;
 use App\Repository\PaymentMethodRepository;
 use App\Repository\UserRepository;
-use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login")
+     * @Symfony\Component\Routing\Annotation\Route("/login", name="app_login")
      * @param           AuthenticationUtils $authenticationUtils
-     * @return          Response
+     * @return          \Symfony\Component\HttpFoundation\Response
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils)
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -46,11 +40,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/register", name="app_register")
+     * @Symfony\Component\Routing\Annotation\Route("/register", name="app_register")
      * @param              Request $request
      * @param              UserPasswordEncoderInterface $passwordEncoder
      * @param              EntityManagerInterface $entityManager
-     * @return             null|Response
+     * @return             null|\Symfony\Component\HttpFoundation\Response
      */
     public function register(
         Request $request,
@@ -90,7 +84,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="app_logout")
+     * @Symfony\Component\Routing\Annotation\Route("/logout", name="app_logout")
      */
     public function logout()
     {
@@ -98,9 +92,9 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/admin/users", name="users")
+     * @Symfony\Component\Routing\Annotation\Route("/admin/users", name="users")
      * @param                 UserRepository $userRepository
-     * @return                Response
+     * @return                \Symfony\Component\HttpFoundation\Response
      */
     public function users(UserRepository $userRepository)
     {
@@ -118,9 +112,9 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/employees", name="employees")
+     * @Symfony\Component\Routing\Annotation\Route("/admin/employees", name="employees")
      * @param                     UserRepository $userRepository
-     * @return                    Response
+     * @return                    \Symfony\Component\HttpFoundation\Response
      */
     public function employees(UserRepository $userRepository)
     {
@@ -138,9 +132,9 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/view_employee/{id}", name="employee_view")
+     * @Symfony\Component\Routing\Annotation\Route("/admin/view_employee/{id}", name="employee_view")
      * @param                              User $user
-     * @return                             Response
+     * @return                             \Symfony\Component\HttpFoundation\Response
      */
     public function viewUser(User $user)
     {
@@ -155,12 +149,12 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/employee_change/{id}", name="employee_change")
+     * @Symfony\Component\Routing\Annotation\Route("/admin/employee_change/{id}", name="employee_change")
      * @param                                User $userId
      * @param                                Request $request
      * @param                                EntityManagerInterface $entityManager
      * @param                                UserPasswordEncoderInterface $passwordEncoder
-     * * @return Response
+     * * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editUser(
         User $userId,
@@ -212,7 +206,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/employee_delete/{id}", name="employee_delete")
+     * @Symfony\Component\Routing\Annotation\Route("/admin/employee_delete/{id}", name="employee_delete")
      * @param                                User $user
      * @param                                EntityManagerInterface $entityManager
      * @return                               \Symfony\Component\HttpFoundation\RedirectResponse
@@ -226,7 +220,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/make_employee/{id}", name="make_employee")
+     * @Symfony\Component\Routing\Annotation\Route("/admin/make_employee/{id}", name="make_employee")
      * @param                              User $user
      * @param                              EntityManagerInterface $entityManager
      * @return                             \Symfony\Component\HttpFoundation\RedirectResponse
@@ -245,11 +239,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profile/my_borrowed_books", name="my_borrowed_books")
+     * @Symfony\Component\Routing\Annotation\Route("/profile/my_borrowed_books", name="my_borrowed_books")
      * @param                               UserInterface $user
      * @param BorrowedRepository $borrowedRepository
      * @param PaymentMethodRepository $paymentMethodRepository
-     * @return                              Response
+     * @return                              \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
     public function usersBorrowedBooks(
@@ -291,11 +285,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profile/add_book/{id}", name="add_book")
+     * @Symfony\Component\Routing\Annotation\Route("/profile/add_book/{id}", name="add_book")
      * @param UserInterface $user
      * @param Book $book
      * @param                           EntityManagerInterface $entityManager
-     * @return                          \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return                          \Symfony\Component\HttpFoundation\RedirectResponse
      */
 
 
@@ -324,11 +318,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profile/remove_from_wishlist/{id}", name="remove_from_wishlist")
+     * @Symfony\Component\Routing\Annotation\Route("/profile/remove_from_wishlist/{id}", name="remove_from_wishlist")
      * @param UserInterface $user
      * @param                                       Wishlist $wishlist
      * @param                                       EntityManagerInterface $entityManager
-     * @return                                      RedirectResponse
+     * @return                                      \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function removeFromWishlist(UserInterface $user, Wishlist $wishlist, EntityManagerInterface $entityManager)
     {
@@ -342,9 +336,9 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/profile/my_wishlist", name="my_wishlist")
+     * @Symfony\Component\Routing\Annotation\Route("/profile/my_wishlist", name="my_wishlist")
      * @param UserInterface $user
-     * @return                        Response
+     * @return                        \Symfony\Component\HttpFoundation\Response
      */
     public function usersWishlist(UserInterface $user)
     {
@@ -367,11 +361,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profile/reserve_book/{id}", name="reserve_book")
+     * @Symfony\Component\Routing\Annotation\Route("/profile/reserve_book/{id}", name="reserve_book")
      * @param                               UserInterface $user
      * @param                               Book $book
      * @param                               EntityManagerInterface $entityManager
-     * @return                              \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return                              \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      */
     public function reserveBook(UserInterface $user, Book $book, EntityManagerInterface $entityManager)

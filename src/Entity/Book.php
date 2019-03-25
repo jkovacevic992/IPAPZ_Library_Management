@@ -10,87 +10,89 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\BookGenre;
 
 /**
  * Class Book
  *
  * @package                                                     App\Entity
- * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
+ * @Doctrine\ORM\Mapping\Entity(repositoryClass="App\Repository\BookRepository")
  */
 class Book
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @Doctrine\ORM\Mapping\Id()
+     * @Doctrine\ORM\Mapping\GeneratedValue()
+     * @Doctrine\ORM\Mapping\Column(type="integer")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
+     * @Doctrine\ORM\Mapping\Column(type="text")
+     * @Symfony\Component\Validator\Constraints\NotBlank()
      */
     private $summary;
     /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @Doctrine\ORM\Mapping\Column(type="string")
+     * @Symfony\Component\Validator\Constraints\NotBlank()
      */
     private $name;
     /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @Doctrine\ORM\Mapping\Column(type="string")
+     * @Symfony\Component\Validator\Constraints\NotBlank()
      */
     private $author;
 
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\GreaterThan(value="0")
-     * @Assert\NotBlank()
+     * @Doctrine\ORM\Mapping\Column(type="integer")
+     * @Symfony\Component\Validator\Constraints\GreaterThan(value="0")
+     * @Symfony\Component\Validator\Constraints\NotBlank()
      */
     private $quantity;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Doctrine\ORM\Mapping\Column(type="integer")
      */
     private $borrowedQuantity = 0;
 
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Doctrine\ORM\Mapping\Column(type="boolean")
      */
     private $available = true;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @Doctrine\ORM\Mapping\Column(type="array", nullable=true)
      */
     private $images = [];
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\BorrowedBooks", mappedBy="book", cascade={"remove"})
+     * @Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\BorrowedBooks", mappedBy="book", cascade={"remove"})
      */
     private $borrowedBooks;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\BookGenre", mappedBy="book", cascade={"persist","remove"})
+     * @Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\BookGenre",
+     *     mappedBy="book", cascade={"persist","remove"})
      */
     private $bookGenre;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Wishlist", mappedBy="book", cascade={"persist","remove"})
+     * @Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\Wishlist",
+     *     mappedBy="book", cascade={"persist","remove"})
      */
     private $wishlist;
 
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Reservation", mappedBy="book", cascade={"persist","remove"})
+     * @Doctrine\ORM\Mapping\OneToOne(targetEntity="App\Entity\Reservation",
+     *     mappedBy="book", cascade={"persist","remove"})
      */
     private $reservation;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Doctrine\ORM\Mapping\Column(type="boolean")
      */
     private $notification = false;
 
@@ -165,7 +167,10 @@ class Book
         return $this->bookGenre;
     }
 
-
+    /**
+     * @param BookGenre $bookGenre
+     * @return Book
+     */
     public function addBookGenre(BookGenre $bookGenre): self
     {
         if (!$this->bookGenre->contains($bookGenre)) {
@@ -176,6 +181,10 @@ class Book
         return $this;
     }
 
+    /**
+     * @param BookGenre $bookGenre
+     * @return Book
+     */
     public function removeBookGenre(BookGenre $bookGenre): self
     {
         if ($this->bookGenre->contains($bookGenre)) {

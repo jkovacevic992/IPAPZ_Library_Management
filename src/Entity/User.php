@@ -10,105 +10,111 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Wishlist;
+use App\Entity\Reservation;
 
 /**
- * @ORM\Entity()
- * @UniqueEntity(fields={"email"},    message="There is already an account with this email")
- * @UniqueEntity(fields={"username"}, message="A user with that username already exists")
+ * @Doctrine\ORM\Mapping\Entity()
+ * @Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity(fields={"email"},
+ *     message="There is already an account with this email")
+ * @Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity(fields={"username"},
+ *     message="A user with that username already exists")
  */
 class User implements UserInterface
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @Doctrine\ORM\Mapping\Id()
+     * @Doctrine\ORM\Mapping\GeneratedValue()
+     * @Doctrine\ORM\Mapping\Column(type="integer")
      */
     private $id;
 
 
 
     /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @Doctrine\ORM\Mapping\Column(type="string")
+     * @Symfony\Component\Validator\Constraints\NotBlank()
      */
     private $username;
     /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @Doctrine\ORM\Mapping\Column(type="string")
+     * @Symfony\Component\Validator\Constraints\NotBlank()
      */
 
     private $firstName;
     /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @Doctrine\ORM\Mapping\Column(type="string")
+     * @Symfony\Component\Validator\Constraints\NotBlank()
      */
     private $lastName;
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email(message      = "The email '{{ value }}' is not a valid email.")
+     * @Doctrine\ORM\Mapping\Column(type="string", length=180, unique=true)
+     * @Symfony\Component\Validator\Constraints\NotBlank()
+     * @Symfony\Component\Validator\Constraints\Email(message      = "The email '{{ value }}' is not a valid email.")
      */
     private $email;
     /**
      * @var                       string The hashed password
-     * @ORM\Column(type="string")
+     * @Doctrine\ORM\Mapping\Column(type="string")
      */
     private $password;
     /**
-     * @ORM\Column(type="json")
+     * @Doctrine\ORM\Mapping\Column(type="json")
      */
     private $roles = [];
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Doctrine\ORM\Mapping\Column(type="boolean")
      */
     private $admin = 0;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Doctrine\ORM\Mapping\Column(type="boolean")
      */
     private $hasBooks = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Borrowed", mappedBy="user", cascade={"remove"})
+     * @Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\Borrowed", mappedBy="user", cascade={"remove"})
      */
     private $borrowed;
     /**
-     * @ORM\Column(type="boolean")
+     * @Doctrine\ORM\Mapping\Column(type="boolean")
      */
     private $employee = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Wishlist", mappedBy="user", cascade={"persist","remove"})
+     * @Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\Wishlist",
+     *     mappedBy="user", cascade={"persist","remove"})
      */
     private $wishlist;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reservation", mappedBy="user", cascade={"persist","remove"})
+     * @Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\Reservation",
+     *     mappedBy="user", cascade={"persist","remove"})
      */
     private $reservation;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PaypalTransaction", mappedBy="user", cascade={"persist","remove"})
+     * @Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\PaypalTransaction",
+     *     mappedBy="user", cascade={"persist","remove"})
      */
     private $paypalTransaction;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OnDeliveryTransaction", mappedBy="user", cascade={"persist","remove"})
+     * @Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\OnDeliveryTransaction",
+     *     mappedBy="user", cascade={"persist","remove"})
      */
     private $onDeliveryTransaction;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Subscription", mappedBy="user", cascade={"persist","remove"})
+     * @Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\Subscription",
+     *     mappedBy="user", cascade={"persist","remove"})
      */
     private $subscription;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Doctrine\ORM\Mapping\Column(type="boolean")
      */
     private $membership = false;
 
@@ -166,6 +172,10 @@ class User implements UserInterface
     }
 
 
+    /**
+     * @param Wishlist $wishlist
+     * @return User
+     */
     public function addWishlist(Wishlist $wishlist): self
     {
         if (!$this->wishlist->contains($wishlist)) {
@@ -176,6 +186,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Wishlist $wishlist
+     * @return User
+     */
     public function removeWishlist(Wishlist $wishlist): self
     {
         if ($this->wishlist->contains($wishlist)) {

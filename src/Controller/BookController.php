@@ -9,12 +9,7 @@
 namespace App\Controller;
 
 use App\Entity\Book;
-use App\Entity\Borrowed;
-use App\Entity\BorrowedBooks;
-use App\Entity\Reservation;
-use App\Entity\User;
 use App\Form\BookFormType;
-use App\Form\BorrowedFormType;
 use App\Repository\BookRepository;
 use App\Repository\GenreRepository;
 use App\Repository\UserRepository;
@@ -24,18 +19,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+
 
 class BookController extends AbstractController
 {
 
 
     /**
-     * @Route("/employee/new_book", name="new_book")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/new_book", name="new_book")
      * @param                       Request $request
      * @param                       EntityManagerInterface $entityManager
-     * @return                      Response
+     * @return                      \Symfony\Component\HttpFoundation\Response
      */
     public function newBook(Request $request, EntityManagerInterface $entityManager)
     {
@@ -84,11 +78,11 @@ class BookController extends AbstractController
 
 
     /**
-     * @Route("/employee/edit_book/{id}", name="edit_book")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/edit_book/{id}", name="edit_book")
      * @param                             Book $bookId
      * @param                             Request $request
      * @param                             EntityManagerInterface $entityManager
-     * * @return Response
+     * * @return                          \Symfony\Component\HttpFoundation\Response
      */
     public function editBook(Book $bookId, Request $request, EntityManagerInterface $entityManager)
     {
@@ -136,9 +130,9 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/view_book/{id}", name="book_view")
+     * @Symfony\Component\Routing\Annotation\Route("/view_book/{id}", name="book_view")
      * @param                    Book $book
-     * @return                   Response
+     * @return                   \Symfony\Component\HttpFoundation\Response
      */
     public function showBook(Book $book)
     {
@@ -153,13 +147,13 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/employee/set_image/{id}/{imageName}", name="set_main_image")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/set_image/{id}/{imageName}", name="set_main_image")
      * @param                                         Book $book
-     * @param String $imageName
+     * @param $imageName
      * @param                                         EntityManagerInterface $entityManager
-     * @return                                        Response
+     * @return                                        \Symfony\Component\HttpFoundation\Response
      */
-    public function setMainImage(Book $book, String $imageName, EntityManagerInterface $entityManager)
+    public function setMainImage(Book $book, $imageName, EntityManagerInterface $entityManager)
     {
 
 
@@ -174,7 +168,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/employee/book_delete/{id}", name="book_delete")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/book_delete/{id}", name="book_delete")
      * @param                               Book $book
      * @param                               EntityManagerInterface $entityManager
      * @return                              \Symfony\Component\HttpFoundation\RedirectResponse
@@ -195,14 +189,14 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/", methods={"GET","POST"}, name="book_index")
+     * @Symfony\Component\Routing\Annotation\Route("/", methods={"GET","POST"}, name="book_index")
      * @param      BookService $query
      * @param      BookRepository $bookRepository
      * @param      UserRepository $userRepository
      * @param      EntityManagerInterface $entityManager
      * @param      GenreRepository $genreRepository
      * @param      Request $request
-     * @return     Response
+     * @return     \Symfony\Component\HttpFoundation\Response
      */
     public function listBookAction(
         Request $request,
@@ -294,9 +288,6 @@ class BookController extends AbstractController
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
             foreach ($user->getReservation() as $reservation) {
                 if ($reservation->getBook()->getAvailable()) {
-                    /**
-                     * @var Reservation $reservation $book
-                     */
                     $book = $reservation->getBook();
                     $book->setNotification(false);
                     $user->removeReservation($reservation);

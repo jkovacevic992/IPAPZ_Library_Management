@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Created by PhpStDoctrine\ORM\Mapping.
  * User: inchoo
  * Date: 3/13/19
  * Time: 8:04 AM
@@ -8,32 +8,30 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Class BookGenre
  *
  * @package      App\Entity
- * @ORM\Entity()
+ * @Doctrine\ORM\Mapping\Entity()
  */
 class BookGenre
 {
 
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @Doctrine\ORM\Mapping\Id()
+     * @Doctrine\ORM\Mapping\GeneratedValue()
+     * @Doctrine\ORM\Mapping\Column(type="integer")
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Book", inversedBy="bookGenre")
+     * @Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Book", inversedBy="bookGenre")
      */
     private $book;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Genre", inversedBy="bookGenre")
+     * @Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Genre", inversedBy="bookGenre")
      */
     private $genre;
 

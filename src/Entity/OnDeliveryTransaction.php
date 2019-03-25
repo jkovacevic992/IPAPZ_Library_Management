@@ -8,34 +8,32 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Class OnDeliveryTransaction
  *
  * @package      App\Entity
- * @ORM\Entity()
+ * @Doctrine\ORM\Mapping\Entity()
  */
 class OnDeliveryTransaction
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @Doctrine\ORM\Mapping\Id()
+     * @Doctrine\ORM\Mapping\GeneratedValue()
+     * @Doctrine\ORM\Mapping\Column(type="integer")
      */
     private $id;
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="onDeliveryTransaction")
+     * @Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\User", inversedBy="onDeliveryTransaction")
      */
     private $user;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Doctrine\ORM\Mapping\Column(type="boolean")
      */
     private $complete;
 
     /**
-     * @ORM\Column(type="float")
+     * @Doctrine\ORM\Mapping\Column(type="float")
      */
     private $amount;
 

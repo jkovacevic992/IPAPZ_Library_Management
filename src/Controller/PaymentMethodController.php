@@ -12,17 +12,15 @@ use App\Entity\PaymentMethod;
 use App\Repository\PaymentMethodRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class PaymentMethodController extends AbstractController
 {
 
     /**
-     * @Route("/admin/disable_payment/{id}", name="disable_payment")
+     * @Symfony\Component\Routing\Annotation\Route("/admin/disable_payment/{id}", name="disable_payment")
      * @param PaymentMethod $paymentMethod
      * @param EntityManagerInterface $entityManager
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function disablePaymentMethod(PaymentMethod $paymentMethod, EntityManagerInterface $entityManager)
     {
@@ -35,10 +33,10 @@ class PaymentMethodController extends AbstractController
     }
 
     /**
-     * @Route("/admin/enable_payment/{id}", name="enable_payment")
+     * @Symfony\Component\Routing\Annotation\Route("/admin/enable_payment/{id}", name="enable_payment")
      * @param PaymentMethod $paymentMethod
      * @param EntityManagerInterface $entityManager
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function enablePaymentMethod(PaymentMethod $paymentMethod, EntityManagerInterface $entityManager)
     {
@@ -53,16 +51,17 @@ class PaymentMethodController extends AbstractController
 
 
     /**
-     * @Route("/admin/payment_methods", name="payment_methods")
+     * @Symfony\Component\Routing\Annotation\Route("/admin/payment_methods", name="payment_methods")
      * @param PaymentMethodRepository $paymentMethodRepository
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function displayPaymentMethods(PaymentMethodRepository $paymentMethodRepository)
     {
         $paymentMethods = $paymentMethodRepository->findAll();
 
         return $this->render(
-            'payment/payments.html.twig', [
+            'payment/payments.html.twig',
+            [
             "paymentMethods" => $paymentMethods
             ]
         );

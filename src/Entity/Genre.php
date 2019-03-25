@@ -8,34 +8,30 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * Class Genre
  *
  * @package                                                      App\Entity
- * @ORM\Entity(repositoryClass="App\Repository\GenreRepository")
- * @UniqueEntity("name")
+ * @Doctrine\ORM\Mapping\Entity(repositoryClass="App\Repository\GenreRepository")
+ * @Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity("name")
  */
 class Genre
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @Doctrine\ORM\Mapping\Id()
+     * @Doctrine\ORM\Mapping\GeneratedValue()
+     * @Doctrine\ORM\Mapping\Column(type="integer")
      */
     private $id;
     /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @Doctrine\ORM\Mapping\Column(type="string")
+     * @Symfony\Component\Validator\Constraints\NotBlank()
      */
     private $name;
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\BookGenre", mappedBy="genre", cascade={"remove"})
+     * @Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\BookGenre", mappedBy="genre", cascade={"remove"})
      */
     private $bookGenre;
 

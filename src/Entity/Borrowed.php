@@ -10,51 +10,51 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\BorrowedBooks;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Class Borrowed
  *
  * @package      App\Entity
- * @ORM\Entity()
+ * @Doctrine\ORM\Mapping\Entity()
  */
 class Borrowed
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @Doctrine\ORM\Mapping\Id()
+     * @Doctrine\ORM\Mapping\GeneratedValue()
+     * @Doctrine\ORM\Mapping\Column(type="integer")
      */
     private $id;
     /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
+     * @Doctrine\ORM\Mapping\Column(type="datetime")
+     * @Symfony\Component\Validator\Constraints\NotBlank()
      */
     private $borrowDate;
     /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
+     * @Doctrine\ORM\Mapping\Column(type="datetime")
+     * @Symfony\Component\Validator\Constraints\NotBlank()
      */
     private $returnDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\BorrowedBooks", mappedBy="borrowed", cascade={"persist", "remove"})
+     * @Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\BorrowedBooks",
+     *     mappedBy="borrowed", cascade={"persist", "remove"})
      * @var                                                    Collection
      */
     private $borrowedBooks;
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="borrowed")
+     * @Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\User", inversedBy="borrowed")
      */
     private $user;
     /**
-     * @ORM\Column(type="boolean")
+     * @Doctrine\ORM\Mapping\Column(type="boolean")
      */
     private $active = true;
 
     /**
-     * @ORM\Column(type="string")
+     * @Doctrine\ORM\Mapping\Column(type="string")
      */
     private $paymentMethod = 'notPaid';
 
@@ -127,7 +127,8 @@ class Borrowed
     }
 
     /**
-     * @Assert\Callback
+     * @Symfony\Component\Validator\Constraints\Callback
+     * @param ExecutionContextInterface $context
      */
     public function validate(ExecutionContextInterface $context)
     {

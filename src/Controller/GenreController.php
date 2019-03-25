@@ -14,18 +14,16 @@ use App\Repository\GenreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class GenreController extends AbstractController
 {
 
 
     /**
-     * @Route("/employee/new_genre", name="new_genre")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/new_genre", name="new_genre")
      * @param                        Request $request
      * @param                        EntityManagerInterface $entityManager
-     * @return                       \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return                       \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newGenre(Request $request, EntityManagerInterface $entityManager)
     {
@@ -54,9 +52,9 @@ class GenreController extends AbstractController
 
 
     /**
-     * @Route("/employee/genres", name="genres")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/genres", name="genres")
      * @param                     GenreRepository $genreRepository
-     * @return                    Response
+     * @return                    \Symfony\Component\HttpFoundation\Response
      */
     public function genres(GenreRepository $genreRepository)
     {
@@ -74,11 +72,11 @@ class GenreController extends AbstractController
     }
 
     /**
-     * @Route("/employee/edit_genre/{id}", name="edit_genre")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/edit_genre/{id}", name="edit_genre")
      * @param                              Genre $genreId
      * @param                              Request $request
      * @param                              EntityManagerInterface $entityManager
-     * * @return Response
+     * * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editGenre(Genre $genreId, Request $request, EntityManagerInterface $entityManager)
     {
@@ -101,7 +99,7 @@ class GenreController extends AbstractController
     }
 
     /**
-     * @Route("/employee/genre_delete/{id}", name="genre_delete")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/genre_delete/{id}", name="genre_delete")
      * @param                                Genre $genre
      * @param                                EntityManagerInterface $entityManager
      * @return                               \Symfony\Component\HttpFoundation\RedirectResponse

@@ -11,7 +11,6 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Entity\Borrowed;
 use App\Entity\BorrowedBooks;
-use App\Entity\Customer;
 use App\Entity\User;
 use App\Form\BorrowedFormType;
 use App\Repository\BorrowedRepository;
@@ -19,16 +18,14 @@ use App\Repository\PaymentMethodRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class BorrowedController extends AbstractController
 {
     /**
-     * @Route("/employee/borrowed_books", name="borrowed_books")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/borrowed_books", name="borrowed_books")
      * @param                             BorrowedRepository $borrowedRepository
      * @param PaymentMethodRepository $paymentMethodRepository
-     * @return                            Response
+     * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
     public function borrowedBooks(
@@ -69,10 +66,10 @@ class BorrowedController extends AbstractController
     }
 
     /**
-     * @Route("/employee/lend_book", name="lend_book")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/lend_book", name="lend_book")
      * @param                        Request $request
      * @param                        EntityManagerInterface $entityManager
-     * @return                       \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return                       \Symfony\Component\HttpFoundation\Response
      */
 
 
@@ -104,7 +101,8 @@ class BorrowedController extends AbstractController
                 $borrowedBook->getBook()->setQuantity($borrowedBook->getBook()->getQuantity() - 1);
                 if ($borrowedBook->getBook()->getQuantity() < 0) {
                     $this->addFlash(
-                        'warning', $borrowedBook->getBook()
+                        'warning',
+                        $borrowedBook->getBook()
                         ->getName() . ' is not available in so many copies.'
                     );
                     return $this->redirectToRoute('book_index');
@@ -132,10 +130,10 @@ class BorrowedController extends AbstractController
     }
 
     /**
-     * @Route("/employee/return_books/{id}", name="return_books")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/return_books/{id}", name="return_books")
      * @param                                Borrowed $borrowedId
      * @param                                EntityManagerInterface $entityManager
-     * @return                               Response
+     * @return                               \Symfony\Component\HttpFoundation\Response
      */
     public function returnBooks(Borrowed $borrowedId, EntityManagerInterface $entityManager)
     {
@@ -175,12 +173,12 @@ class BorrowedController extends AbstractController
     }
 
     /**
-     * @Route("/employee/return_single_book/{id}/{borrowedId}/{borrowedBooks}", name= "return_single_book")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/return_single_book/{id}/{borrowedId}/{borrowedBooks}", name= "return_single_book")
      * @param BorrowedBooks $borrowedBooks
      * @param                                                                   Book $book
      * @param                                                                   Borrowed $borrowedId
      * @param                                                                   EntityManagerInterface $entityManager
-     * @return                                                                  Response
+     * @return                                                                  \Symfony\Component\HttpFoundation\Response
      */
     public function returnSingleBook(
         BorrowedBooks $borrowedBooks,
@@ -223,9 +221,9 @@ class BorrowedController extends AbstractController
     }
 
     /**
-     * @Route("/employee/books_details/{id}", name="books_details")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/books_details/{id}", name="books_details")
      * @param                                 Borrowed $borrowed
-     * @return                                Response
+     * @return                                \Symfony\Component\HttpFoundation\Response
      */
     public function booksDetails(Borrowed $borrowed)
     {
@@ -238,11 +236,11 @@ class BorrowedController extends AbstractController
     }
 
     /**
-     * @Route("/employee/edit_borrowed/{id}", name="edit_borrowed")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/edit_borrowed/{id}", name="edit_borrowed")
      * @param                                 Request $request
      * @param                                 EntityManagerInterface $entityManager
      * @param                                 Borrowed $borrowedId
-     * @return                                \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return                                \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
     public function editBorrowed(Borrowed $borrowedId, Request $request, EntityManagerInterface $entityManager)

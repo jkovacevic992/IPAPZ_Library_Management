@@ -8,48 +8,46 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Class BorrowedBooks
  *
  * @package                     App\Entity
- * @ORM\Entity()
- * @ORM\HasLifecycleCallbacks()
+ * @Doctrine\ORM\Mapping\Entity()
+ * @Doctrine\ORM\Mapping\HasLifecycleCallbacks()
  */
 class BorrowedBooks
 {
 
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @Doctrine\ORM\Mapping\Id()
+     * @Doctrine\ORM\Mapping\GeneratedValue()
+     * @Doctrine\ORM\Mapping\Column(type="integer")
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Book", inversedBy="borrowedBooks")
+     * @Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Book", inversedBy="borrowedBooks")
      */
     private $book;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Borrowed", inversedBy="borrowedBooks")
+     * @Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Borrowed", inversedBy="borrowedBooks")
      */
     private $borrowed;
 
 
     /**
-     * @ORM\Column(type="datetime")
+     * @Doctrine\ORM\Mapping\Column(type="datetime")
      */
     private $createdAt;
 
     /**
-     * @ORM\Column(type="decimal", precision=7,scale=2)
+     * @Doctrine\ORM\Mapping\Column(type="decimal", precision=7,scale=2)
      */
     private $lateFee = 0;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Doctrine\ORM\Mapping\Column(type="boolean")
      */
     private $paid = false;
 
@@ -102,7 +100,7 @@ class BorrowedBooks
     }
 
     /**
-     * @ORM\PrePersist()
+     * @Doctrine\ORM\Mapping\PrePersist()
      */
     public function onPrePersist()
     {

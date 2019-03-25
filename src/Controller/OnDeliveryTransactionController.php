@@ -16,13 +16,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 
 class OnDeliveryTransactionController extends AbstractController
 {
 
     /**
-     * @Route("/employee/invoice/{id}", name="invoice")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/invoice/{id}", name="invoice")
      * @param                           Borrowed $borrowed
      * @param                           EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -86,7 +85,7 @@ class OnDeliveryTransactionController extends AbstractController
     }
 
     /**
-     * @Route("/employee/single_book_invoice/{id}/{borrowedBooks}", name="single_book_invoice")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/single_book_invoice/{id}/{borrowedBooks}", name="single_book_invoice")
      * @param BorrowedBooks $borrowedBooks
      * @param                           Borrowed $borrowed
      * @param                           EntityManagerInterface $entityManager
@@ -137,7 +136,7 @@ class OnDeliveryTransactionController extends AbstractController
     }
 
     /**
-     * @Route("/employee/see_invoice/{id}", name="see_invoice")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/see_invoice/{id}", name="see_invoice")
      * @param Borrowed $borrowed
      * @throws \Exception
      */
@@ -154,7 +153,8 @@ class OnDeliveryTransactionController extends AbstractController
         $pdfOptions->set('defaultFont', 'Arial');
         $domPdf = new Dompdf($pdfOptions);
         $html = $this->renderView(
-            'pdf/invoice.html.twig', [
+            'pdf/invoice.html.twig',
+            [
             'title' => 'Something',
             'borrowed' => $borrowed,
             'lateFee' => $lateFee
@@ -164,7 +164,8 @@ class OnDeliveryTransactionController extends AbstractController
         $domPdf->setPaper('A4', 'portrait');
         $domPdf->render();
         $domPdf->stream(
-            "mypdf.pdf", [
+            "mypdf.pdf",
+            [
             'Attachment' => false
             ]
         );
