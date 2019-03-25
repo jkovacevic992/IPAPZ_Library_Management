@@ -10,6 +10,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Wishlist;
 use App\Entity\Reservation;
@@ -21,7 +22,7 @@ use App\Entity\Reservation;
  * @Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity(fields={"username"},
  *     message="A user with that username already exists")
  */
-class User implements UserInterface
+class User implements UserInterface, EquatableInterface
 {
     /**
      * @Doctrine\ORM\Mapping\Id()
@@ -424,5 +425,32 @@ class User implements UserInterface
     public function isGranted($role)
     {
         return in_array($role, $this->getRoles());
+    }
+
+    /**
+     * The equality comparison should neither be done by referential equality
+     * nor by comparing identities (i.e. getId() === getId()).
+     *
+     * However, you do not need to compare every attribute, but only those that
+     * are relevant for assessing whether re-authentication is required.
+     *
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isEqualTo(UserInterface $user)
+    {
+        if ($user instanceof User) {
+            // Check that the roles are the same, in any order
+            $isEqual = count($this->getRoles()) == count($user->getRoles());
+            if ($isEqual) {
+                foreach ($this->getRoles() as $role) {
+                    $isEqual = $isEqual && in_array($role, $user->getRoles());
+                }
+            }
+
+            return $isEqual;
+        }
+
+        return false;
     }
 }

@@ -37,7 +37,6 @@ class SubscriptionController extends AbstractController
             $diff = $today->diff($subscription->getCreatedAt())->format("%a");
             if ($diff > 30) {
                 $user = $subscription->getUser();
-                $user->setRoles([]);
                 $user->setMembership(false);
                 $subscription->setActive(false);
                 $entityManager->persist($user);

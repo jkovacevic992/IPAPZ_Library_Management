@@ -2,36 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed7e72de-b7c3-4449-a8f5-684cf487040f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/64ffc5f3-2796-49ea-96a2-11ac1866ccbb.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/64ffc5f3-2796-49ea-96a2-11ac1866ccbb.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/zavrsni.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/zavrsni.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inchooRuleset.xml" beforeDir="false" afterPath="$PROJECT_DIR$/inchooRuleset.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/BookController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BookController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/BorrowedController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BorrowedController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/GenreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GenreController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PaymentMethodController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PaymentMethodController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/PaypalTransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PaypalTransactionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/SubscriptionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SubscriptionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Book.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Book.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/BookGenre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/BookGenre.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Borrowed.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Borrowed.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/BorrowedBooks.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/BorrowedBooks.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Genre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Genre.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/OnDeliveryTransaction.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/OnDeliveryTransaction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/PaymentMethod.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/PaymentMethod.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/PaypalTransaction.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/PaypalTransaction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Reservation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Subscription.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Wishlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Wishlist.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/BookFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/BookFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/BorrowedFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/BorrowedFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/book/view_book.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book/view_book.html.twig" afterDir="false" />
     </list>
     <list id="c8cf934a-cf53-4a15-80f5-34441611fb9a" name="Revert &quot;Genres on index now have show more/show less option&quot;" comment="Revert &quot;Genres on index now have show more/show less option&quot;&#10;&#10;This reverts commit d93df3ad" />
     <list id="48974687-cc20-4b66-aa27-42bb2247e704" name="Revert &quot;Search bar now works (user can search for books/authors)&quot;" comment="Revert &quot;Search bar now works (user can search for books/authors)&quot;&#10;&#10;This reverts commit d59c0f8f" />
@@ -98,54 +76,64 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/Borrowed.php">
+        <entry file="file://$PROJECT_DIR$/src/Controller/PaypalTransactionController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1695">
-              <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/Genre.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+            <state relative-caret-position="377">
+              <caret line="140" column="52" selection-start-line="140" selection-start-column="52" selection-end-line="140" selection-end-column="52" />
+              <folding>
+                <element signature="e#116#140#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
+        <entry file="file://$PROJECT_DIR$/src/Command/CronSubscription.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-234" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
-              <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+              <caret line="130" column="69" selection-start-line="130" selection-start-column="69" selection-end-line="130" selection-end-column="69" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://64ffc5f3-2796-49ea-96a2-11ac1866ccbb/schema/library_management/table/user">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
+              <column-attributes>
+                <column name="roles" languageId="JSON" />
+              </column-attributes>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/book/view_book.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="81">
+              <caret line="12" column="70" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
+              <folding>
+                <element signature="e#12#26#0#Twig" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="381">
+              <caret line="446" column="74" selection-start-line="446" selection-start-column="74" selection-end-line="446" selection-end-column="74" />
               <folding>
                 <element signature="e#115#163#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Form/BookFormType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="17" column="31" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
-              <folding>
-                <element signature="e#109#129#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Form/BorrowedFormType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-210">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
-              <folding>
-                <element signature="e#107#131#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -179,10 +167,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Repository/BookRepository.php" />
-        <option value="$PROJECT_DIR$/src/Repository/PaymentMethodRepository.php" />
         <option value="$PROJECT_DIR$/templates/genre/genres.html.twig" />
-        <option value="$PROJECT_DIR$/templates/base.html.twig" />
         <option value="$PROJECT_DIR$/templates/payment/payments.html.twig" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/templates/pdf/mypdf.html.twig" />
@@ -206,15 +191,12 @@
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/64ffc5f3-2796-49ea-96a2-11ac1866ccbb/console.sql" />
         <option value="$PROJECT_DIR$/grumphp.yml" />
         <option value="$PROJECT_DIR$/inchooRuleset.xml" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
         <option value="$PROJECT_DIR$/src/Controller/BorrowedController.php" />
         <option value="$PROJECT_DIR$/src/Controller/GenreController.php" />
         <option value="$PROJECT_DIR$/src/Controller/OnDeliveryTransactionController.php" />
         <option value="$PROJECT_DIR$/src/Controller/BookController.php" />
         <option value="$PROJECT_DIR$/src/Controller/PaymentMethodController.php" />
-        <option value="$PROJECT_DIR$/src/Controller/PaypalTransactionController.php" />
         <option value="$PROJECT_DIR$/src/Controller/SecurityController.php" />
-        <option value="$PROJECT_DIR$/src/Controller/SubscriptionController.php" />
         <option value="$PROJECT_DIR$/src/Controller/UserController.php" />
         <option value="$PROJECT_DIR$/src/Entity/BorrowedBooks.php" />
         <option value="$PROJECT_DIR$/src/Entity/BookGenre.php" />
@@ -230,6 +212,12 @@
         <option value="$PROJECT_DIR$/src/Form/BookFormType.php" />
         <option value="$PROJECT_DIR$/src/Form/BorrowedFormType.php" />
         <option value="$PROJECT_DIR$/src/Entity/User.php" />
+        <option value="$PROJECT_DIR$/templates/base.html.twig" />
+        <option value="$PROJECT_DIR$/config/packages/security.yaml" />
+        <option value="$PROJECT_DIR$/src/Controller/PaypalTransactionController.php" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
+        <option value="$PROJECT_DIR$/templates/book/view_book.html.twig" />
+        <option value="$PROJECT_DIR$/src/Controller/SubscriptionController.php" />
       </list>
     </option>
   </component>
@@ -359,7 +347,31 @@
             <path>
               <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
               <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Command" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
@@ -378,6 +390,17 @@
               <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Form" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
+              <item name="zavrsni" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="book" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="zavrsni" type="b2602c69:ProjectViewProjectNode" />
@@ -449,14 +472,7 @@
       <workItem from="1553257886577" duration="4029000" />
       <workItem from="1553497535288" duration="127000" />
       <workItem from="1553501287664" duration="1833000" />
-      <workItem from="1553504440597" duration="8378000" />
-    </task>
-    <task id="LOCAL-00011" summary="Every user can now see the books they borrowed">
-      <created>1552482587725</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1552482587725</updated>
+      <workItem from="1553504440597" duration="15384000" />
     </task>
     <task id="LOCAL-00012" summary="Users now have a wish list where they can add and remove books.">
       <created>1552488040286</created>
@@ -794,30 +810,38 @@
       <option name="project" value="LOCAL" />
       <updated>1553505001742</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="Fixed code formatting">
+      <created>1553515164076</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1553515164076</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="217433000" />
+    <option name="totallyTimeSpent" value="224439000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1040" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49909255" visible="true" weight="0.24172892" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49909255" visible="true" weight="0.24172892" />
       <window_info id="Structure" order="1" sideWeight="0.5009074" side_tool="true" weight="0.2113127" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49893278" weight="0.32969433" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49733192" weight="0.39847162" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4967983" visible="true" weight="0.39847162" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" sideWeight="0.4994664" weight="0.32969433" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.4994664" weight="0.32969433" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.48826042" visible="true" weight="0.3231441" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5117396" side_tool="true" visible="true" weight="0.3231441" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.48826042" weight="0.3231441" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5032017" side_tool="true" visible="true" weight="0.39847162" />
       <window_info anchor="bottom" id="Database Console" order="12" sideWeight="0.49839914" weight="0.3220524" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -897,51 +921,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Fixed code formatting" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/features/User.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="30">
-            <caret line="2" column="72" selection-start-line="2" selection-start-column="72" selection-end-line="2" selection-end-column="72" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/Borrowed.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="15">
-            <caret line="1" column="96" selection-start-line="1" selection-start-column="96" selection-end-line="1" selection-end-column="96" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/Genre.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor>
-            <caret column="86" selection-start-column="86" selection-end-column="86" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/Book.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="165">
-            <caret line="11" column="49" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Migrations/Version20190312144621.php" />
-    <entry file="file://$PROJECT_DIR$/src/Migrations/Version20190322071805.php" />
-    <entry file="file://$PROJECT_DIR$/public/js/genres.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Migrations/Version20190321125535.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -970,17 +949,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="26" column="68" selection-start-line="26" selection-start-column="68" selection-end-line="26" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1335">
-          <caret line="79" column="79" selection-start-line="79" selection-start-column="79" selection-end-line="79" selection-end-column="79" />
-          <folding>
-            <element signature="e#3531#3540#0#Twig" expanded="true" />
-            <element signature="e#3625#3640#0#Twig" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1097,16 +1065,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://64ffc5f3-2796-49ea-96a2-11ac1866ccbb/schema/library_management/table/user">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-          <column-attributes>
-            <column name="roles" languageId="JSON" />
-          </column-attributes>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/GenreController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -1158,27 +1116,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/PaypalTransactionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="15" column="45" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/SecurityController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="46" selection-start-line="5" selection-start-column="46" selection-end-line="5" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/SubscriptionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="12" column="65" selection-start-line="12" selection-start-column="65" selection-end-line="12" selection-end-column="65" />
-          <folding>
-            <element signature="e#116#158#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1214,13 +1155,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/PaypalTransaction.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -1289,14 +1223,104 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/PaypalTransaction.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1335">
+          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/symfony/security-csrf/TokenStorage/TokenStorageInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="29" column="20" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+        <state relative-caret-position="381">
+          <caret line="446" column="74" selection-start-line="446" selection-start-column="74" selection-end-line="446" selection-end-column="74" />
           <folding>
             <element signature="e#115#163#0#PHP" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/routing.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/symfony/security-core/Authentication/Token/UsernamePasswordToken.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-365">
+          <caret line="33" column="20" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/symfony/security-core/Authentication/Provider/UserAuthenticationProvider.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="51" column="20" selection-start-line="51" selection-start-column="20" selection-end-line="51" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/security.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="37" column="44" lean-forward="true" selection-start-line="37" selection-start-column="44" selection-end-line="37" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="130" column="69" selection-start-line="130" selection-start-column="69" selection-end-line="130" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://64ffc5f3-2796-49ea-96a2-11ac1866ccbb/schema/library_management/table/user">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+          <column-attributes>
+            <column name="roles" languageId="JSON" />
+          </column-attributes>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/book/view_book.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="12" column="70" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/PaypalTransactionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="140" column="52" selection-start-line="140" selection-start-column="52" selection-end-line="140" selection-end-column="52" />
+          <folding>
+            <element signature="e#116#140#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/SubscriptionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="38" column="49" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
+          <folding>
+            <element signature="e#116#158#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Command/CronSubscription.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-234" />
       </provider>
     </entry>
   </component>

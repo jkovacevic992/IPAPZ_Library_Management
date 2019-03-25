@@ -14,6 +14,7 @@ use App\Entity\Subscription;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class PaypalTransactionController extends AbstractController
@@ -110,8 +111,11 @@ class PaypalTransactionController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      */
-    public function premiumMembership(UserInterface $user, EntityManagerInterface $entityManager, Request $request)
-    {
+    public function premiumMembership(
+        Security $security,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ) {
         $gateway = $this->gateway();
         $nonce = $request->get('payment_method_nonce');
         $amount = '10.00';
@@ -122,9 +126,8 @@ class PaypalTransactionController extends AbstractController
             ]
         );
         $transaction = $result->transaction;
-
+        $user = $security->getUser();
         $paypalTransaction = $this->payPalTransaction($amount, $transaction, $user);
-        $user->setRoles(['ROLE_PREMIUM_USER']);
         $subscription = new Subscription();
         $subscription->setUser($user);
         $subscription->setCreatedAt(new \DateTime('now'));
@@ -133,9 +136,9 @@ class PaypalTransactionController extends AbstractController
         $entityManager->persist($user);
         $entityManager->persist($paypalTransaction);
         $entityManager->flush();
-        session_destroy();
 
-        $this->addFlash('success', 'You are now a premium member, please relog.');
+
+        $this->addFlash('success', 'You are now a premium member.');
         return $this->redirectToRoute('book_index');
     }
 
