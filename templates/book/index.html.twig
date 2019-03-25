@@ -33,7 +33,7 @@
             <div class= "genre" id = "genre" style="display: none"><li><a href="{{ path('book_index') }}?genre={{ genre.name }}" class="card-link">{{ genre.name }}</a></li></div>
             {% endfor %}
         </ul>
-        <a class="loadMore" href="#" id="loadMore">Show More</a>
+        <a class="loadMore" href="#" id="loadMore" >Show More</a>
     </div>
 </aside>
     <section class="col-lg-9">
@@ -120,6 +120,7 @@
 {{ parent() }}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="{{ asset('js/showMore.js') }}"></script>
+
 {% endblock %}
 
 
