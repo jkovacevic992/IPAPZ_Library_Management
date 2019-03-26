@@ -20,7 +20,6 @@ use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
-
 class BookController extends AbstractController
 {
 
@@ -132,18 +131,36 @@ class BookController extends AbstractController
     /**
      * @Symfony\Component\Routing\Annotation\Route("/view_book/{id}", name="book_view")
      * @param                    Book $book
+     *
      * @return                   \Symfony\Component\HttpFoundation\Response
      */
-    public function showBook(Book $book)
+    public function showBook(Book $book, UserRepository $userRepository)
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $borrowedByUser = false;
 
+        if ($user === 'anon.') {
+            return $this->render(
+                'book/view_book.html.twig',
+                [
+                    'book' => $book,
+                    'borrowedByUser' => $borrowedByUser
+                ]
+            );
+        } else {
+            $temp = $userRepository->findBook($user->getId(), $book->getId());
+            if (in_array($book, $temp)) {
+                $borrowedByUser = true;
+            }
 
-        return $this->render(
-            'book/view_book.html.twig',
-            [
-                'book' => $book
-            ]
-        );
+            return $this->render(
+                'book/view_book.html.twig',
+                [
+                    'book' => $book,
+                    'borrowedByUser' => $borrowedByUser
+                ]
+            );
+        }
     }
 
     /**
@@ -287,6 +304,10 @@ class BookController extends AbstractController
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
             foreach ($user->getReservation() as $reservation) {
+                if ($reservation->getBook() === null) {
+                    continue;
+                }
+
                 if ($reservation->getBook()->getAvailable()) {
                     $book = $reservation->getBook();
                     $book->setNotification(false);

@@ -5,7 +5,7 @@
     <p>Late fee is 0.50 EUR per book per day.</p>
     {% for book in books %}
         <div class="row mt-3">
-            <div class="col-lg-6">
+            <div class="col-lg-3">
                 <div class="card">
                     <div class="card-body">
         {% for borrowedBook in book.borrowedBooks %}
@@ -15,8 +15,8 @@
 
 
 
-
         {% endfor %}
+                        <h6 class="card-text">Expected return date: {{ book.returnDate|date('d.m.Y.') }}</h6>
 
 
 

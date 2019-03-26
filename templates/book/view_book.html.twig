@@ -12,7 +12,7 @@
 
                             {% elseif is_granted('ROLE_USER') and app.user.membership%}
                                 <a href="{{ path('add_book', {'id' : book.id}) }}" class="btn btn-primary">Add to my Wishlist</a>
-                                {% if book.quantity == 0 and book.reservation == null %}
+                                {% if book.quantity == 0 and book.reservation == null and not borrowedByUser %}
                                     <p>No available copies of this book at the moment</p>
                                     <a href="{{ path('reserve_book', {'id' : book.id}) }}" class="btn btn-primary">Reserve</a>
                                 {% endif %}

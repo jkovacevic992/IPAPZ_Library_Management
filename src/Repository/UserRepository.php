@@ -26,4 +26,18 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findBook($id, $book)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('b')
+            ->innerJoin('App\Entity\Book', 'b')
+            ->innerJoin('App\Entity\Borrowed', 'b2')
+            ->where('u.id = :id')
+            ->andWhere('b.id = :book')
+            ->setParameter('book', $book)
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
 }
