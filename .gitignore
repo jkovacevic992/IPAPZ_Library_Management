@@ -14,3 +14,4 @@
 ###< squizlabs/php_codesniffer ###
 
 /public/uploads/images/
+.idea/workspace.xml
