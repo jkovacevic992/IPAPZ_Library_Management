@@ -406,6 +406,7 @@ class UserController extends AbstractController
     /**
      * @Symfony\Component\Routing\Annotation\Route("/username", name="username")
      * @param UserInterface $user
+     * @return JsonResponse
      */
     public function username(UserInterface $user)
     {
