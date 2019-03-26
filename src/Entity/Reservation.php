@@ -42,6 +42,26 @@ class Reservation
     private $createdAt;
 
     /**
+     * @Doctrine\ORM\Mapping\Column(type="boolean")
+     */
+    private $active = true;
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active): void
+    {
+        $this->active = $active;
+    }
+    /**
      * @param mixed $createdAt
      */
     public function setCreatedAt($createdAt): void
