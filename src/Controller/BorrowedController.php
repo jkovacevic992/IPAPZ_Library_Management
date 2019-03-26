@@ -353,8 +353,10 @@ class BorrowedController extends AbstractController
         $reservations = $reservationRepository->findBy(['active' => true]);
 
         $this->addFlash('success', 'Success!');
-        return $this->render('reservation/reservations.html.twig', [
+        return $this->render(
+            'reservation/reservations.html.twig', [
             'reservations' => $reservations
-        ]);
+            ]
+        );
     }
 }

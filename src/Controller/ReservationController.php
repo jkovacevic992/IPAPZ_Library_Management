@@ -23,8 +23,11 @@ class ReservationController extends AbstractController
     {
         $reservations = $reservationRepository->findBy(['active' => true]);
 
-        return $this->render('reservation/reservations.html.twig', [
+        return $this->render(
+            'reservation/reservations.html.twig',
+            [
             'reservations' => $reservations
-        ]);
+            ]
+        );
     }
 }

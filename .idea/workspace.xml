@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed7e72de-b7c3-4449-a8f5-684cf487040f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20190326103232.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/reservation/reservations.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/BorrowedController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BorrowedController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Reservation.php" afterDir="false" />
@@ -88,7 +91,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/BorrowedController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="391">
@@ -96,7 +99,18 @@
               <folding>
                 <element signature="e#115#135#0#PHP" expanded="true" />
                 <element signature="e#8636#8666#0#PHP" expanded="true" />
-                <element signature="e#12727#12763#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Controller/ReservationController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="32" column="1" lean-forward="true" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
+              <folding>
+                <element signature="e#117#158#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -185,11 +199,11 @@
         <option value="$PROJECT_DIR$/src/Controller/UserController.php" />
         <option value="$PROJECT_DIR$/src/Entity/Reservation.php" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
-        <option value="$PROJECT_DIR$/src/Controller/ReservationController.php" />
         <option value="$PROJECT_DIR$/templates/base.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/BookController.php" />
         <option value="$PROJECT_DIR$/templates/reservation/reservations.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/BorrowedController.php" />
+        <option value="$PROJECT_DIR$/src/Controller/ReservationController.php" />
       </list>
     </option>
   </component>
@@ -458,7 +472,7 @@
       <workItem from="1553501287664" duration="1833000" />
       <workItem from="1553504440597" duration="19058000" />
       <workItem from="1553584157916" duration="8472000" />
-      <workItem from="1553595628409" duration="2415000" />
+      <workItem from="1553595628409" duration="3091000" />
     </task>
     <task id="LOCAL-00016" summary="If book quantity is 0, the book can't be borrowed">
       <created>1552554787571</created>
@@ -807,11 +821,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="239293000" />
+    <option name="totallyTimeSpent" value="239969000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1040" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49909255" visible="true" weight="0.2470651" />
       <window_info id="Structure" order="1" sideWeight="0.5009074" side_tool="true" weight="0.2113127" />
@@ -1278,17 +1291,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/ReservationController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="5" selection-start-column="5" selection-end-column="5" />
-          <folding>
-            <element signature="e#117#158#0#PHP" expanded="true" />
-            <element signature="e#608#644#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/reservation/reservations.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
@@ -1316,7 +1318,16 @@
           <folding>
             <element signature="e#115#135#0#PHP" expanded="true" />
             <element signature="e#8636#8666#0#PHP" expanded="true" />
-            <element signature="e#12727#12763#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/ReservationController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="32" column="1" lean-forward="true" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
+          <folding>
+            <element signature="e#117#158#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
