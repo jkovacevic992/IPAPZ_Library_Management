@@ -362,6 +362,31 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Symfony\Component\Routing\Annotation\Route("/profile/my_reservations", name="my_reservations")
+     * @param UserInterface $user
+     * @return                        \Symfony\Component\HttpFoundation\Response
+     */
+    public function usersReservations(UserInterface $user)
+    {
+        $tmp = [];
+        $reservations = $user->getReservation();
+
+        foreach ($reservations as $reservation) {
+            $tmp[] = $reservation;
+        }
+
+
+        return $this->render(
+            'user/my_reservations.html.twig',
+            [
+
+                'reservations' => $tmp
+
+            ]
+        );
+    }
+
+    /**
      * @Symfony\Component\Routing\Annotation\Route("/profile/reserve_book/{id}", name="reserve_book")
      * @param                               UserInterface $user
      * @param                               Book $book

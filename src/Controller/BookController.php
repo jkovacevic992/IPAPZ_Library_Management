@@ -315,10 +315,7 @@ class BookController extends AbstractController
                 if ($reservation->getBook()->getAvailable()) {
                     $book = $reservation->getBook();
                     $book->setNotification(false);
-                    $user->removeReservation($reservation);
-                    $reservation->setBook(null);
-                    $entityManager->persist($user);
-                    $entityManager->persist($reservation);
+                    $entityManager->persist($book);
                     $entityManager->flush();
                     return $book;
                 }

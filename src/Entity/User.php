@@ -141,6 +141,7 @@ class User implements UserInterface
         $this->wishlist = new ArrayCollection();
         $this->reservation = new ArrayCollection();
         $this->subscription = new ArrayCollection();
+        $this->reservation = new ArrayCollection();
     }
 
 

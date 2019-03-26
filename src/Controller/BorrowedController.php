@@ -341,6 +341,7 @@ class BorrowedController extends AbstractController
         $borrowedBook->setBorrowed($borrowed);
         $reservation->setActive(false);
         $reservation->setBook(null);
+        $reservation->setUser(null);
         $user->setHasBooks(true);
         $borrowed->addBorrowedBook($borrowedBook);
         $em->persist($borrowedBook);
