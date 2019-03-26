@@ -33,13 +33,13 @@
                 {{ lateFee[borrowedBook.id] }} EUR
             </td>
             <td>
-                <a href="{{ path('books_details', {'id': borrowedBook.id}) }}"
-                   class="btn btn-primary">Details</a>
+                <a style="color: white" href="{{ path('books_details', {'id': borrowedBook.id}) }}"
+                   class="btn purple-gradient btn-rounded my-0">Details</a>
             </td>
             <td>
                 {% if borrowedBook.paymentMethod == 'notPaid' and paymentMethods[1].active %}
                 <a href="{{ path('invoice', {'id': borrowedBook.id}) }}"
-                   class="btn btn-primary">Invoice</a>
+                   class="btn btn-danger btn-rounder my-0">Invoice</a>
                 {% elseif paymentMethods[1].active == false %}
                     <p>Payment on Delivery Disabled</p>
                 {% else %}
@@ -57,10 +57,10 @@
             {% if borrowedBook.paymentMethod == 'notPaid' %}
                <td>Cannot return</td>
             {% else %}
-                <td><a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger">Return all books</a></td>
+                <td><a href="{{ path('return_books', {id: borrowedBook.id}) }}" class="btn btn-danger btn-rounder my-0">Return all books</a></td>
             {% endif %}
             <td>
-                <a href="{{ path('see_invoice', {'id': borrowedBook.id}) }}" class="btn btn-danger">Invoice</a>
+                <a style="color: white" href="{{ path('see_invoice', {'id': borrowedBook.id}) }}" class="btn purple-gradient btn-rounded my-0">Invoice</a>
             </td>
         </tr>
 

@@ -242,7 +242,11 @@ class BookController extends AbstractController
                 'query',
                 SearchType::class,
                 [
-                    'label' => false
+                    'attr' => [
+                        'class' => 'form-control mr-sm-2'
+                    ],
+                    'label' => false,
+
                 ]
             )
             ->add(
@@ -250,7 +254,7 @@ class BookController extends AbstractController
                 SubmitType::class,
                 [
                     'attr' => [
-                        'class' => 'btn btn-primary'
+                        'class' => 'btn purple-gradient btn-rounded btn-sm my-0'
                     ]
                 ]
             )

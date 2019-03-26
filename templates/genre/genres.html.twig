@@ -1,19 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h3>Genres</h3>
-    {% for genre in genres %}
-        <div class="row mt-3">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mt-2 text-muted">{{ genre.name }}</h6>
-                        <a href="{{ path('edit_genre', {'id': genre.id}) }}" class="btn btn-primary">Edit</a>
-                        <br/><a href="{{ path('genre_delete', {'id': genre.id}) }}" class="btn btn-danger">Delete Genre</a>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
 
-                    </div>
-                </div>
-            </div>
-        </div>
+    </tr>
+    </thead>
+    <tbody>
+    {% for genre in genres %}
+       <tr>
+        <td >{{ genre.name }}</td>
+                        <td><a style="color: white" href="{{ path('edit_genre', {'id': genre.id}) }}" class="btn purple-gradient btn-rounded my-0">Edit</a></td>
+    <td ><a href="{{ path('genre_delete', {'id': genre.id}) }}" class="btn btn-danger btn-rounder my-0">Delete</a></td>
+       </tr>
+
     {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

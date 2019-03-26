@@ -1,21 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h3>Payment Methods</h3>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Payment Method</th>
+        <th scope="col">Enable/Disable</th>
+
+
+
+    </tr>
+    </thead>
+    <tbody>
     {% for paymentMethod in paymentMethods %}
-        <div class="row mt-3">
-            <div class="col-lg-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mt-2 text-muted">{{ paymentMethod.method }}</h6>
-                        {% if paymentMethod.active %}
-                            <br/><a href="{{ path('disable_payment', {'id' : paymentMethod.id}) }}" class="btn btn-danger">Disable</a>
+      <tr>
+       <td>{{ paymentMethod.method }}</td>
+        {% if paymentMethod.active %}
+                            <td><a href="{{ path('disable_payment', {'id' : paymentMethod.id}) }}" class="btn btn-danger">Disable</a></td>
                         {% else %}
-                            <br/><a href="{{ path('enable_payment', {'id' : paymentMethod.id}) }}" class="btn btn-primary">Enable</a>
+                           <td> <br/><a href="{{ path('enable_payment', {'id' : paymentMethod.id}) }}" class="btn btn-secondary">Enable</a></td>
                         {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
+      </tr>
     {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

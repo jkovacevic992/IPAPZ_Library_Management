@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
               integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
               crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.1/css/mdb.min.css" />
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
     {% endblock %}
@@ -35,7 +36,7 @@
     <div class="navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{{ path('book_index') }}">Home</a>
+                <a class="btn btn-outline-secondary" href="{{ path('book_index') }}">Home</a>
 
             </li>
         </ul>
@@ -85,7 +86,7 @@
                 </div>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                    <a class="btn btn-outline-secondary" href="{{ path('app_logout') }}">Logout</a>
                 </li>
             {% elseif is_granted('ROLE_EMPLOYEE') %}
                 <div class="dropdown">
@@ -131,30 +132,30 @@
                 </li>
             {% elseif is_granted('ROLE_USER') and app.user.membership %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('my_borrowed_books') }}">My Borrowed Books</a>
+                    <a class="btn btn-outline-secondary" href="{{ path('my_borrowed_books') }}">My Borrowed Books</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('my_wishlist') }}">Wish list</a>
+                    <a class="btn btn-outline-secondary" href="{{ path('my_wishlist') }}">Wish list</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                    <a class="btn btn-outline-secondary" href="{{ path('app_logout') }}">Logout</a>
                 </li>
 
             {% elseif is_granted('ROLE_USER') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('premiumMembership') }}">Become Premium Member</a>
+                    <a class="btn btn-outline-secondary" href="{{ path('premiumMembership') }}">Become Premium Member</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                    <a class="btn btn-outline-secondary" href="{{ path('app_logout') }}">Logout</a>
                 </li>
 
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                        <a class="btn btn-outline-secondary" href="{{ path('app_login') }}">Login</a>
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_register') }}">Registration</a>
+                        <a class="btn btn-outline-secondary" href="{{ path('app_register') }}">Registration</a>
                     </li>
             {% endif %}
         </ul>

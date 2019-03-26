@@ -5,6 +5,7 @@
     <thead>
     <tr>
         <th scope="col">User</th>
+        <th scope="col">Email</th>
         <th scope="col">Subscription</th>
         <th scope="col">Details</th>
         <th scope="col">Subscription History</th>
@@ -20,14 +21,15 @@
         <tr>
 
             <td>{{ user.firstName }} {{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
 
             <td>{% if user.membership == false %}
                     NOT PAID
                 {% else %}
                     OK
                 {% endif %}</td>
-            <td><a href="{{ path('employee_view', {'id': user.id}) }}" class="btn btn-primary">Details</a></td>
-            <td><a href="{{ path('subscription_history', {'id': user.id}) }}" class="btn btn-primary">History</a></td>
+            <td><a href="{{ path('employee_view', {'id': user.id}) }}" class="btn btn-secondary">Details</a></td>
+            <td><a href="{{ path('subscription_history', {'id': user.id}) }}" class="btn btn-secondary">History</a></td>
         </tr>
 
     {% endfor %}

@@ -2,18 +2,26 @@
 
 {% block body %}
 
-    <h3>Employees</h3>
-    {% for user in users %}
-        <div class="row mt-3">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mt-2 text-muted">{{ user.firstName }} {{ user.lastName }}</h6>
-                        <a href="{{ path('employee_view', {'id': user.id}) }}" class="btn btn-primary">Details</a>
+    <table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">User</th>
+        <th scope="col">Email</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
 
-                    </div>
-                </div>
-            </div>
-        </div>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+    <tr>
+
+        <td>{{ user.firstName }} {{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td><a href="{{ path('employee_change', {'id': user.id}) }}" class="btn btn-secondary">Edit</a></td>
+        <td><a href="{{ path('employee_delete', {'id': user.id}) }}" class="btn btn-danger">Delete</a></td>
+
+    </tr>
     {% endfor %}
 {% endblock %}

@@ -24,7 +24,7 @@
             {% if reservation.book.available %}
             <td>Book Available</td>
                 <td><a href="{{ path('lend_reserved_book', {'book': reservation.book.id, 'user' : reservation.user.id, 'reservation' : reservation.id}) }}"
-                       class="btn btn-primary">Lend</a></td>
+                       class="btn btn-secondary">Lend</a></td>
             {% else %}
                 <td>Book Not Available</td>
                 {% endif %}

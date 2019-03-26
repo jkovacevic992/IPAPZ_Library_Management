@@ -22,15 +22,19 @@
 
         </div>
     </nav>
-    {{ form(formSearch) }}
+    {{ form(formSearch, { 'attr': {'class': 'form-inline mr-auto'} }) }}
 <div class="row">
 <aside class="col-lg-2">
     <div class="block-content">
         <h3>Genres</h3>
 
-        <ul>
+        <ul class="list-group list-group-flush">
             {% for genre in genres %}
-            <div class= "genre" id = "genre" style="display: none"><li><a href="{{ path('book_index') }}?genre={{ genre.name }}" class="card-link">{{ genre.name }}</a></li></div>
+            <div class= "genre" id = "genre" style="display: none">
+
+                    <a href="{{ path('book_index') }}?genre={{ genre.name }}" class="list-group-item">{{ genre.name }}</a>
+
+            </div>
             {% endfor %}
         </ul>
         <a class="loadMore" href="#" id="loadMore" >Show More</a>
@@ -65,7 +69,7 @@
 
                         {% endfor %}
                     </td>
-                    <td><a href="{{ path('book_view', {'id': book[0].id}) }}" class="card-link">Details</a></td>
+                    <td><a style="color: white" href="{{ path('book_view', {'id': book[0].id}) }}" class="btn purple-gradient btn-rounded btn-sm my-0">Details</a></td>
 
                 </tr>
             {% endfor %}
@@ -100,7 +104,7 @@
 
                     {% endfor %}
                 </td>
-                <td><a href="{{ path('book_view', {'id': book.id}) }}" class="card-link">Details</a></td>
+                <td><a style="color: white" href="{{ path('book_view', {'id': book.id}) }}" class="btn purple-gradient btn-rounded btn-sm my-0">Details</a></td>
 
             </tr>
         {% endfor %}
