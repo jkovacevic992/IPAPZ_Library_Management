@@ -1,38 +1,14 @@
 
 $(function () {
-    var cookie = getCookie('showMoreCookie');
 
-    if(cookie != 'clicked') {
-        $(".genre").slice(0, 5).show();
-        $("#loadMore").on('click', function (e) {
-            e.preventDefault();
+    $.ajax({
+        method: 'POST',
+        url: "username"
+    }).done(function (data) {
+        var cookie = getCookie(data.username);
+        something(cookie, data.username)
+    })
 
-            if ($(".genre:hidden").length !== 0) {
-                $(".genre:hidden").slideDown();
-                $("#loadMore").text("Show Less");
-                createCookie('showMoreCookie','clicked',1);
-
-            } else {
-
-                $(".genre").slice(5, $(".genre").length).slideUp();
-                $("#loadMore").text("Show More");
-                createCookie('showMoreCookie','unclicked',1);
-            }
-
-
-        });
-    }else {
-        $(".genre").show();
-        $("#loadMore").text("Show Less");
-        $("#loadMore").on('click', function (e) {
-            e.preventDefault();
-            $(".genre").slice(5, $(".genre").length).slideUp();
-            $("#loadMore").text("Show More");
-            createCookie('showMoreCookie','unclicked',1);
-        });
-
-
-    }
 
 });
 
@@ -68,5 +44,53 @@ function createCookie(name,value,days) {
     document.cookie = name+"="+value+expires+"; path=/";
 }
 
+function something(cookie, value) {
+    if(cookie == value+'1') {
 
+        $(".genre").show();
+        $("#loadMore").text("Show Less");
+        $("#loadMore").on('click', function (e) {
+            e.preventDefault();
+            $(".genre").slice(5, $(".genre").length).slideUp();
+            $("#loadMore").text("Show More");
+            createCookie(value,value+'0',1);
+        });
+    }else {
+
+
+
+        $(".genre").slice(0, 5).show();
+        $("#loadMore").on('click', function (e) {
+
+            e.preventDefault();
+
+            if ($(".genre:hidden").length !== 0) {
+                $(".genre:hidden").slideDown();
+                $("#loadMore").text('Show More');
+                $.ajax({
+                    method: 'POST',
+                    url: "username"
+                }).done(function (data) {
+                    createCookie(data.username,data.username+'1',1);
+                })
+
+
+            } else {
+
+                $(".genre").slice(5, $(".genre").length).slideUp();
+                $("#loadMore").text("Show More");
+                $.ajax({
+                    method: 'POST',
+                    url: "username"
+                }).done(function (data) {
+                    createCookie(data.username,data.username+'0',1);
+                })
+            }
+
+
+        });
+
+
+    }
+}
 

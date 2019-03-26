@@ -18,6 +18,7 @@ use App\Repository\PaymentMethodRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -400,5 +401,19 @@ class UserController extends AbstractController
 
             return $fee;
         }
+    }
+
+    /**
+     * @Symfony\Component\Routing\Annotation\Route("/username", name="username")
+     * @param UserInterface $user
+     */
+    public function username(UserInterface $user)
+    {
+        $username = $user->getUsername();
+        return new JsonResponse(
+            [
+            'username' => $username
+            ]
+        );
     }
 }
