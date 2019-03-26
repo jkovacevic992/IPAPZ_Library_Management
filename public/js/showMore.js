@@ -44,9 +44,9 @@ function createCookie(name,value,days) {
     document.cookie = name+"="+value+expires+"; path=/";
 }
 
-function something(cookie, value) {
-    if(cookie == value+'1') {
-
+function something(cookie, value)
+{
+    if (cookie === value+'1') {
         $(".genre").show();
         $("#loadMore").text("Show Less");
         $("#loadMore").on('click', function (e) {
@@ -55,10 +55,7 @@ function something(cookie, value) {
             $("#loadMore").text("Show More");
             createCookie(value,value+'0',1);
         });
-    }else {
-
-
-
+    } else {
         $(".genre").slice(0, 5).show();
         $("#loadMore").on('click', function (e) {
 
@@ -76,7 +73,6 @@ function something(cookie, value) {
 
 
             } else {
-
                 $(".genre").slice(5, $(".genre").length).slideUp();
                 $("#loadMore").text("Show More");
                 $.ajax({
