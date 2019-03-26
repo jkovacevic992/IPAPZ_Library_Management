@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\SubscriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,5 +48,21 @@ class SubscriptionController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('book_index');
+    }
+
+    /**
+     * @param \App\Entity\User $user
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Symfony\Component\Routing\Annotation\Route("admin/subscription_history/{id}", name="subscription_history")
+     */
+    public function subscriptionHistory(User $user)
+    {
+
+        return $this->render(
+            'payment/subscription_history.html.twig',
+            [
+            'user' => $user
+            ]
+        );
     }
 }

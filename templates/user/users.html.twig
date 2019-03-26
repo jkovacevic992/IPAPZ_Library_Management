@@ -5,8 +5,10 @@
     <thead>
     <tr>
         <th scope="col">User</th>
-        <th scope="col">Membership</th>
+        <th scope="col">Subscription</th>
         <th scope="col">Details</th>
+        <th scope="col">Subscription History</th>
+
 
     </tr>
     </thead>
@@ -25,6 +27,7 @@
                     OK
                 {% endif %}</td>
             <td><a href="{{ path('employee_view', {'id': user.id}) }}" class="btn btn-primary">Details</a></td>
+            <td><a href="{{ path('subscription_history', {'id': user.id}) }}" class="btn btn-primary">History</a></td>
         </tr>
 
     {% endfor %}

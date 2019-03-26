@@ -1,6 +1,7 @@
 
 $(function () {
     var cookie = getCookie('showMoreCookie');
+
     if(cookie != 'clicked') {
         $(".genre").slice(0, 5).show();
         $("#loadMore").on('click', function (e) {
