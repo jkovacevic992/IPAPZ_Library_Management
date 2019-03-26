@@ -14,8 +14,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ReservationController extends AbstractController
 {
 
+    /**
+     * @Symfony\Component\Routing\Annotation\Route("/employee/reservations", name="reservations")
+     * @param ReservationRepository $reservationRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function reservations(ReservationRepository $reservationRepository)
     {
-        $reservations = $reservationRepository->findAll();
+        $reservations = $reservationRepository->findBy(['active' => true]);
+
+        return $this->render('reservation/reservations.html.twig', [
+            'reservations' => $reservations
+        ]);
     }
 }

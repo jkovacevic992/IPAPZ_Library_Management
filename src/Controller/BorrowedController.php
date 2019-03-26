@@ -11,10 +11,12 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Entity\Borrowed;
 use App\Entity\BorrowedBooks;
+use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\BorrowedFormType;
 use App\Repository\BorrowedRepository;
 use App\Repository\PaymentMethodRepository;
+use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -301,5 +303,58 @@ class BorrowedController extends AbstractController
                 'form' => $form->createView()
             ]
         );
+    }
+
+    /**
+     * @Symfony\Component\Routing\Annotation\Route("/employee/lend_reserved_book/{user}/{book}/{reservation}",
+     *     name="lend_reserved_book")
+     * @param User $user
+     * @param Book $book
+     * @param EntityManagerInterface $em
+     * @param ReservationRepository $reservationRepository
+     * @param Reservation $reservation
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function lendReservedBook(
+        User $user,
+        Book $book,
+        EntityManagerInterface $em,
+        ReservationRepository $reservationRepository,
+        Reservation $reservation
+    ) {
+        $borrowed = new Borrowed();
+        $borrowed->setBorrowDate(new \DateTime('now'));
+        $borrowed->setReturnDate(new \DateTime('now + 15 day'));
+        $borrowed->setUser($user);
+        $borrowed->setActive(true);
+        $book->setBorrowedQuantity($book->getBorrowedQuantity() + 1);
+        $book->setQuantity($book->getQuantity() - 1);
+
+        if ($book->getQuantity() === 0) {
+            $book->setAvailable(false);
+        }
+
+        $borrowedBook = new BorrowedBooks();
+        $borrowedBook->setCreatedAt('now');
+        $borrowedBook->setBook($book);
+        $borrowedBook->setBorrowed($borrowed);
+        $reservation->setActive(false);
+        $user->setHasBooks(true);
+        $borrowed->addBorrowedBook($borrowedBook);
+        $em->persist($borrowedBook);
+        $em->persist($borrowed);
+        $em->persist($user);
+        $em->persist($reservation);
+        $em->persist($book);
+        $em->flush();
+
+
+        $reservations = $reservationRepository->findBy(['active' => true]);
+
+        $this->addFlash('success', 'Success!');
+        return $this->render('reservation/reservations.html.twig', [
+            'reservations' => $reservations
+        ]);
     }
 }
