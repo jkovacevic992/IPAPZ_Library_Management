@@ -3,9 +3,11 @@
 {% block title %}New genre{% endblock %}
 
 {% block body %}
+    <div class="container">
     {{ form_start(genreForm) }}
     {{ form_row(genreForm.name) }}
 
     <button class="btn purple-gradient btn-rounded btn-sm my-0" formnovalidate>Submit</button>
     {{ form_end(genreForm) }}
+    </div>
 {% endblock %}

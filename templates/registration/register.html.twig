@@ -3,8 +3,9 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
 
+<div class="container">
+    <h1>Register</h1>
     {{ form_start(registrationForm) }}
     {{ form_row(registrationForm.firstName) }}
     {{ form_row(registrationForm.lastName) }}
@@ -12,6 +13,7 @@
     {{ form_row(registrationForm.email) }}
     {{ form_row(registrationForm.plainPassword.first) }}
     {{ form_row(registrationForm.plainPassword.second) }}
-    <button class="btn purple-gradient btn-rounded btn-sm my-0" formnovalidate>Register</button>
+    <button class="btn purple-gradient btn-rounded" formnovalidate>Register</button>
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}

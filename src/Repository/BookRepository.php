@@ -32,9 +32,10 @@ class BookRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('b')
             ->select('b')
-            ->addSelect('r')
+
             ->leftJoin('b.reservation', 'r')
-            ->where('b.available=true');
+            ->where('b.available=true')
+            ->andWhere('r.book is null');
     }
 
     public function getBooks()

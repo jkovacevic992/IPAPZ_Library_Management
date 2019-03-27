@@ -3,6 +3,7 @@
 {% block title %}New book{% endblock %}
 
 {% block body %}
+    <div class="container">
     {{ form_start(form) }}
     {{ form_row(form.name) }}
     {{ form_row(form.author) }}
@@ -18,6 +19,7 @@
     <button class="btn purple-gradient btn-rounded btn-sm my-0" formnovalidate>Submit</button>
     {{ form_widget(form.bookGenre) }}
     {{ form_end(form) }}
+    </div>
 {% endblock %}
 
 
