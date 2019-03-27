@@ -280,8 +280,9 @@ class BookController extends AbstractController
                 ]
             );
         } else {
-            if (isset($_GET['genre'])) {
-                $books = $query->returnBooksByGenre($request, $_GET['genre']);
+            $get = $request->query->get('genre');
+            if ($get !== null) {
+                $books = $query->returnBooksByGenre($request, $get);
                 $topBooks = null;
             } else {
                 $books = $query->returnBooks($request);
