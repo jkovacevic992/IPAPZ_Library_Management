@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Count;
 use App\Form\BookGenreFormType;
 
 /**
@@ -38,7 +39,15 @@ class BookFormType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'by_reference' => false,
-                    'label' => false]
+                    'label' => false,
+                    'constraints' => array(
+                        new Count(
+                            array(
+                            'min' => 1,
+                            'minMessage' => 'At least 1 choice is required',
+                            )
+                        ),
+                    ),]
             )
             ->add('summary')
             ->add(

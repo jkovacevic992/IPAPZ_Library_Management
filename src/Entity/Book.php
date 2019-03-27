@@ -81,6 +81,7 @@ class Book
     /**
      * @Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\Wishlist",
      *     mappedBy="book", cascade={"persist","remove"})
+     *
      */
     private $wishlist;
 
