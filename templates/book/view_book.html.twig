@@ -8,8 +8,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EMPLOYEE') %}
-                            <br/><a href="{{ path('edit_book', {'id': book.id}) }}" class="btn btn-secondary">Edit</a>
-                            <br/><a href="{{ path('book_delete', {'id': book.id}) }}" class="btn btn-danger">Delete Book</a>
+                            <a href="{{ path('edit_book', {'id': book.id}) }}" class="btn btn-secondary">Edit</a>
+                            <a href="{{ path('book_delete', {'id': book.id}) }}" class="btn btn-danger">Delete Book</a>
 
                             {% elseif is_granted('ROLE_USER') and app.user.membership%}
                                 <a href="{{ path('add_book', {'id' : book.id}) }}" class="btn btn-secondary">Add to my Wishlist</a>
@@ -20,14 +20,15 @@
                                         <a href="{{ path('reserve_book', {'id' : book.id}) }}" class="btn btn-secondary disabled">Reserve</a>
                                 {% endif %}
                         {% endif %}
-                        <h6 class="card-subtitle mt-2 text-muted">{{ book.author }}</h6>
-                        <p class="card-text">{{ book.name }}</p>
-                        <p class="card-text">Genres:
+                        <h4 class="card-title mt-3 text-muted">{{ book.author }}</h4>
+                        <h5 class="card-text">{{ book.name }}</h5>
+                        <p style="display: inline" class="card-text">Genres:
                             {% for genre in book.bookGenre %}
 
-                        <h6 class="card-text">{{ genre.genre.name }}  </h6>
+                            <p style="display: inline" class="card-text text-muted">{{ genre.genre.name }}  </p>
 
                         {% endfor %}
+                        </ul>
                         </p>
                         <p class="card-text">Quantity: {{ book.quantity }}</p>
 
