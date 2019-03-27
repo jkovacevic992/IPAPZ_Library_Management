@@ -32,7 +32,7 @@
             {% for genre in genres %}
             <div class= "genre" id = "genre" style="display: none">
 
-                    <a href="{{ path('book_index') }}?genre={{ genre.name }}" class="list-group-item">{{ genre.name }}</a>
+                    <a style="background-color:#E7E7E7; color: black" href="{{ path('book_index') }}?genre={{ genre.name }}" class="list-group-item">{{ genre.name }}</a>
 
             </div>
             {% endfor %}
