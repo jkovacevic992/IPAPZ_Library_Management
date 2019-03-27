@@ -237,28 +237,7 @@ class BookController extends AbstractController
             $this->addFlash('success', $book->getName() . ' is available!');
         }
 
-        $formSearch = $this->createFormBuilder(null)
-            ->add(
-                'query',
-                SearchType::class,
-                [
-                    'attr' => [
-                        'class' => 'form-control mr-sm-2'
-                    ],
-                    'label' => false,
-
-                ]
-            )
-            ->add(
-                'search',
-                SubmitType::class,
-                [
-                    'attr' => [
-                        'class' => 'btn purple-gradient btn-rounded btn-sm my-0'
-                    ]
-                ]
-            )
-            ->getForm();
+        $formSearch = $this->createFormSearch();
         $formSearch->handleRequest($request);
 
 
@@ -268,7 +247,7 @@ class BookController extends AbstractController
             return $this->render(
                 'book/index.html.twig',
                 [
-                    'form' => $formSearch->createView(),
+
                     'books' => $books,
                     'formSearch' => $formSearch->createView(),
                     'totalUsers' => $users,
@@ -285,7 +264,7 @@ class BookController extends AbstractController
                 $books = $query->returnBooksByGenre($request, $get);
                 $topBooks = null;
             } else {
-                $books = $query->returnBooks($request);
+                $books = null;
             }
 
             return $this->render(
@@ -324,5 +303,68 @@ class BookController extends AbstractController
         }
 
         return false;
+    }
+
+    /**
+     * @Symfony\Component\Routing\Annotation\Route("/all_books", name="all_books")
+     * @param Request $request
+     * @param BookService $query
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function allBooks(Request $request, BookService $query)
+    {
+
+
+        $formSearch = $this->createFormSearch();
+        $formSearch->handleRequest($request);
+
+        if ($formSearch->isSubmitted() && $formSearch->isValid()) {
+            $books = $query->returnFoundBooks($request, $formSearch->getData()['query']);
+
+            return $this->render(
+                'book/all_books.html.twig',
+                [
+                    'form' => $formSearch->createView(),
+                    'books' => $books,
+                    'formSearch' => $formSearch->createView()
+
+                ]
+            );
+        } else {
+            $books = $query->returnBooks($request);
+        }
+
+        return $this->render(
+            'book/all_books.html.twig', [
+            'books' => $books,
+            'formSearch' => $formSearch->createView()
+            ]
+        );
+    }
+
+    public function createFormSearch()
+    {
+        return $formSearch = $this->createFormBuilder(null)
+            ->add(
+                'query',
+                SearchType::class,
+                [
+                    'attr' => [
+                        'class' => 'form-control mr-sm-2'
+                    ],
+                    'label' => false,
+
+                ]
+            )
+            ->add(
+                'search',
+                SubmitType::class,
+                [
+                    'attr' => [
+                        'class' => 'btn purple-gradient btn-rounded btn-sm my-0'
+                    ]
+                ]
+            )
+            ->getForm();
     }
 }

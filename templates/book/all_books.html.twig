@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    {{ form(formSearch, { 'attr': {'class': 'form-inline mr-auto'} }) }}
+
+<div style="text-align: center">
+    <h3>Books in the Library</h3>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Book</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for book in books %}
+        <tr>
+            <td>{% if book.images != null %}<img style="max-height: 50px"
+                                                 src="../../uploads/images/{{ book.images[0] }}">{% endif %} {{ book.name }}
+            </td>
+            <td>{{ book.author }}</td>
+            <td>
+                {% for genre in book.bookGenre %}
+
+                    <h6 class="card-subtitle mt-2 text-muted">{{ genre.genre.name }}  </h6>
+
+                {% endfor %}
+            </td>
+            <td><a style="color: white" href="{{ path('book_view', {'id': book.id}) }}" class="btn purple-gradient btn-rounded btn-sm my-0">Details</a></td>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+<div class="navigation">
+    {{ knp_pagination_render(books, 'book/pagination.html.twig') }}
+</div>
+{% endblock %}

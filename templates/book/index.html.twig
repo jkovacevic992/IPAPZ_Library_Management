@@ -40,48 +40,37 @@
         <a class="btn purple-gradient btn-rounded btn-sm my-0" href="#" id="loadMore" >Show More</a>
     </div>
 </aside>
-    <section class="col-lg-9">
+
         {% if topBooks != null %}
-        <h3>Top Books Last Week</h3>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Book</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>Details</th>
-            </tr>
-            </thead>
-            <tbody>
 
-            {% for book in topBooks %}
-                <tr>
-                    <td>{% if book[0].images != null %}<img style="max-height: 50px"
-                                                         src="../../uploads/images/{{ book[0].images[0] }}">
-                        {% endif %}
-                        {{ book[0].name }}
-                    </td>
-                    <td>{{ book[0].author }}</td>
-                    <td>
-                        {% for genre in book[0].bookGenre %}
+                    {% for book in topBooks %}
+        <div class="row">
+            <div class="col-sm-6">
 
-                            <h6 class="card-subtitle mt-2 text-muted">{{ genre.genre.name }}  </h6>
-
+                        <div class="card" style="width: 18rem;">
+                        {% if book[0].images != null %}
+                <img  style="width: 100%; height: 20vh;
+object-fit: cover;" class="card-img-top" src="../../uploads/images/{{ book[0].images[0] }}" alt="Card image cap">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{  book[0].name}}</h5>
+                    <p class="card-subtitle mb-2 text-muted">{{ book[0].author }}</p>
+                    {% for genre in book[0].bookGenre %}
+                    <p style="display: inline" class="card-text">{{genre.genre.name  }}</p>
                         {% endfor %}
-                    </td>
-                    <td><a style="color: white" href="{{ path('book_view', {'id': book[0].id}) }}" class="btn purple-gradient btn-rounded btn-sm my-0">Details</a></td>
+                    <br><a style="color: white" href="{{ path('book_view', {'id': book[0].id}) }}" class="btn purple-gradient btn-sm my-0">Details</a>
+                </div>
+            </div>
+                </div>
 
-                </tr>
+        </div>
             {% endfor %}
-
-            </tbody>
-
-        </table>
         {% endif %}
-    <h3>Books in the Library</h3>
 
 
-    <table class="table table-striped">
+{% if books is defined and books is not null%}
+    <section class="col-lg-9">
+    <table class="table table-bordered">
         <thead>
         <tr>
             <th>Book</th>
@@ -115,6 +104,7 @@
     <div class="navigation">
         {{ knp_pagination_render(books, 'book/pagination.html.twig') }}
     </div>
+        {% endif %}
     </section>
 </div>
 

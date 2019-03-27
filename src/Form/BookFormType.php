@@ -47,15 +47,23 @@ class BookFormType extends AbstractType
                             'minMessage' => 'At least 1 choice is required',
                             )
                         ),
-                    ),]
+                    )]
             )
             ->add('summary')
             ->add(
                 'images',
                 FileType::class,
                 [
-                    'required' => false,
+                    'required' => true,
                     'multiple' => true,
+                    'constraints' => array(
+                        new Count(
+                            array(
+                                'min' => 1,
+                                'minMessage' => 'At least 1 choice is required',
+                            )
+                        ),
+                    )
 
                 ]
             )
