@@ -25,10 +25,11 @@
                         {%  if book.paymentMethod != "PayPal" and paymentMethods[0].active and lateFee[book.id] != 0.00%}
                         <h6 class="card-text">Late Fee:</h6>
                             {{ lateFee[book.id] }} EUR<br>
-                        <a href="{{ path('pay',{'id': book.id}) }}" class="btn btn-primary ">Pay</a>
+                        <a href="{{ path('pay',{'id': book.id}) }}" class="btn btn-secondary ">Pay</a>
                             {% elseif paymentMethods[0].active == false %}
                                 <h6>PayPal payment currently disabled</h6>
                                 {% else %}
+                                    <a href="{{ path('pay',{'id': book.id}) }}" class="btn btn-secondary disabled">Pay</a>
                             <h6>No late fee.</h6>
                        {% endif %}
                     </div>

@@ -247,10 +247,13 @@ class BorrowedController extends AbstractController
      */
     public function editBorrowed(Borrowed $borrowedId, Request $request, EntityManagerInterface $entityManager)
     {
-
+        $edit = true;
         $borrowed = new Borrowed();
         $borrowed->setBorrowDate(new \DateTime('now'));
         $borrowed->setReturnDate($borrowedId->getReturnDate());
+        $borrowed->setUser($borrowedId->getUser());
+
+
         $form = $this->createForm(BorrowedFormType::class, $borrowed);
 
 
@@ -284,7 +287,7 @@ class BorrowedController extends AbstractController
             }
 
             $borrowed->setId($borrowedId->getId());
-            $entityManager->persist($borrowed);
+            $entityManager->merge($borrowed);
             try {
                 $entityManager->flush();
             } catch (\Exception $exception) {
@@ -300,7 +303,9 @@ class BorrowedController extends AbstractController
         return $this->render(
             'book/lend_book.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'borrowed' => $borrowedId,
+                'edit' => $edit
             ]
         );
     }
