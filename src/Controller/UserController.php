@@ -214,10 +214,15 @@ class UserController extends AbstractController
      */
     public function deleteUser(User $user, EntityManagerInterface $entityManager)
     {
-        $entityManager->remove($user);
-        $entityManager->flush();
-        $this->addFlash('success', 'User deleted!');
-        return $this->redirectToRoute('book_index');
+        if ($user->getHasBooks() === true) {
+            $this->addFlash('warning', 'User has to return their books first!');
+            return $this->redirectToRoute('book_index');
+        } else {
+            $entityManager->remove($user);
+            $entityManager->flush();
+            $this->addFlash('success', 'User deleted!');
+            return $this->redirectToRoute('book_index');
+        }
     }
 
     /**
