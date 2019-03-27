@@ -119,6 +119,8 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ path('genres') }}">Genres</a>
+                        <a class="dropdown-item" href="{{ path('users') }}">Users</a>
+                        <a class="dropdown-item" href="{{ path('reservations') }}">Reservations</a>
                 
 
 
@@ -128,17 +130,17 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                    <a class="btn btn-outline-secondary" href="{{ path('app_logout') }}">Logout</a>
                 </li>
             {% elseif is_granted('ROLE_USER') and app.user.membership %}
                 <li class="nav-item">
-                    <a class="btn btn-outline-secondary" href="{{ path('my_borrowed_books') }}">My Borrowed Books</a>
+                    <a class="btn btn-secondary" href="{{ path('my_borrowed_books') }}">My Borrowed Books</a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-outline-secondary" href="{{ path('my_reservations') }}">My Reservations</a>
+                    <a class="btn btn-secondary" href="{{ path('my_reservations') }}">My Reservations</a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-outline-secondary" href="{{ path('my_wishlist') }}">Wish list</a>
+                    <a class="btn btn-secondary" href="{{ path('my_wishlist') }}">Wish list</a>
                 </li>
                 <li class="nav-item">
                     <a class="btn btn-outline-secondary" href="{{ path('app_logout') }}">Logout</a>

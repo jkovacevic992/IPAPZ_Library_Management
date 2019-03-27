@@ -8,7 +8,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
+use App\Entity\Reservation;
 use App\Repository\ReservationRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use function Sodium\add;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ReservationController extends AbstractController
@@ -29,5 +33,29 @@ class ReservationController extends AbstractController
             'reservations' => $reservations
             ]
         );
+    }
+
+    /**
+     * @Symfony\Component\Routing\Annotation\Route("/user/cancel_reservation/{reservation}/{book}",
+     *     name="cancel_reservation")
+     * @param Reservation $reservation
+     * @param Book $book
+     * @param EntityManagerInterface $em
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function cancelReservation(Reservation $reservation, Book $book, EntityManagerInterface $em)
+    {
+
+        $book->setReservation(null);
+        $reservation->setBook(null);
+        $reservation->setUser(null);
+        $reservation->setActive(false);
+
+        $book->setNotification(false);
+        $em->persist($book);
+        $em->persist($reservation);
+        $em->flush();
+        $this->addFlash('success', 'Book removed from reservations!');
+        return $this->redirectToRoute('book_index');
     }
 }

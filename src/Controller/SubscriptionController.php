@@ -53,7 +53,7 @@ class SubscriptionController extends AbstractController
     /**
      * @param \App\Entity\User $user
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Symfony\Component\Routing\Annotation\Route("admin/subscription_history/{id}", name="subscription_history")
+     * @Symfony\Component\Routing\Annotation\Route("employee/subscription_history/{id}", name="subscription_history")
      */
     public function subscriptionHistory(User $user)
     {

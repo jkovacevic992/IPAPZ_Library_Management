@@ -9,6 +9,7 @@
     <tr>
         <th scope="col">Id</th>
         <th scope="col">Paid</th>
+        <th scope="col">Active Until</th>
         <th scope="col">Active</th>
     </tr>
     </thead>
@@ -17,6 +18,7 @@
         <tr>
             <td>{{ subscription.id }}</td>
             <td>{{ subscription.createdAt|date("d.m.Y") }}</td>
+            <td>{{ subscription.createdAt|date_modify("+30 day")|date("d.m.Y") }}</td>
             <td>
             {% if subscription.active %}
                 YES

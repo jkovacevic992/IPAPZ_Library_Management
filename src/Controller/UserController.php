@@ -93,7 +93,7 @@ class UserController extends AbstractController
 
 
     /**
-     * @Symfony\Component\Routing\Annotation\Route("/admin/users", name="users")
+     * @Symfony\Component\Routing\Annotation\Route("/employee/users", name="users")
      * @param                 UserRepository $userRepository
      * @return                \Symfony\Component\HttpFoundation\Response
      */

@@ -13,6 +13,7 @@
         <th scope="col">Created at</th>
         <th scope="col">Available</th>
         <th scope="col">Lend</th>
+        <th scope="col">Cancel Reservation</th>
     </tr>
     </thead>
     <tbody>
@@ -27,7 +28,11 @@
                        class="btn btn-secondary">Lend</a></td>
             {% else %}
                 <td>Book Not Available</td>
+                <td><a href="{{ path('lend_reserved_book', {'book': reservation.book.id, 'user' : reservation.user.id, 'reservation' : reservation.id}) }}"
+                       class="btn btn-secondary disabled">Lend</a></td>
                 {% endif %}
+            <td><a href="{{ path('cancel_reservation', {'book': reservation.book.id, 'reservation' : reservation.id}) }}"
+                   class="btn btn-danger">Cancel</a></td>
 
         </tr>
 
