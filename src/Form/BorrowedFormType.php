@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Form\BookBorrowedFormType;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class BorrowedFormType extends AbstractType
 {
@@ -34,7 +36,10 @@ class BorrowedFormType extends AbstractType
                     'widget' => 'single_text',
                     'attr' => ['class' => 'js-datepicker'],
                     'html5' => false,
-                    'format' => 'dd.MM.yyyy.'
+                    'format' => 'dd.MM.yyyy.',
+                    'constraints' => [
+                        new GreaterThanOrEqual('today')
+                    ]
                 ]
             )
             ->add(
@@ -44,7 +49,10 @@ class BorrowedFormType extends AbstractType
                     'widget' => 'single_text',
                     'attr' => ['class' => 'js-datepicker'],
                     'html5' => false,
-                    'format' => 'dd.MM.yyyy.'
+                    'format' => 'dd.MM.yyyy.',
+                    'constraints' => [
+                        new GreaterThan('today')
+                    ]
                 ]
             )
             ->add(
