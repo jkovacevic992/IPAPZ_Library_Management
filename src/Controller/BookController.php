@@ -132,6 +132,7 @@ class BookController extends AbstractController
      * @Symfony\Component\Routing\Annotation\Route("/view_book/{id}", name="book_view")
      * @param                    Book $book
      *
+     * @param UserRepository $userRepository
      * @return                   \Symfony\Component\HttpFoundation\Response
      */
     public function showBook(Book $book, UserRepository $userRepository)
@@ -227,37 +228,18 @@ class BookController extends AbstractController
         $users = $userRepository->findUsers()[0][1];
         $bookNumber = $bookRepository->findBooks()[0][1];
         $availableBooks = $bookRepository->count(['available' => true]);
-
         $user = $this->getUser();
         $book = $this->checkBookAvailability($user, $entityManager);
         $topBooks = $bookRepository->getTopBooks();
-
-
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER') && $book !== false) {
             $this->addFlash('success', $book->getName() . ' is available!');
         }
 
         $formSearch = $this->createFormSearch();
         $formSearch->handleRequest($request);
-
-
         if ($formSearch->isSubmitted() && $formSearch->isValid()) {
             $books = $query->returnFoundBooks($request, $formSearch->getData()['query']);
-
-            return $this->render(
-                'book/index.html.twig',
-                [
-
-                    'books' => $books,
-                    'formSearch' => $formSearch->createView(),
-                    'totalUsers' => $users,
-                    'totalBooks' => $bookNumber,
-                    'availableBooks' => $availableBooks,
-                    'genres' => $genres,
-                    'topBooks' => null
-
-                ]
-            );
+            $topBooks = null;
         } else {
             $get = $request->query->get('genre');
             if ($get !== null) {
@@ -266,21 +248,21 @@ class BookController extends AbstractController
             } else {
                 $books = null;
             }
-
-            return $this->render(
-                'book/index.html.twig',
-                [
-                    'books' => $books,
-                    'totalUsers' => $users,
-                    'totalBooks' => $bookNumber,
-                    'availableBooks' => $availableBooks,
-                    'genres' => $genres,
-                    'formSearch' => $formSearch->createView(),
-                    'topBooks' => $topBooks
-
-                ]
-            );
         }
+
+        return $this->render(
+            'book/index.html.twig',
+            [
+                'books' => $books,
+                'totalUsers' => $users,
+                'totalBooks' => $bookNumber,
+                'availableBooks' => $availableBooks,
+                'genres' => $genres,
+                'formSearch' => $formSearch->createView(),
+                'topBooks' => $topBooks
+
+            ]
+        );
     }
 
     public function checkBookAvailability($user, EntityManagerInterface $entityManager)
@@ -335,7 +317,8 @@ class BookController extends AbstractController
         }
 
         return $this->render(
-            'book/all_books.html.twig', [
+            'book/all_books.html.twig',
+            [
             'books' => $books,
             'formSearch' => $formSearch->createView()
             ]

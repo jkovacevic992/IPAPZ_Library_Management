@@ -69,7 +69,7 @@ class PaypalTransactionController extends AbstractController
         );
         $transaction = $result->transaction;
 
-        $paypalTransaction = self::payPalTransaction($amount, $transaction, $user);
+        $paypalTransaction = $this->payPalTransaction($amount, $transaction, $user);
 
         $borrowed->setPaymentMethod('PayPal');
         $entityManager->persist($borrowed);
@@ -164,7 +164,7 @@ class PaypalTransactionController extends AbstractController
     {
 
 
-        $gateway = self::gateway();
+        $gateway = $this->gateway();
 
         return $this->render(
             'paypal/paypal_premium.html.twig',

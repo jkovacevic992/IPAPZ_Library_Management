@@ -361,7 +361,8 @@ class BorrowedController extends AbstractController
 
         $this->addFlash('success', 'Success!');
         return $this->render(
-            'reservation/reservations.html.twig', [
+            'reservation/reservations.html.twig',
+            [
             'reservations' => $reservations
             ]
         );

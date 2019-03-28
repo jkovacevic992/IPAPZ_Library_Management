@@ -72,7 +72,7 @@ class OnDeliveryTransactionController extends AbstractController
         );
 
         $user =  $user = $entityManager->find(User::class, $borrowed->getUser());
-        $pdfName = rand(1, 100) . $user->getId() . rand(1, 100000) . '.pdf';
+        $pdfName = $user->getFirstName().$user->getLastName().rand(1, 100000) . $user->getId(). '.pdf';
         $domPdf->loadHtml($html);
 
         $domPdf->setPaper('A4', 'portrait');
@@ -97,13 +97,13 @@ class OnDeliveryTransactionController extends AbstractController
         EntityManagerInterface $entityManager
     ) {
         $borrowedBooks->setPaid(true);
-        $array =  self::onDeliveryTransaction($borrowed, [1]);
+        $array =  $this->onDeliveryTransaction($borrowed, [1]);
         $entityManager->persist($borrowed);
         $entityManager->persist($borrowedBooks);
         $entityManager->persist($array['onDeliveryTransaction']);
         $entityManager->flush();
 
-        self::createDomPdf(
+        $this->createDomPdf(
             $borrowed,
             $array['lateFee'],
             $array['onDeliveryTransaction'],
@@ -155,7 +155,7 @@ class OnDeliveryTransactionController extends AbstractController
         $html = $this->renderView(
             'pdf/invoice.html.twig',
             [
-            'title' => 'Something',
+            'title' => 'Invoice',
             'borrowed' => $borrowed,
             'lateFee' => $lateFee
             ]
