@@ -58,4 +58,17 @@ class BookRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getBooksByUser($user)
+    {
+        return $this->createQueryBuilder('b')
+            ->select('b')
+            ->innerJoin('App\Entity\User', 'u')
+            ->innerJoin('App\Entity\Borrowed', 'bb')
+            ->innerJoin('App\Entity\BorrowedBooks', 'bbb')
+            ->where('bb.user = :user')
+            ->andWhere('b = bbb.book')
+            ->groupBy('b')
+            ->setParameter('user', $user);
+    }
 }

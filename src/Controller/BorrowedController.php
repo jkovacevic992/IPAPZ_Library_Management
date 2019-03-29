@@ -17,7 +17,9 @@ use App\Form\BorrowedFormType;
 use App\Repository\BorrowedRepository;
 use App\Repository\PaymentMethodRepository;
 use App\Repository\ReservationRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,13 +34,39 @@ class BorrowedController extends AbstractController
      */
     public function borrowedBooks(
         BorrowedRepository $borrowedRepository,
-        PaymentMethodRepository $paymentMethodRepository
+        PaymentMethodRepository $paymentMethodRepository,
+        Request $request
     ) {
         $paymentMethods = $paymentMethodRepository->findAll();
         $borrowedBooks = $borrowedRepository->findBy(['active' => true]);
         $lateFee = [];
         $daysLate = [];
         $borrowedFor = [];
+        $form = $this->createFormBuilder(null)
+            ->add(
+                'user', EntityType::class, [
+                'class' => User::class,
+                'required' => false,
+                'placeholder' => 'Please select user',
+                'label' => false,
+                'choice_label' => function ($user) {
+                    /**
+                     * @var User $user
+                     */
+                    return $user->getFirstName() . ' ' . $user->getLastName();
+                },
+                'query_builder' => function (UserRepository $userRepository) {
+                    return $userRepository->findUsersWithBooks();
+                }
+                ]
+            )
+            ->getForm();
+        $form->handleRequest($request);
+        $user = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $borrowedBooks = $borrowedRepository->findBy(['user' => $user, 'active' => true]);
+        }
+
 
         foreach ($borrowedBooks as $item) {
             $time = $item->getReturnDate();
@@ -61,7 +89,8 @@ class BorrowedController extends AbstractController
                 'lateFee' => $lateFee,
                 'daysLate' => $daysLate,
                 'borrowedFor' => $borrowedFor,
-                'paymentMethods' => $paymentMethods
+                'paymentMethods' => $paymentMethods,
+                'form' => $form->createView()
 
             ]
         );

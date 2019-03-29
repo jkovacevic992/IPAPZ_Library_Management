@@ -15,7 +15,7 @@ use App\Entity\Wishlist;
 use App\Entity\Reservation;
 
 /**
- * @Doctrine\ORM\Mapping\Entity()
+ * @Doctrine\ORM\Mapping\Entity(repositoryClass="App\Repository\UserRepository")
  * @Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity(fields={"email"},
  *     message="There is already an account with this email")
  * @Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity(fields={"username"},

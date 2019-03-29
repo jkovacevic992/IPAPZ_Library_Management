@@ -45,4 +45,11 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findUsersWithBooks()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u')
+            ->where('u.hasBooks = true');
+    }
 }
