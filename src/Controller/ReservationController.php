@@ -13,6 +13,7 @@ use App\Entity\Reservation;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ReservationController extends AbstractController
 {
@@ -37,24 +38,33 @@ class ReservationController extends AbstractController
     /**
      * @Symfony\Component\Routing\Annotation\Route("/user/cancel_reservation/{reservation}/{book}",
      *     name="cancel_reservation")
+     * @param UserInterface $user
      * @param Reservation $reservation
      * @param Book $book
      * @param EntityManagerInterface $em
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function cancelReservation(Reservation $reservation, Book $book, EntityManagerInterface $em)
-    {
+    public function cancelReservation(
+        UserInterface $user,
+        Reservation $reservation,
+        Book $book,
+        EntityManagerInterface $em
+    ) {
+        if ($user === $reservation->getUser() || $this->isGranted('ROLE_EMPLOYEE')) {
+            $book->setReservation(null);
+            $reservation->setBook(null);
+            $reservation->setUser(null);
+            $reservation->setActive(false);
 
-        $book->setReservation(null);
-        $reservation->setBook(null);
-        $reservation->setUser(null);
-        $reservation->setActive(false);
-
-        $book->setNotification(false);
-        $em->persist($book);
-        $em->persist($reservation);
-        $em->flush();
-        $this->addFlash('success', 'Book removed from reservations!');
-        return $this->redirectToRoute('book_index');
+            $book->setNotification(false);
+            $em->persist($book);
+            $em->persist($reservation);
+            $em->flush();
+            $this->addFlash('success', 'Book removed from reservations!');
+            return $this->redirectToRoute('book_index');
+        } else {
+            $this->addFlash('warning', 'You are not authorized to cancel this reservation!');
+            return $this->redirectToRoute('book_index');
+        }
     }
 }

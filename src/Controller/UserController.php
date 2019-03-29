@@ -333,11 +333,16 @@ class UserController extends AbstractController
     public function removeFromWishlist(UserInterface $user, Wishlist $wishlist, EntityManagerInterface $entityManager)
     {
 
-        $user->removeWishlist($wishlist);
-        $entityManager->merge($user);
-        $entityManager->flush();
-        $this->addFlash('success', 'Successfully removed the book from wish list!');
-        return $this->redirectToRoute('book_index');
+        if ($user === $wishlist->getUser()) {
+            $user->removeWishlist($wishlist);
+            $entityManager->merge($user);
+            $entityManager->flush();
+            $this->addFlash('success', 'Successfully removed the book from wish list!');
+            return $this->redirectToRoute('book_index');
+        } else {
+            $this->addFlash('warning', 'Not authorized!');
+            return $this->redirectToRoute('book_index');
+        }
     }
 
 
