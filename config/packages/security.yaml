@@ -39,5 +39,5 @@ security:
          - { path: ^/employee, roles: [ROLE_EMPLOYEE, ROLE_ADMIN]}
          - { path: ^/profile, allow_if: "user.getMembership()", roles: [ROLE_EMPLOYEE, ROLE_ADMIN, ROLE_PREMIUM_USER]}
          - { path: ^/login, allow_if: "is_anonymous()" }
-
+    access_denied_url: book_index
 
