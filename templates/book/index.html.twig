@@ -49,8 +49,9 @@
 
                         <div class="card ml-3" style="width: 18rem; background-color:#eae7ea">
                         {% if book[0].images != null %}
-                <img  style="width: 100%; height: 30vh;
-object-fit: cover;" class="card-img-top" src="../../uploads/images/{{ book[0].images[0] }}" alt="Card image cap">
+                <a href="{{ path('book_view', {'id': book[0].id}) }}"><img  style="width: 100%; height: 30vh;
+object-fit: cover;" class="card-img-top" src="../../uploads/images/{{ book[0].images[0] }}"
+                         alt="Card image cap"></a>
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{  book[0].name}}</h5>
@@ -58,7 +59,7 @@ object-fit: cover;" class="card-img-top" src="../../uploads/images/{{ book[0].im
                     {% for genre in book[0].bookGenre %}
                     <p style="display: inline" class="card-text">{{genre.genre.name  }}</p>
                         {% endfor %}
-                    <br><a style="color: white" href="{{ path('book_view', {'id': book[0].id}) }}" class="btn purple-gradient btn-sm my-0">Details</a>
+                    
                 </div>
             </div>
                 </div>
