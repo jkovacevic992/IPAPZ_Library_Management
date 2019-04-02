@@ -30,7 +30,7 @@ class BookService
         $container = $this->container;
 
         $query = $em->createQuery(
-            'SELECT b from App\Entity\Book b order by b.name asc'
+            'SELECT b,r from App\Entity\Book b left join b.reservation r order by b.name asc '
         );
         $paginator = $container->get('knp_paginator');
         $results = $paginator->paginate(

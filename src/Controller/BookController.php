@@ -302,16 +302,6 @@ class BookController extends AbstractController
 
         if ($formSearch->isSubmitted() && $formSearch->isValid()) {
             $books = $query->returnFoundBooks($request, $formSearch->getData()['query']);
-
-            return $this->render(
-                'book/all_books.html.twig',
-                [
-                    'form' => $formSearch->createView(),
-                    'books' => $books,
-                    'formSearch' => $formSearch->createView()
-
-                ]
-            );
         } else {
             $books = $query->returnBooks($request);
         }
