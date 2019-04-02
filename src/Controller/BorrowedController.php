@@ -71,7 +71,12 @@ class BorrowedController extends AbstractController
         foreach ($borrowedBooks as $item) {
             $time = $item->getReturnDate();
             $timeDiff = date_diff(new \DateTime('now'), $time)->d;
-            $borrowedFor[$item->getId()] = date_diff(new \DateTime('now'), $item->getBorrowDate())->d;
+            if (new \DateTime('now') < $item->getBorrowDate()) {
+                $borrowedFor[$item->getId()] = 0;
+            } else {
+                $borrowedFor[$item->getId()] = date_diff(new \DateTime('now'), $item->getBorrowDate())->d;
+            }
+
             if ($time < new \DateTime('now')) {
                 $lateFee[$item->getId()] = sprintf("%.2f", $timeDiff * 0.5 * count($item->getBorrowedBooks()));
                 $daysLate[$item->getId()] = $timeDiff;

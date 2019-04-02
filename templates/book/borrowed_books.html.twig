@@ -29,9 +29,12 @@
                 {% endfor %}
             </td>
             <td>
+                Date: {{ borrowedBook.borrowDate|date('d.m.Y.') }}<br>
+                Return Date: {{ borrowedBook.returnDate|date('d.m.Y.') }}<br>
                 Borrowed for: {{ borrowedFor[borrowedBook.id] }} days<br>
                 Late: {{ daysLate[borrowedBook.id] }} days<br>
                 {{ lateFee[borrowedBook.id] }} EUR
+
             </td>
             <td>
                 <a style="color: white" href="{{ path('books_details', {'id': borrowedBook.id}) }}"
