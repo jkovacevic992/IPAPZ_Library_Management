@@ -21,7 +21,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends AbstractController
@@ -246,18 +245,16 @@ class UserController extends AbstractController
 
     /**
      * @Symfony\Component\Routing\Annotation\Route("/profile/my_borrowed_books", name="my_borrowed_books")
-     * @param                               UserInterface $user
      * @param BorrowedRepository $borrowedRepository
      * @param PaymentMethodRepository $paymentMethodRepository
      * @return                              \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
     public function usersBorrowedBooks(
-        UserInterface $user,
         BorrowedRepository $borrowedRepository,
         PaymentMethodRepository $paymentMethodRepository
     ) {
-
+        $user = $this->getUser();
         $lateFee = [];
         $borrowed = $borrowedRepository->findBy(['user' => $user->getId(), 'active' => true]);
         $paymentMethods = $paymentMethodRepository->findAll();
@@ -292,16 +289,15 @@ class UserController extends AbstractController
 
     /**
      * @Symfony\Component\Routing\Annotation\Route("/profile/add_book/{id}", name="add_book")
-     * @param UserInterface $user
      * @param Book $book
      * @param                           EntityManagerInterface $entityManager
      * @return                          \Symfony\Component\HttpFoundation\RedirectResponse
      */
 
 
-    public function addBookToWishlist(UserInterface $user, Book $book, EntityManagerInterface $entityManager)
+    public function addBookToWishlist(Book $book, EntityManagerInterface $entityManager)
     {
-
+        $user = $this->getUser();
         $wishlist = new Wishlist();
         $wishlist->setUser($user);
         $wishlist->setBook($book);
@@ -325,14 +321,13 @@ class UserController extends AbstractController
 
     /**
      * @Symfony\Component\Routing\Annotation\Route("/profile/remove_from_wishlist/{id}", name="remove_from_wishlist")
-     * @param UserInterface $user
      * @param                                       Wishlist $wishlist
      * @param                                       EntityManagerInterface $entityManager
      * @return                                      \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function removeFromWishlist(UserInterface $user, Wishlist $wishlist, EntityManagerInterface $entityManager)
+    public function removeFromWishlist(Wishlist $wishlist, EntityManagerInterface $entityManager)
     {
-
+        $user = $this->getUser();
         if ($user === $wishlist->getUser()) {
             $user->removeWishlist($wishlist);
             $entityManager->merge($user);
@@ -348,11 +343,11 @@ class UserController extends AbstractController
 
     /**
      * @Symfony\Component\Routing\Annotation\Route("/profile/my_wishlist", name="my_wishlist")
-     * @param UserInterface $user
      * @return                        \Symfony\Component\HttpFoundation\Response
      */
-    public function usersWishlist(UserInterface $user)
+    public function usersWishlist()
     {
+        $user = $this->getUser();
         $tmp = [];
         $wishlist = $user->getWishlist();
 
@@ -373,11 +368,11 @@ class UserController extends AbstractController
 
     /**
      * @Symfony\Component\Routing\Annotation\Route("/profile/my_reservations", name="my_reservations")
-     * @param UserInterface $user
      * @return                        \Symfony\Component\HttpFoundation\Response
      */
-    public function usersReservations(UserInterface $user)
+    public function usersReservations()
     {
+        $user = $this->getUser();
         $tmp = [];
         $reservations = $user->getReservation();
 
@@ -398,15 +393,14 @@ class UserController extends AbstractController
 
     /**
      * @Symfony\Component\Routing\Annotation\Route("/profile/reserve_book/{id}", name="reserve_book")
-     * @param                               UserInterface $user
      * @param                               Book $book
      * @param                               EntityManagerInterface $entityManager
      * @return                              \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      */
-    public function reserveBook(UserInterface $user, Book $book, EntityManagerInterface $entityManager)
+    public function reserveBook(Book $book, EntityManagerInterface $entityManager)
     {
-
+        $user = $this->getUser();
         $response = $this->redirectToRoute('book_index');
 
 
@@ -440,11 +434,11 @@ class UserController extends AbstractController
 
     /**
      * @Symfony\Component\Routing\Annotation\Route("/username", name="username")
-     * @param UserInterface $user
      * @return JsonResponse
      */
-    public function username(UserInterface $user)
+    public function username()
     {
+        $user = $this->getUser();
         $username = $user->getUsername();
         return new JsonResponse(
             [

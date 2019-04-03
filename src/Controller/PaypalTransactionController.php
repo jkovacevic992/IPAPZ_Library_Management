@@ -14,8 +14,6 @@ use App\Entity\Subscription;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class PaypalTransactionController extends AbstractController
 {
@@ -45,18 +43,17 @@ class PaypalTransactionController extends AbstractController
 
     /**
      * @Symfony\Component\Routing\Annotation\Route("/profile/payment/{id}", name="payment")
-     * @param UserInterface $user
      * @param Borrowed $borrowed
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function payment(
-        UserInterface $user,
         Borrowed $borrowed,
         EntityManagerInterface $entityManager,
         Request $request
     ) {
+        $user = $this->getUser();
         $lateFee = $this->calculateLateFeeBorrowed($borrowed);
         $gateway = $this->gateway();
         $amount = $lateFee;
@@ -105,14 +102,12 @@ class PaypalTransactionController extends AbstractController
 
     /**
      * @Symfony\Component\Routing\Annotation\Route("/user/pay-premium", name="payPremium")
-     * @param UserInterface $user
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      */
     public function premiumMembership(
-        Security $security,
         EntityManagerInterface $entityManager,
         Request $request
     ) {
@@ -126,7 +121,7 @@ class PaypalTransactionController extends AbstractController
             ]
         );
         $transaction = $result->transaction;
-        $user = $security->getUser();
+        $user = $this->getUser();
         $paypalTransaction = $this->payPalTransaction($amount, $transaction, $user);
         $subscription = new Subscription();
         $subscription->setUser($user);

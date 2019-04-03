@@ -13,7 +13,6 @@ use App\Entity\Reservation;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class ReservationController extends AbstractController
 {
@@ -38,18 +37,17 @@ class ReservationController extends AbstractController
     /**
      * @Symfony\Component\Routing\Annotation\Route("/user/cancel_reservation/{reservation}/{book}",
      *     name="cancel_reservation")
-     * @param UserInterface $user
      * @param Reservation $reservation
      * @param Book $book
      * @param EntityManagerInterface $em
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function cancelReservation(
-        UserInterface $user,
         Reservation $reservation,
         Book $book,
         EntityManagerInterface $em
     ) {
+        $user = $this->getUser();
         if ($user === $reservation->getUser() || $this->isGranted('ROLE_EMPLOYEE')) {
             $book->setReservation(null);
             $reservation->setBook(null);
