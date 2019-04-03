@@ -29,6 +29,7 @@ class BorrowedController extends AbstractController
      * @Symfony\Component\Routing\Annotation\Route("/employee/borrowed_books", name="borrowed_books")
      * @param                             BorrowedRepository $borrowedRepository
      * @param PaymentMethodRepository $paymentMethodRepository
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */

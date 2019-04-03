@@ -86,10 +86,10 @@ class PaypalTransactionController extends AbstractController
     {
         return $gateway = new \Braintree_Gateway(
             [
-                'environment' => 'sandbox',
-                'merchantId' => 'kzftwpnnt5t7gfrf',
-                'publicKey' => 'x267p4jntgzy7thj',
-                'privateKey' => 'dfc284aeeb9f8c71709bf19987541f88'
+                'environment' => getenv('PAYPALENVIRONMENT'),
+                'merchantId' => getenv('PAYPALMERCHANTID'),
+                'publicKey' => getenv('PAYPALPUBLICKEY'),
+                'privateKey' => getenv('PAYPALPRIVATEKEY')
             ]
         );
     }
