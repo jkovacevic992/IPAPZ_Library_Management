@@ -1,7 +1,7 @@
 var $collectionHolder;
 
 // setup an "add a tag" link
-var $addBookButton = $('<button type="button" class="add_book_link">Add a book</button>');
+var $addBookButton = $('<button type="button" class="btn btn-secondary">Add a book</button>');
 var $newLinkLi = $('<li></li>').append($addBookButton);
 
 jQuery(document).ready(function() {
@@ -41,7 +41,7 @@ function addBookForm($collectionHolder, $newLinkLi) {
 }
 
 function addBookFormDeleteLink($bookFormLi) {
-    var $removeFormButton = $('<button type="button" class="btn btn-primary">Delete this book</button>');
+    var $removeFormButton = $('<button type="button" class="btn btn-danger">Remove this book</button>');
     $bookFormLi.append($removeFormButton);
 
     $removeFormButton.on('click', function(e) {
@@ -49,3 +49,4 @@ function addBookFormDeleteLink($bookFormLi) {
         $bookFormLi.remove();
     });
 }
+
